@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:id="@+id/btn_addSymptom"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#988CD8"
+        android:text="증상기록"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/btn_meetingDoc"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/btn_addSymptom"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#553CE1"
+        android:text="의사와의 만남"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/btn_recording"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/btn_meetingDoc"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#484363"
+        android:text="녹음하기"
+        android:textColor="@color/white" />
+</RelativeLayout>
