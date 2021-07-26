@@ -2,6 +2,7 @@ package com.example.doctorcommunication;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 
 
 public class MeetingDoc extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

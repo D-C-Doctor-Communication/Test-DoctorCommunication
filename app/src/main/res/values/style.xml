@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--구분선-->
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">#4B000000</item>
+    </style>
+
+    <!--HOME_CARDS-->
+    <style name="cards">
+        <item name="android:layout_width">141dp</item>
+        <item name="android:layout_height">105dp</item>
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:elevation">30dp</item>
+        <item name="cardCornerRadius">10dp</item>
+    </style>
+
+    <style name="cards_title">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="cards_content">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="cards_btn">
+        <item name="android:layout_height">21dp</item>
+        <item name="android:layout_width">76dp</item>
+        <item name="android:backgroundTint">#1AFFFFFF</item>
+        <item name="android:background">@drawable/btn_radius_ractangle</item>
+        <item name="android:textSize">6sp</item>
+        <item name="android:textColor">@color/white</item>
+        <!--<item name="android:radius">20dp</item>-->
+    </style>
+
+
+
+    <!--HOME_CALENDER-->
+    <style name="wCalender_num">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <style name="wCalender_txt">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">50dp</item>
+    </style>
+
+    <style name="wCalender">
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_height">75dp</item>
+        <item name="cardCornerRadius">7dp</item>
+        <item name="cardBackgroundColor">#F8F8F8</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+</resources>
