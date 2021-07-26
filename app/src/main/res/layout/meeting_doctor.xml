@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -13,11 +14,177 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:menu="@menu/meeting_doc_toolbar_menu"/>
 
-    <TextView
-        android:layout_width="100dp"
+    <RelativeLayout
+        android:id="@+id/select_user"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="#D8D8D8" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="200dp"
+        android:layout_height="35dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="152dp" >
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="2021.04.05"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" - "
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="100dp"/>
+
+        <TextView
+            android:layout_marginLeft="120dp"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="2021.04.05"
+            android:layout_gravity="center_vertical"/>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="201dp"
+        android:layout_marginEnd="-5dp"
+        android:background="#D8D8D8" />
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_centerInParent="true"
-        android:text="의사와의 만남 탭입니다."
-        android:textColor="@color/black"/>
+        android:layout_below="@+id/line1"
+        android:layout_marginTop="5dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_1_symptom"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="#F4F4F6"
+                android:text="증상부위"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+                tools:ignore="HardcodedText,SmallSp" />
+
+            <Button
+                android:id="@+id/btn_2_symptom"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="#F4F4F6"
+                android:text="증상부위"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+                tools:ignore="HardcodedText,SmallSp" />
+
+            <Button
+                android:id="@+id/btn_3_symptom"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="#F4F4F6"
+                android:text="증상부위"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+                tools:ignore="HardcodedText,SmallSp" />
+
+            <Button
+                android:id="@+id/btn_4_symptom"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="#F4F4F6"
+                android:text="증상부위"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+                tools:ignore="HardcodedText,SmallSp" />
+
+            <Button
+                android:id="@+id/btn_5_symptom"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="#F4F4F6"
+                android:text="증상부위"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+                tools:ignore="HardcodedText,SmallSp" />
+
+            <Button
+                android:id="@+id/btn_6_symptom"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="#F4F4F6"
+                android:text="증상부위"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+                tools:ignore="HardcodedText,SmallSp" />
+
+            <Button
+                android:id="@+id/btn_7_symptom"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="#F4F4F6"
+                android:text="증상부위"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+                tools:ignore="HardcodedText,SmallSp" />
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="266dp"
+        android:layout_marginEnd="-2dp"
+        android:background="#D8D8D8" />
 
 </RelativeLayout>
