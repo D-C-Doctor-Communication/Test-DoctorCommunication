@@ -9,11 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 
 public class Fragment_home extends Fragment {
@@ -53,11 +50,7 @@ public class Fragment_home extends Fragment {
 
         //취소버튼
             Button btnCancel = popupView.findViewById(R.id.no_btn);
-            btnCancel.setOnClickListener(new Button.OnClickListener(){
-                public void onClick(View v){
-                    alertDialog.dismiss();
-                }
-            });
+            btnCancel.setOnClickListener(v1 -> alertDialog.dismiss());
 
         });
 
