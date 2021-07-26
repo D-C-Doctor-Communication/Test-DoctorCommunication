@@ -66,4 +66,38 @@
         <item name="cardBackgroundColor">#F8F8F8</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
+
+
+    <!--HOME_VERTICAL_SCROLLBAR-->
+    <style name="home_vertical_scrollCard">
+        <item name="android:layout_width">335dp</item>
+        <item name="android:layout_height">148dp</item>
+        <item name="cardBackgroundColor">@color/ache_card_background</item>
+        <item name="cardCornerRadius">15dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+    <style name="home_vertical_scrollCard_imgView">
+        <item name="android:layout_width">106dp</item>
+        <item name="android:layout_height">116dp</item>
+        <item name="background">@drawable/image_radius_rectangle</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+    </style>
+    <style name="home_vertical_scrollCard_title">
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginLeft">140dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="home_vertical_scrollCard_content">
+        <item name="android:layout_width">150dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:textColor">@color/ache_card_textColor</item>
+        <item name="android:layout_marginTop">60dp</item>
+        <item name="android:layout_marginLeft">140dp</item>
+        <item name="android:textSize">13sp</item>
+    </style>
 </resources>
