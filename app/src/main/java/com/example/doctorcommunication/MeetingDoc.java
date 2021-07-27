@@ -3,6 +3,7 @@ package com.example.doctorcommunication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -11,18 +12,27 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
 import java.util.Calendar;
-class Data{
 
-}
+
 
 public class MeetingDoc extends AppCompatActivity {
 
     private TextView startDate; //기간선택 - 시작 날짜를 표시할 TextView
     private TextView endDate; //기간선택 - 종료 날짜를 표시할 TextView
+
+    private Button gotoGraph; // 심각도 그래프로 이동하는 버튼
+
+    //증상선택 버튼
+    Button btn_1_symptom;
+    Button btn_2_symptom;
+    Button btn_3_symptom;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +40,58 @@ public class MeetingDoc extends AppCompatActivity {
         setContentView(R.layout.meeting_doctor);
         Log.d("myapp","의사와의 만남탭 열림");
 
+
+
+//기본 세팅
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction(); // 각 프레그먼트들로 이동하기 위한 객체 생성
+        //이전버튼, 녹음버튼있는 툴바(액션바 기능)
         Toolbar toolbar = findViewById(R.id.toolbar_meeting_doctor); //마이크, 이전버튼 들어있는 toolbar 생성
         setSupportActionBar(toolbar); //toolbar를 액션바로서 지정
 
+        // 증상에 대한 심각도 그래프로 이동하는 버튼
+        gotoGraph = findViewById(R.id.btn_gotoGraph);
+        gotoGraph.setOnClickListener(v->{
+            Log.d("mytag","그래프 이동 버튼 눌림");
+           //심각도 그래프 버튼을 누르면 상태분석 페이지로 이동함
+        });
+
+        //기간 선택을 위한 DatePicker를 호출하는 버튼(TextView)
         startDate = (TextView)findViewById(R.id.startDate);//기간선택 - 시작 날짜를 표시할 TextView
         endDate = (TextView)findViewById(R.id.endDate);//기간선택 - 종료 날짜를 표시할 TextView
+
+        //각 증상 선택 버튼을 눌렀을때 누른 버튼의 아이디값을 받아옴
+        btn_1_symptom = findViewById(R.id.btn_1_symptom);
+        btn_2_symptom = findViewById(R.id.btn_2_symptom);
+        btn_3_symptom = findViewById(R.id.btn_3_symptom);
+
+// -> 증상 선택 기능
+//commit 중복 호출 안되는거 해결하기!!!!!!
+
+        //기본 선택된 프래그먼트 (1번 증상)
+        MD_Fragment_1 fragment = (MD_Fragment_1)new MD_Fragment_1(); // 객체 생성
+        transaction.replace(R.id.symthom_description_notSelected, fragment); //layout, 교체될 layout
+
+        btn_1_symptom.setOnClickListener(v -> {
+            MD_Fragment_1 fragment1 = (MD_Fragment_1)new MD_Fragment_1(); // 증상1에 해당하는 프레그먼트 객체 생성
+            transaction.replace(R.id.symthom_description_notSelected, fragment1); //meeting_doctor.xml의 FrameLayout부분을 위 객체(fragment1)로 교체
+             //commit으로 저장
+        });
+
+        btn_2_symptom.setOnClickListener(v -> {
+            MD_Fragment_2 fragment2 = (MD_Fragment_2)new MD_Fragment_2(); // 증상1에 해당하는 프레그먼트 객체 생성
+            transaction.replace(R.id.symthom_description_notSelected, fragment2); //meeting_doctor.xml의 FrameLayout부분을 위 객체(fragment1)로 교체
+            //commit으로 저장
+        });
+
+        btn_3_symptom.setOnClickListener(v -> {
+            MD_Fragment_3 fragment3 = (MD_Fragment_3)new MD_Fragment_3(); // 증상1에 해당하는 프레그먼트 객체 생성
+            transaction.replace(R.id.symthom_description_notSelected, fragment3); //meeting_doctor.xml의 FrameLayout부분을 위 객체(fragment1)로 교체
+            //transaction.addToBackStack(null); //이전버튼 누르면 돌아가는 기능
+            // commit으로 저장
+        });
+        transaction.commit();
+
+// -> 날짜 선택 기능
 
         //시작날짜 텍스트를 누르면 DatePickerDialog 동작
         startDate.setOnClickListener(v -> {
@@ -76,6 +133,8 @@ public class MeetingDoc extends AppCompatActivity {
 
     }
 
+
+// -> toolbar 기능
     @Override
     //toolbar와 메뉴 구성 layout 연결
     public boolean onCreateOptionsMenu(Menu menu){
