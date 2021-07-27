@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    프레임레이아웃 예제
+    http://croute.me/412
+    croute / 2011.05.03
+ -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <!-- 버튼 -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <!-- 레드 버튼 -->
+        <Button
+            android:id="@+id/frame_layout_example_activity_b_visible_red"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="빨간색 레이아웃 보이기" />
+        <!-- /레드 버튼 -->
+        <!-- 블루 버튼 -->
+        <Button
+            android:id="@+id/frame_layout_example_activity_b_visible_blue"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="파란색 레이아웃 보이기" />
+        <!-- /블루 버튼 -->
+    </LinearLayout>
+    <!-- /버튼 -->
+
+    <!-- 프레임레이아웃 -->
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+        <!-- 레드 레이아웃 -->
+        <LinearLayout
+            android:id="@+id/frame_layout_example_activity_ll_red"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#ff0000"
+            android:orientation="vertical">
+        </LinearLayout>
+        <!-- /레드 레이아웃 -->
+        <!-- 블루 레이아웃 -->
+        <LinearLayout
+            android:id="@+id/frame_layout_example_activity_ll_blue"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#000cff"
+            android:visibility="invisible"
+            android:orientation="vertical">
+            <!-- 블루 LinearLayout이 아래에 있어 먼저 보여지므로, 레드 LinearLayout을 먼저 보여주기 위해 invisible -->
+        </LinearLayout>
+        <!-- /블루 레이아웃 -->
+    </FrameLayout>
+    <!-- /프레임레이아웃 -->
+
+</LinearLayout>
