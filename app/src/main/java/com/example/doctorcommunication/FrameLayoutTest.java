@@ -1,60 +1,22 @@
 package com.example.doctorcommunication;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 
-/**
- * 프레임레이아웃 사용예제
- * http://croute.me/412
- *
- * @author croute
- * @since 2011.05.03
- */
-public class FrameLayoutTest extends Activity
-{
-    private LinearLayout mLlRed;
-    private LinearLayout mLlBlue;
+public class FrameLayoutTest extends AppCompatActivity {
 
-    /* (non-Javadoc)
-     * @see android.app.Activity#onCreate(android.os.Bundle)
-     */
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
 
-        Button bRed = (Button)findViewById(R.id.frame_layout_example_activity_b_visible_red);
-        Button bBlue = (Button)findViewById(R.id.frame_layout_example_activity_b_visible_blue);
-
-        mLlRed = (LinearLayout)findViewById(R.id.frame_layout_example_activity_ll_red);
-        mLlBlue = (LinearLayout)findViewById(R.id.frame_layout_example_activity_ll_blue);
-
-        bRed.setOnClickListener(v -> {
-            mLlRed.setVisibility(LinearLayout.VISIBLE);
-            mLlBlue.setVisibility(LinearLayout.INVISIBLE);
-        });
-        bBlue.setOnClickListener(v -> {
-            mLlRed.setVisibility(LinearLayout.INVISIBLE);
-            mLlBlue.setVisibility(LinearLayout.VISIBLE);
-        });
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        // 프래그먼트매니저를 통해 사용
+        Test_Fragment1 fragment1 = (Test_Fragment1)new Test_Fragment1(); // 객체 생성
+        transaction.replace(R.id.frameLayout, fragment1); //layout, 교체될 layout
+        transaction.commit(); //commit으로 저장 하지 않으면 화면 전환이 되지 않음
     }
-
-    /* (non-Javadoc)
-     * @see android.app.Activity#onResume()
-     */
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-
-        mLlRed.setVisibility(LinearLayout.VISIBLE);
-        mLlBlue.setVisibility(LinearLayout.INVISIBLE);
-    }
-
-
 }
-
