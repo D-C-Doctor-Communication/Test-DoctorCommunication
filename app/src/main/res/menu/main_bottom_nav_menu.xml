@@ -7,9 +7,9 @@
     <item
         android:id="@+id/nav_conditionAnaly"
         android:icon="@drawable/ic_nav_condition_analysis"
-        android:title="환경설정" />
+        android:title="상태분석" />
     <item
         android:id="@+id/nav_medicalCharts"
         android:icon="@drawable/ic_nav_medical_records"
-        android:title="환경설정" />
+        android:title="진료기록" />
 </menu>

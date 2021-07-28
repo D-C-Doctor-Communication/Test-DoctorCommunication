@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -28,6 +29,8 @@ public class MeetingDoc extends AppCompatActivity {
 
     private Button gotoGraph; // 심각도 그래프로 이동하는 버튼
 
+    //날짜선택 버튼 위 증상 텍스트
+    TextView symptom_title;
     //증상선택 버튼
     Button btn_1_symptom;
     Button btn_2_symptom;
@@ -43,6 +46,7 @@ public class MeetingDoc extends AppCompatActivity {
 
 
 //기본 세팅
+//액션바 사라짐 -> ?
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction(); // 각 프레그먼트들로 이동하기 위한 객체 생성
         //이전버튼, 녹음버튼있는 툴바(액션바 기능)
         Toolbar toolbar = findViewById(R.id.toolbar_meeting_doctor); //마이크, 이전버튼 들어있는 toolbar 생성
@@ -52,12 +56,23 @@ public class MeetingDoc extends AppCompatActivity {
         gotoGraph = findViewById(R.id.btn_gotoGraph);
         gotoGraph.setOnClickListener(v->{
             Log.d("mytag","그래프 이동 버튼 눌림");
-           //심각도 그래프 버튼을 누르면 상태분석 페이지로 이동함
+           //심각도 그래프 버튼을 누르면 상태분석 페이지 프래그먼트를 불러옴
+            FragmentTransaction gotoGraph = getSupportFragmentManager().beginTransaction();
+            Fragment_conditionAnalysis fragment = new Fragment_conditionAnalysis();
+            //FrameLayout을 사용하였기 때문에 겹쳐보이지 않도록 meeting_doctor_Frame를 unvisible로 설정
+            FrameLayout doc_frame = findViewById(R.id.meeting_doctor_Frame);
+            doc_frame.setVisibility(View.INVISIBLE);
+            //프레그먼트를 프레임과 교체하여 띄움
+            gotoGraph.replace(R.id.meeting_doctor_Frame,fragment); //meeting_doctor_Frame : meeting_doctor 최상위 레이아웃
+            gotoGraph.commit();
         });
 
         //기간 선택을 위한 DatePicker를 호출하는 버튼(TextView)
         startDate = (TextView)findViewById(R.id.startDate);//기간선택 - 시작 날짜를 표시할 TextView
         endDate = (TextView)findViewById(R.id.endDate);//기간선택 - 종료 날짜를 표시할 TextView
+
+        //날짜선택 버튼 위 증상 텍스트
+        symptom_title = findViewById(R.id.symptom_title);
 
         //각 증상 선택 버튼을 눌렀을때 누른 버튼의 아이디값을 받아옴
         btn_1_symptom = findViewById(R.id.btn_1_symptom);
@@ -65,29 +80,38 @@ public class MeetingDoc extends AppCompatActivity {
         btn_3_symptom = findViewById(R.id.btn_3_symptom);
 
 // -> 증상 선택 기능
-//commit 중복 호출 안되는거 해결하기!!!!!!
+//key,value 이용해서 중복 로직 합칠것
 
         //기본 선택된 프래그먼트 (1번 증상)
         MD_Fragment_1 fragment = (MD_Fragment_1)new MD_Fragment_1(); // 객체 생성
         transaction.replace(R.id.symthom_description_notSelected, fragment); //layout, 교체될 layout
 
         btn_1_symptom.setOnClickListener(v -> {
-            MD_Fragment_1 fragment1 = (MD_Fragment_1)new MD_Fragment_1(); // 증상1에 해당하는 프레그먼트 객체 생성
-            transaction.replace(R.id.symthom_description_notSelected, fragment1); //meeting_doctor.xml의 FrameLayout부분을 위 객체(fragment1)로 교체
+            symptom_title.setText("가래");
+            FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
+            MD_Fragment_1 fragment1 = new MD_Fragment_1(); // 증상1에 해당하는 프레그먼트 객체 생성
+            transaction1.replace(R.id.symthom_description_notSelected, fragment1); //meeting_doctor.xml의 FrameLayout부분을 위 객체(fragment1)로 교체
              //commit으로 저장
+            transaction1.commit();
         });
 
         btn_2_symptom.setOnClickListener(v -> {
-            MD_Fragment_2 fragment2 = (MD_Fragment_2)new MD_Fragment_2(); // 증상1에 해당하는 프레그먼트 객체 생성
-            transaction.replace(R.id.symthom_description_notSelected, fragment2); //meeting_doctor.xml의 FrameLayout부분을 위 객체(fragment1)로 교체
+            symptom_title.setText("발열");
+            FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
+            MD_Fragment_2 fragment2 = new MD_Fragment_2(); // 증상2에 해당하는 프레그먼트 객체 생성
+            transaction2.replace(R.id.symthom_description_notSelected, fragment2); //meeting_doctor.xml의 FrameLayout부분을 위 객체(fragment2)로 교체
             //commit으로 저장
+            transaction2.commit();
         });
 
         btn_3_symptom.setOnClickListener(v -> {
-            MD_Fragment_3 fragment3 = (MD_Fragment_3)new MD_Fragment_3(); // 증상1에 해당하는 프레그먼트 객체 생성
-            transaction.replace(R.id.symthom_description_notSelected, fragment3); //meeting_doctor.xml의 FrameLayout부분을 위 객체(fragment1)로 교체
+            symptom_title.setText("두통");
+            FragmentTransaction transaction3 = getSupportFragmentManager().beginTransaction();
+            MD_Fragment_3 fragment3 = new MD_Fragment_3(); // 증상3에 해당하는 프레그먼트 객체 생성
+            transaction3.replace(R.id.symthom_description_notSelected, fragment3); //meeting_doctor.xml의 FrameLayout부분을 위 객체(fragment3)로 교체
             //transaction.addToBackStack(null); //이전버튼 누르면 돌아가는 기능
             // commit으로 저장
+            transaction3.commit();
         });
         transaction.commit();
 

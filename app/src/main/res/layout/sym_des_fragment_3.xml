@@ -5,11 +5,100 @@
     android:layout_height="match_parent"
     android:id="@+id/symthom_description_3">
 
-    <TextView
-        android:id="@+id/symthom_description_3_text"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="200dp"
         android:layout_height="150dp"
-        android:text="세번째 증상 프래그먼트"
-        android:gravity="center"/>
+        android:background="#28000000"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/sym3_1_txt1"
+            android:layout_width="160dp"
+            android:layout_height="25dp"
+            android:text=""
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/sym3_1_txt2"
+            android:layout_width="160dp"
+            android:layout_height="25dp"
+            android:text=""
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/sym3_1_txt3"
+            android:layout_width="160dp"
+            android:layout_height="25dp"
+            android:text=""
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/sym3_1_txt4"
+            android:layout_width="160dp"
+            android:layout_height="25dp"
+            android:text=""
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/sym3_1_txt5"
+            android:layout_width="160dp"
+            android:layout_height="25dp"
+            android:text=""
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/sym3_1_txt6"
+            android:layout_width="160dp"
+            android:layout_height="25dp"
+            android:text=""
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:background="#28000000"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/sym3_2_txt1"
+            android:layout_width="160dp"
+            android:layout_height="25dp"
+            android:text=""
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/sym3_2_txt2"
+            android:layout_width="160dp"
+            android:layout_height="25dp"
+            android:text=""
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/sym3_2_txt3"
+            android:layout_width="160dp"
+            android:layout_height="25dp"
+            android:text=""
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/sym3_2_txt4"
+            android:layout_width="160dp"
+            android:layout_height="25dp"
+            android:text=""
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/sym3_2_txt5"
+            android:layout_width="160dp"
+            android:layout_height="25dp"
+            android:text=""
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/sym3_2_txt6"
+            android:layout_width="160dp"
+            android:layout_height="25dp"
+            android:text=""
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

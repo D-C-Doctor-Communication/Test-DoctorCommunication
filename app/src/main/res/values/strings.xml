@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">의사:소통</string>
+
+    <string name="symthom_description_1">부위</string>
+    <string name="symthom_description_2">통증 정도</string>
+    <string name="symthom_description_3">통증 양상</string>
+    <string name="symthom_description_4">악화 상황</string>
+    <string name="symthom_description_5">동반 증상</string>
+    <string name="symthom_description_6">추가사항</string>
 </resources>
