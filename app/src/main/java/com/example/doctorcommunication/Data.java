@@ -21,7 +21,6 @@ public class Data{
     String accompany_pain; //동반 증상
     String additional; //추가사항
 
-    TextView textView;
 
     //추가사항 없는 값 생성자
     public Data(String date,String part,String pain_level,String pain_characteristics
@@ -74,7 +73,7 @@ public class Data{
         if(CheckDate.before(EndDay)&&CheckDate.after(StartDay)){
             return true;
         }
-        return true;
+        return false;
     }
 
 

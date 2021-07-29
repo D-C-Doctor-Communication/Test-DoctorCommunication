@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,12 +17,13 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Fragment Fragment_home;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FragmentManager manager = getFragmentManager();
 
         //android 기본 제공되는 액션바 제거 - 사용자 정의 액션바 사용하기 위함
         getDelegate().getSupportActionBar();
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         //기본으로 선택되어있는 프래그먼트 지정
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
         bottomNavigationView.setOnItemSelectedListener((NavigationBarView.OnItemSelectedListener)(item -> {
+
             //네비바에서 선택한 아이디가 이미 눌려있는 아이디라면 동작하지 않음
             if (item.getItemId() == bottomNavigationView.getSelectedItemId()) {
                 return false;
