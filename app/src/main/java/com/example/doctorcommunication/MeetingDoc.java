@@ -2,7 +2,6 @@ package com.example.doctorcommunication;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.DatePickerDialog;
@@ -14,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -27,6 +25,7 @@ public class MeetingDoc extends AppCompatActivity {
     private TextView startDate; //기간선택 - 시작 날짜를 표시할 TextView
     private TextView endDate; //기간선택 - 종료 날짜를 표시할 TextView
 
+
     private Button gotoGraph; // 심각도 그래프로 이동하는 버튼
 
     //날짜선택 버튼 위 증상 텍스트
@@ -38,11 +37,11 @@ public class MeetingDoc extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.meeting_doctor);
         Log.d("myapp","의사와의 만남탭 열림");
-
+//        Log.d("myapp",Person1.symptom1.getDate());
 
 
 //기본 세팅
@@ -128,12 +127,16 @@ public class MeetingDoc extends AppCompatActivity {
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     this,
                     //0000.00.00의 형식으로 입력받은 날짜를 startDate 텍스트뷰의 텍스트로 지정
-                    (view, year, month, dayOfMonth) -> startDate.setText(year + "." + (month + 1) + "." + dayOfMonth)
+                    (view, year, month, dayOfMonth) ->{
+                        startDate.setText(year + "." + (month + 1) + "." + dayOfMonth);
+
+                    }
                     //기본 세팅 날짜 지정 (위의 변수대로)
                     ,mYear,mMonth,mDay
             );
             //DatePickerDialog 표시
             datePickerDialog.show();
+
         });
 
         //종료날짜 텍스트를 누르면 DatePickerDialog 동작 (위의 startDate방식과 동일함)
