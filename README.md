@@ -24,5 +24,7 @@
     
     
     
-+ ## UI
-![텍스트](이미지 링크 주소)
++ ## UI    
+        
+    <img src="https://user-images.githubusercontent.com/67359955/127502823-468bd7a3-6c6d-4d80-835d-21ef157dba34.PNG"  width="200" height="400"/>
+    <img src="https://user-images.githubusercontent.com/67359955/127502927-4745e832-2bf2-4258-bf38-486d1b60b9be.PNG"  width="200" height="400"/>
