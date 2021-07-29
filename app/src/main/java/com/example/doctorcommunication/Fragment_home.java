@@ -27,21 +27,21 @@ public class Fragment_home extends Fragment {
         //카드 - 녹음하기 버튼
         Button btn_recording = (Button)view.findViewById(R.id.btn_recording);
 
-
+//카드1 - 증상등록으로 이동
         btn_addSymptom.setOnClickListener(v -> { //람다형식 사용 ~ new Button.OnClickListener()와 같은 기능
             Intent addSymptom = new Intent(getContext(), AddSymptom.class);
             startActivity(addSymptom);
         });
 
-
+//카드2 - 의사와의 만남으로 이동
         btn_meetingDoc.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), MeetingDoc.class);
             startActivity(intent);
         });
 
-        //녹음하기 버튼 눌렀을 경우 - 팝업 띄움
+//카드3 - 녹음하기 팝업 띄움
         btn_recording.setOnClickListener(v -> {
-            final View popupView = getLayoutInflater().inflate(R.layout.fragment_recording, null);
+            final View popupView = getLayoutInflater().inflate(R.layout.popup_recording, null);
             final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setView(popupView);
 
@@ -53,6 +53,11 @@ public class Fragment_home extends Fragment {
             btnCancel.setOnClickListener(v1 -> alertDialog.dismiss());
 
         });
+
+//주간 캘린더 - 각 날짜에 맞도록 텍스트 주마다 변경
+
+
+
 
         return view;
     }
