@@ -363,6 +363,14 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ListView
+        android:id="@+id/home_listView"
+        android:layout_width="match_parent"
+        android:layout_height="496dp"
+        android:layout_below="@+id/constraintLayout"
+        android:layout_marginTop="10dp" />
+    
+    <!--
     <ScrollView
         android:id="@+id/home_scrollView2"
         android:layout_width="match_parent"
@@ -385,7 +393,7 @@
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView style="@style/home_vertical_scrollCard">
-                <!--메인에서 주간 캘린더 날짜를 클릭했을 때에 나올 증상-->
+                메인에서 주간 캘린더 날짜를 클릭했을 때에 나올 증상
                 <ImageView
                     android:id="@+id/first_record_img"
                     style="@style/home_vertical_scrollCard_imgView"
@@ -440,6 +448,5 @@
 
         </LinearLayout>
 
-    </ScrollView>
-
+    </ScrollView>-->
 </RelativeLayout>

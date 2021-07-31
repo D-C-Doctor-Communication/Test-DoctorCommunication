@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -24,6 +26,7 @@ import java.util.Locale;
 
 
 public class Fragment_home extends Fragment {
+    static final String[] LIST_MENU = {"LIST1", "LIST2", "LIST3"} ;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         Log.d("myapp","home탭 열림");
@@ -46,6 +49,10 @@ public class Fragment_home extends Fragment {
         wCalender[5] = (CardView)view.findViewById(R.id.wCalender_fri); //금요일
         wCalender[6] = (CardView)view.findViewById(R.id.wCalender_sat); //토요일
 
+        //리스트뷰를 이용한 주간캘린더 날짜별 증상 나타내기
+        ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_MENU) ;
+        ListView listview = (ListView) view.findViewById(R.id.home_listView) ;
+        listview.setAdapter(adapter) ;
 
 
 //카드1 - 증상등록으로 이동
@@ -76,25 +83,6 @@ public class Fragment_home extends Fragment {
         });
 
 //주간 캘린더 - 각 날짜에 맞도록 텍스트 주마다 변경
-        WeekCalendar weekCalendar = new WeekCalendar();
-        Date todayDate = new Date();
-        weekCalendar.setWeekCalenderDate(view,todayDate);
-
-
-
-
-        return view;
-    }
-}
-
-
-
-class WeekCalendar{
-
-    @SuppressLint("SetTextI18n")
-    void setWeekCalenderDate(View view, Date date){ //주간캘린더 날짜변경 메소드
-
-        Calendar calendarForMax = Calendar.getInstance(); //월별 최대 날짜값 얻기 위한 객체 생성
 
         TextView ymTextView = view.findViewById(R.id.ymTextView); //0000년 00월 텍스트뷰
         TextView[] wDate = new TextView[7];
@@ -106,28 +94,74 @@ class WeekCalendar{
         wDate[5] = view.findViewById(R.id.FRI_num);
         wDate[6] = view.findViewById(R.id.SAT_num);
 
-        Log.d("mytag","setWeekCalenderDate 과정 통과");
-        SimpleDateFormat todaySdf = new SimpleDateFormat("yyyy.MM.dd", Locale.KOREA); //한국 기준 시간 사용
-        todaySdf.format(date); //한국 시간 적용
+        WeekCalendar weekCalendar = new WeekCalendar();
+        Date todayDate = new Date();
+        weekCalendar.setWeekCalenderDate(view,todayDate,ymTextView,wDate);
 
-        int YEAR = date.getYear()+1900; //1900년부터 count시작
-        int MONTH = date.getMonth()+1; //0월부터 count시작
-        String YEARandMonth = YEAR+"년 "+MONTH+"월";
-        int DAY = date.getDay(); //일요일 : 1
-        int DATE = date.getDate(); //몇일
-
-        ymTextView.setText(YEARandMonth); //0000년 00월 텍스트 적용
+        //각 요일을 눌렀을 때 해당 날짜에 대한 정보 가져오기
         for(int i=0;i<7;i++){
-            wDate[i].setText(Integer.toString(DATE+i- DAY));
-            calendarForMax.set(YEAR,MONTH,DATE);
-            //Log.d("mytag",Integer.toString(calendarForMax.getActualMaximum(Calendar.DAY_OF_MONTH)));
-            if((DATE+i- DAY)>calendarForMax.getActualMaximum(Calendar.DAY_OF_MONTH)){ //최대 날짜보다 크면..
-                wDate[i].setText(Integer.toString(7- DAY)); //7-요일값으로 텍스트 변경
-            }
+            int finalI = i;
+            wCalender[i].setOnClickListener(v -> {
+                String year = ymTextView.getText().toString().substring(0,4); //0000년 00월 에서 0000
+                String month = ymTextView.getText().toString().substring(6,8); //0000년 00월 에서 00
+                String date = wDate[finalI].getText().toString(); //월요일(wCalendar[1])을 누르면 wDate[1]의 텍스트 받아옴
+
+                String clickedDate = year+"."+month+"."+date;
+
+                if(clickedDate.contentEquals(Person1.symptom1.getDate())){
+                    
+                }
+
+            });
         }
 
 
+
+        return view;
+    }
+
+    class WeekCalendar{
+        @SuppressLint("SetTextI18n")
+        void setWeekCalenderDate(View view, Date date,TextView ymTextView,TextView[] wDate){ //주간캘린더 날짜변경 메소드
+
+            Log.d("mytag","setWeekCalenderDate 과정 통과");
+            SimpleDateFormat todaySdf = new SimpleDateFormat("yyyy.MM.dd", Locale.KOREA); //한국 기준 시간 사용
+            todaySdf.format(date); //한국 시간 적용
+
+            Calendar cal = Calendar.getInstance();
+            cal.setFirstDayOfWeek(Calendar.SUNDAY);
+
+            int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+            cal.add(Calendar.DAY_OF_MONTH, (-(dayOfWeek - 1)));
+
+            ymTextView.setText(todaySdf.format(cal.getTime()).substring(0,4)+"년 "+todaySdf.format(cal.getTime()).substring(5,7)+"월"); //0000년 00월 텍스트 적용
+
+            for ( int i = 0; i < 7; i++ ) {
+                wDate[i].setText(todaySdf.format(cal.getTime()).substring(8));
+                cal.add(Calendar.DAY_OF_MONTH, 1);
+            }
+
+
+//            int YEAR = date.getYear()+1900; //1900년부터 count시작
+//            int MONTH = date.getMonth()+1; //0월부터 count시작
+//            String YEARandMonth = YEAR+"년 "+MONTH+"월";
+//            int DAY = date.getDay(); //일요일 : 1
+//            int DATE = date.getDate(); //몇일
+//            for(int i=0;i<7;i++){
+//                wDate[i].setText(Integer.toString(DATE+i- DAY));
+//                calendarForMax.set(YEAR,MONTH,DATE);
+//                //Log.d("mytag",Integer.toString(calendarForMax.getActualMaximum(Calendar.DAY_OF_MONTH)));
+//                if((DATE+i- DAY)>calendarForMax.getActualMaximum(Calendar.DAY_OF_MONTH)){ //최대 날짜보다 크면..
+//                    wDate[i].setText(Integer.toString(7- DAY)); //7-요일값으로 텍스트 변경
+//                }
+//            }
+            //return YEAR+"."+MONTH+"."+DATE;
+        }
     }
 }
+
+
+
+
 
 
