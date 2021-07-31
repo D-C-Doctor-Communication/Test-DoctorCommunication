@@ -22,7 +22,7 @@ public class HomeListViewAdapter extends BaseAdapter {
     private TextView record_content_characteristics;
     private TextView record_content_situation;
 
-    private ArrayList<ListViewItem> listViewItemArrayList = new ArrayList<ListViewItem>();
+    private ArrayList<ListViewItem> listViewItemArrayList = new ArrayList<>();
 
     public HomeListViewAdapter(){} //HomeListViewAdapter클래스 기본 생성자
 
@@ -30,7 +30,7 @@ public class HomeListViewAdapter extends BaseAdapter {
     //Adapter에 사용되는 리스트(데이터 배열) 개수 반환
     @Override
     public int getCount() {
-        return ListViewItem.size();
+        return ListViewItem.count;
     }
 
     //지정한 위치에 있는 아이템 반환
@@ -76,7 +76,7 @@ public class HomeListViewAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void addItem(String title,int image,String content_painLevel,String content_characteristics,String content_situation){
+    public void addItem(String title,int image,int content_painLevel,String content_characteristics,String content_situation){
         ListViewItem item = new ListViewItem();
         item.setImage(image);
         item.setTitle(title);
@@ -84,7 +84,7 @@ public class HomeListViewAdapter extends BaseAdapter {
         item.setCharacteristics(content_characteristics);
         item.setSituation(content_situation);
 
-
+        listViewItemArrayList.add(item);
     }
 }
 

@@ -26,7 +26,10 @@ import java.util.Locale;
 
 
 public class Fragment_home extends Fragment {
-    static final String[] LIST_MENU = {"LIST1", "LIST2", "LIST3"} ;
+    //리스트뷰
+    private ListView listView;
+    private HomeListViewAdapter adapter;
+    //static final String[] LIST_MENU = {"LIST1", "LIST2", "LIST3"} ;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         Log.d("myapp","home탭 열림");
@@ -50,9 +53,16 @@ public class Fragment_home extends Fragment {
         wCalender[6] = (CardView)view.findViewById(R.id.wCalender_sat); //토요일
 
         //리스트뷰를 이용한 주간캘린더 날짜별 증상 나타내기
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_MENU) ;
-        ListView listview = (ListView) view.findViewById(R.id.home_listView) ;
-        listview.setAdapter(adapter) ;
+        //ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_MENU) ;
+        //ListView listview = (ListView) view.findViewById(R.id.home_listView) ;
+        //listview.setAdapter(adapter) ;
+
+        //listView 어댑터 생성
+        adapter = new HomeListViewAdapter();
+        //listView 참조 및 Adapter 연결
+        listView = (ListView)view.findViewById(R.id.home_listView);
+        listView.setAdapter(adapter);
+        //listView.setOnItemClickListener(listener);
 
 
 //카드1 - 증상등록으로 이동
@@ -99,6 +109,7 @@ public class Fragment_home extends Fragment {
         weekCalendar.setWeekCalenderDate(view,todayDate,ymTextView,wDate);
 
         //각 요일을 눌렀을 때 해당 날짜에 대한 정보 가져오기
+        /*
         for(int i=0;i<7;i++){
             int finalI = i;
             wCalender[i].setOnClickListener(v -> {
@@ -109,13 +120,27 @@ public class Fragment_home extends Fragment {
                 String clickedDate = year+"."+month+"."+date;
 
                 if(clickedDate.contentEquals(Person1.symptom1.getDate())){
-                    
+
                 }
 
             });
-        }
+        }*/
 
 
+//ListView
+        //addItem를 통해 동적으로 ListView 생성됨 -> (증상제목,이미지(리소스아이디),증상정도,양상,악화상황)
+        adapter.addItem(Person1.symptom1.getPart(),R.drawable.img_pain_sym1,Person1.symptom1.getPain_level(),Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation());
+        adapter.addItem(Person1.symptom2.getPart(),R.drawable.img_pain_sym2,Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation());
+        adapter.addItem(Person1.symptom3.getPart(),R.drawable.img_pain_sym3,Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation());
+        adapter.notifyDataSetChanged();
+
+        //각 날짜를 클릭했을 때 날짜와 일치하는 데이터 불러오기
+        wCalender[0].setOnClickListener(v -> {
+                String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
+                clickedDate += "."+wDate[0].getText().toString();
+                String finalClickedDate = clickedDate;
+
+        });
 
         return view;
     }

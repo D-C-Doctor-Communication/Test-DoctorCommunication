@@ -21,19 +21,24 @@
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        app:itemTextColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/fragment_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/main_bottom_nav_menu"
-        android:background="@color/white"
-        app:itemTextColor="@color/black"/>
+        app:menu="@menu/main_bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
