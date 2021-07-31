@@ -86,7 +86,7 @@ public class HomeListViewAdapter extends BaseAdapter {
         item.setPainLevel(content_painLevel);
         item.setCharacteristics(content_characteristics);
         item.setSituation(content_situation);
-
+        //countList
         listViewItemArrayList.add(item);
     }
 }

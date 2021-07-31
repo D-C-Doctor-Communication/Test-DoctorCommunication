@@ -138,54 +138,64 @@ public class Fragment_home extends Fragment {
 
 
 //ListView
-        //addItem를 통해 동적으로 ListView 생성됨 -> (증상제목,이미지(리소스아이디),증상정도,양상,악화상황)
-        adapter.addItem(Person1.symptom1.getPart(),R.drawable.img_pain_sym1,Person1.symptom1.getPain_level(),Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation());
-        adapter.addItem(Person1.symptom2.getPart(),R.drawable.img_pain_sym2,Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation());
-        adapter.addItem(Person1.symptom3.getPart(),R.drawable.img_pain_sym3,Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation());
-        adapter.notifyDataSetChanged();
+
 
         //각 날짜를 클릭했을 때 날짜와 일치하는 데이터 불러오기
         wCalender[0].setOnClickListener(v -> { //일요일
+            Log.d("myapp","일요일 눌림");
             //0000.00.00형식의 String 만들기
             String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
             clickedDate += "."+wDate[0].getText().toString();
             int sameDatacount = WeekCalendar.setSameDatetoTrue(clickedDate);
+            Log.d("myapp"," "+sameDatacount);
         });
         wCalender[1].setOnClickListener(v -> {
+            Log.d("myapp","월요일 눌림");
             //0000.00.00형식의 String 만들기
             String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
-            clickedDate += "."+wDate[0].getText().toString();
+            clickedDate += "."+wDate[1].getText().toString();
             int sameDatacount = WeekCalendar.setSameDatetoTrue(clickedDate);
+            Log.d("myapp"," "+sameDatacount);
         });
         wCalender[2].setOnClickListener(v -> {
+            Log.d("myapp","화요일 눌림");
             //0000.00.00형식의 String 만들기
             String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
-            clickedDate += "."+wDate[0].getText().toString();
+            clickedDate += "."+wDate[2].getText().toString();
             int sameDatacount = WeekCalendar.setSameDatetoTrue(clickedDate);
+            Log.d("myapp"," "+sameDatacount);
         });
         wCalender[3].setOnClickListener(v -> {
+            Log.d("myapp","수요일 눌림");
             //0000.00.00형식의 String 만들기
             String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
-            clickedDate += "."+wDate[0].getText().toString();
+            clickedDate += "."+wDate[3].getText().toString();
             int sameDatacount = WeekCalendar.setSameDatetoTrue(clickedDate);
+            Log.d("myapp"," "+sameDatacount);
         });
         wCalender[4].setOnClickListener(v -> {
+            Log.d("myapp","목요일 눌림");
             //0000.00.00형식의 String 만들기
             String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
-            clickedDate += "."+wDate[0].getText().toString();
+            clickedDate += "."+wDate[4].getText().toString();
             int sameDatacount = WeekCalendar.setSameDatetoTrue(clickedDate);
+            Log.d("myapp"," "+sameDatacount);
         });
         wCalender[5].setOnClickListener(v -> {
+            Log.d("myapp","금요일 눌림");
             //0000.00.00형식의 String 만들기
             String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
-            clickedDate += "."+wDate[0].getText().toString();
+            clickedDate += "."+wDate[5].getText().toString();
             int sameDatacount = WeekCalendar.setSameDatetoTrue(clickedDate);
+            Log.d("myapp"," "+sameDatacount);
         });
         wCalender[6].setOnClickListener(v -> {
+            Log.d("myapp","토요일 눌림");
             //0000.00.00형식의 String 만들기
             String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
-            clickedDate += "."+wDate[0].getText().toString();
+            clickedDate += "."+wDate[6].getText().toString();
             int sameDatacount = WeekCalendar.setSameDatetoTrue(clickedDate);
+            Log.d("myapp"," "+sameDatacount);
         });
         //int sameDatacount = 0일 경우 : 날짜를 선택해 주십시오 or 기록된 통증이 없습니다.
 
@@ -198,53 +208,53 @@ public class Fragment_home extends Fragment {
     //주간캘린더 관련 작업 모아둔 클래스
     static class WeekCalendar{
 
-        static int setSameDatetoTrue(String clickedDate){
+        static int setSameDatetoTrue(String date){
             int countSameDate = 0;
-            if(Person1.symptom1.getDate().equals(clickedDate)){
+            if(Person1.symptom1.getDate().equals(date)){
                 Person1.symptom1.checkSameDate();
                 countSameDate++;
             }
-            if(Person1.symptom2.getDate().equals(clickedDate)){
+            if(Person1.symptom2.getDate().equals(date)){
                 Person1.symptom2.checkSameDate();
                 countSameDate++;
             }
-            if(Person1.symptom3.getDate().equals(clickedDate)){
+            if(Person1.symptom3.getDate().equals(date)){
                 Person1.symptom3.checkSameDate();
                 countSameDate++;
             }
-            if(Person1.symptom4.getDate().equals(clickedDate)){
+            if(Person1.symptom4.getDate().equals(date)){
                 Person1.symptom4.checkSameDate();
                 countSameDate++;
             }
-            if(Person1.symptom5.getDate().equals(clickedDate)){
+            if(Person1.symptom5.getDate().equals(date)){
                 Person1.symptom5.checkSameDate();
                 countSameDate++;
             }
-            if(Person1.symptom6.getDate().equals(clickedDate)){
+            if(Person1.symptom6.getDate().equals(date)){
                 Person1.symptom6.checkSameDate();
                 countSameDate++;
             }
-            if(Person1.symptom7.getDate().equals(clickedDate)){
+            if(Person1.symptom7.getDate().equals(date)){
                 Person1.symptom7.checkSameDate();
                 countSameDate++;
             }
-            if(Person1.symptom8.getDate().equals(clickedDate)){
+            if(Person1.symptom8.getDate().equals(date)){
                 Person1.symptom8.checkSameDate();
                 countSameDate++;
             }
-            if(Person1.symptom9.getDate().equals(clickedDate)){
+            if(Person1.symptom9.getDate().equals(date)){
                 Person1.symptom9.checkSameDate();
                 countSameDate++;
             }
-            if(Person1.symptom10.getDate().equals(clickedDate)){
+            if(Person1.symptom10.getDate().equals(date)){
                 Person1.symptom10.checkSameDate();
                 countSameDate++;
             }
-            if(Person1.symptom11.getDate().equals(clickedDate)){
+            if(Person1.symptom11.getDate().equals(date)){
                 Person1.symptom11.checkSameDate();
                 countSameDate++;
             }
-            if(Person1.symptom12.getDate().equals(clickedDate)){
+            if(Person1.symptom12.getDate().equals(date)){
                 Person1.symptom12.checkSameDate();
                 countSameDate++;
             }
