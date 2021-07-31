@@ -67,7 +67,7 @@ public class HomeListViewAdapter extends BaseAdapter {
         ListViewItem listViewItem = listViewItemArrayList.get(posision);
 
         //아이템의 각 위치에 데이터를 적용
-        record_img.setImageDrawable(listViewItem.getImage()); //get
+        record_img.setImageResource(listViewItem.getImage()); //get
         record_title.setText(listViewItem.getTitle());
         record_content_painLevel.setText(listViewItem.getPainLevel());
         record_content_characteristics.setText(listViewItem.getCharacteristics());
