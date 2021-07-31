@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,6 +37,15 @@ public class Fragment_home extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home,container,false);
 
 //세팅
+        //설정버튼
+//        ImageButton setting = view.findViewById(R.id.to_setting);
+//        setting.setOnClickListener(v -> {
+////            Intent intent = new Intent(getActivity(), SettingActivity.class);
+////            startActivity(intent);
+//            Log.d("myapp","설정 버튼 눌림");
+//        });
+
+
         //카드 - 증상등록 버튼
         Button btn_addSymptom = (Button)view.findViewById(R.id.btn_addSymptom);
         //카드 - 의사와의 만남 버튼
@@ -130,8 +140,8 @@ public class Fragment_home extends Fragment {
 //ListView
         //addItem를 통해 동적으로 ListView 생성됨 -> (증상제목,이미지(리소스아이디),증상정도,양상,악화상황)
         adapter.addItem(Person1.symptom1.getPart(),R.drawable.img_pain_sym1,Person1.symptom1.getPain_level(),Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation());
-        //adapter.addItem(Person1.symptom2.getPart(),R.drawable.img_pain_sym2,Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation());
-        //adapter.addItem(Person1.symptom3.getPart(),R.drawable.img_pain_sym3,Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation());
+        adapter.addItem(Person1.symptom2.getPart(),R.drawable.img_pain_sym2,Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation());
+        adapter.addItem(Person1.symptom3.getPart(),R.drawable.img_pain_sym3,Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation());
         adapter.notifyDataSetChanged();
 
         //각 날짜를 클릭했을 때 날짜와 일치하는 데이터 불러오기
@@ -150,37 +160,26 @@ public class Fragment_home extends Fragment {
         void setWeekCalenderDate(View view, Date date,TextView ymTextView,TextView[] wDate){ //주간캘린더 날짜변경 메소드
 
             Log.d("mytag","setWeekCalenderDate 과정 통과");
+            //날짜 형식 지정
             SimpleDateFormat todaySdf = new SimpleDateFormat("yyyy.MM.dd", Locale.KOREA); //한국 기준 시간 사용
             todaySdf.format(date); //한국 시간 적용
 
+            //시작 날짜를 일요일로 고정
             Calendar cal = Calendar.getInstance();
             cal.setFirstDayOfWeek(Calendar.SUNDAY);
 
             int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
             cal.add(Calendar.DAY_OF_MONTH, (-(dayOfWeek - 1)));
 
-            ymTextView.setText(todaySdf.format(cal.getTime()).substring(0,4)+"년 "+todaySdf.format(cal.getTime()).substring(5,7)+"월"); //0000년 00월 텍스트 적용
+            //0000년 00월 텍스트 적용
+            ymTextView.setText(todaySdf.format(cal.getTime()).substring(0,4)+"년 "+todaySdf.format(cal.getTime()).substring(5,7)+"월");
 
             for ( int i = 0; i < 7; i++ ) {
+                //00일 텍스트 적용
                 wDate[i].setText(todaySdf.format(cal.getTime()).substring(8));
                 cal.add(Calendar.DAY_OF_MONTH, 1);
             }
 
-
-//            int YEAR = date.getYear()+1900; //1900년부터 count시작
-//            int MONTH = date.getMonth()+1; //0월부터 count시작
-//            String YEARandMonth = YEAR+"년 "+MONTH+"월";
-//            int DAY = date.getDay(); //일요일 : 1
-//            int DATE = date.getDate(); //몇일
-//            for(int i=0;i<7;i++){
-//                wDate[i].setText(Integer.toString(DATE+i- DAY));
-//                calendarForMax.set(YEAR,MONTH,DATE);
-//                //Log.d("mytag",Integer.toString(calendarForMax.getActualMaximum(Calendar.DAY_OF_MONTH)));
-//                if((DATE+i- DAY)>calendarForMax.getActualMaximum(Calendar.DAY_OF_MONTH)){ //최대 날짜보다 크면..
-//                    wDate[i].setText(Integer.toString(7- DAY)); //7-요일값으로 텍스트 변경
-//                }
-//            }
-            //return YEAR+"."+MONTH+"."+DATE;
         }
     }
 }
