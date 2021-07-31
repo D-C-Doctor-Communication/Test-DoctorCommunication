@@ -16,6 +16,8 @@ public class Data{
     private String accompany_pain; //동반 증상
     private String additional; //추가사항
     static int number = 0; //추가된 증상 개수
+    boolean isSameDate = false; //home listview에서 클릭한 날짜와 일치하는지 확인
+
 
     //추가사항 없는 값 생성자
     public Data(String date,String part,int pain_level,String pain_characteristics
@@ -52,6 +54,11 @@ public class Data{
     String getAccompany_pain(){ return accompany_pain; }
     String getAdditional(){ return additional; }
 
+
+    //home listview에서 클릭한 날짜와 일치하는지 확인 -> 일치하면 true
+    void checkSameDate(){
+        this.isSameDate = true;
+    }
 
     //증상이 기록된 날짜가 의사와의 만남 DatePicker 날짜의 사이에 있는지 검사하는 메소드 -> 사이에 있으면 true 반환
     public boolean checkDate(String startDate,String endDate){

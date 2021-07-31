@@ -9,14 +9,12 @@ public class ListViewItem {
     private int record_content_painLevel;
     private String record_content_characteristics;
     private String record_content_situation;
-    static int count = 0;
 
     public void setImage(int image){
         this.record_img = image;
     }
     public void setTitle(String title){
         this.record_title = title;
-        count++;
     }
     public void setPainLevel(int content_painLevel){
         this.record_content_painLevel = content_painLevel;
@@ -30,9 +28,6 @@ public class ListViewItem {
 
     public int getImage(){
         return this.record_img;
-    }
-    public int getCount() {
-        return count;
     }
 
     public String getTitle(){

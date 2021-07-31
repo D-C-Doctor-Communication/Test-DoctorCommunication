@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <fragment
-        android:name="com.example.pomodoro.SettingFragment"
+        android:name="com.example.doctorcommunication.SettingFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -21,6 +21,7 @@ public class HomeListViewAdapter extends BaseAdapter {
     private TextView record_content_painLevel;
     private TextView record_content_characteristics;
     private TextView record_content_situation;
+    private int countList = 0;
 
     private ArrayList<ListViewItem> listViewItemArrayList = new ArrayList<>();
 
@@ -30,7 +31,7 @@ public class HomeListViewAdapter extends BaseAdapter {
     //Adapter에 사용되는 리스트(데이터 배열) 개수 반환
     @Override
     public int getCount() {
-        return ListViewItem.count;
+        return countList;
     }
 
     //지정한 위치에 있는 아이템 반환
@@ -63,6 +64,8 @@ public class HomeListViewAdapter extends BaseAdapter {
         record_content_painLevel = (TextView)convertView.findViewById(R.id.record_content_painLevel);
         record_content_characteristics = (TextView) convertView.findViewById(R.id.record_content_characteristics);
         record_content_situation = (TextView)convertView.findViewById(R.id.record_content_situation);
+
+
 
         ListViewItem listViewItem = listViewItemArrayList.get(posision);
 
