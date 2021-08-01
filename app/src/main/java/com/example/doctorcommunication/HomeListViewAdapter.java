@@ -27,7 +27,7 @@ public class HomeListViewAdapter extends BaseAdapter {
     //Adapter에 사용되는 리스트(데이터 배열) 개수 반환
     @Override
     public int getCount() {
-        return countList;
+        return listViewItemArrayHomeList.size();
     }
 
     //지정한 위치에 있는 아이템 반환

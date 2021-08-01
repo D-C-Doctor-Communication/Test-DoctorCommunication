@@ -121,7 +121,7 @@ public class Fragment_home extends Fragment {
         adapter.addItem(Person1.symptom2.getPart(),R.drawable.img_pain_sym2,Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation());
         adapter.addItem(Person1.symptom3.getPart(),R.drawable.img_pain_sym3,Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation());
         adapter.notifyDataSetChanged();
-
+        Log.d("myapp","home Adapter added");
 
         //각 날짜를 클릭했을 때 날짜와 일치하는 데이터 불러오기
         wCalender[0].setOnClickListener(v -> { //일요일

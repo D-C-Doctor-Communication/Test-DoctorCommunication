@@ -24,6 +24,11 @@ import java.util.Calendar;
 
 public class MeetingDoc extends AppCompatActivity {
 
+    //리스트뷰 사용을 위한 리스트뷰와 어댑터
+    private ListView dcListView;
+    private DCListViewAdapter dcListViewAdapter;
+
+
     private TextView startDate; //기간선택 - 시작 날짜를 표시할 TextView
     private TextView endDate; //기간선택 - 종료 날짜를 표시할 TextView
 
@@ -152,6 +157,31 @@ public class MeetingDoc extends AppCompatActivity {
             datePickerDialog.show();
         });
 
+
+// -> List View 기능
+        //Adapter 생성
+        dcListViewAdapter = new DCListViewAdapter();
+        //ListView 참조 및 어댑터 연결
+        dcListView = (ListView)findViewById(R.id.DC_listView);
+        dcListView.setAdapter(dcListViewAdapter);
+
+        //addItem시 데이터 삽입 순서
+        //dc_list_title_date
+        //dc_list_title_partAndLevel
+        //dc_list_content_part
+        //dc_list_content_level
+        //dc_list_content_characteristics
+        //dc_list_content_situation
+        //dc_list_content_accompany_pain
+        //dc_list_content_additional
+
+        dcListViewAdapter.addItem(Person1.symptom1.getDate(),
+                Person1.symptom1.getPart()+Person1.symptom1.getPain_level()
+                ,Person1.symptom1.getPart(),Person1.symptom1.getPain_level(),
+                Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation(),
+                Person1.symptom1.getAccompany_pain(),Person1.symptom1.getAdditional());
+
+        dcListViewAdapter.notifyDataSetChanged();
     }
 
 
