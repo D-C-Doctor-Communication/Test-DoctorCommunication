@@ -37,15 +37,6 @@ public class Fragment_home extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home,container,false);
 
 //세팅
-        //설정버튼
-//        ImageButton setting = view.findViewById(R.id.to_setting);
-//        setting.setOnClickListener(v -> {
-////            Intent intent = new Intent(getActivity(), SettingActivity.class);
-////            startActivity(intent);
-//            Log.d("myapp","설정 버튼 눌림");
-//        });
-
-
         //카드 - 증상등록 버튼
         Button btn_addSymptom = (Button)view.findViewById(R.id.btn_addSymptom);
         //카드 - 의사와의 만남 버튼

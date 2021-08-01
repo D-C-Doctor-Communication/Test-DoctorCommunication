@@ -6,11 +6,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -22,7 +24,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//설정 fragment
+        //설정버튼
+        ImageButton setting = findViewById(R.id.to_setting);
+        setting.setOnClickListener(v -> {
+            Intent intent = new Intent(this, SettingActivity.class);
+            startActivity(intent);
+            Log.d("myapp","설정 버튼 눌림");
+        });
 
+
+//home,진료기록,상태분석 fragment
         FragmentManager manager = getFragmentManager();
 
         //android 기본 제공되는 액션바 제거 - 사용자 정의 액션바 사용하기 위함
