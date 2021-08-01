@@ -23,6 +23,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class MeetingDoc extends AppCompatActivity {
@@ -232,6 +233,7 @@ public class MeetingDoc extends AppCompatActivity {
         DCListViewAdapter adapter = new DCListViewAdapter();
         //Adapter 지정
         listView.setAdapter(adapter);
+        //데이터의 날짜가 datePicker의 두 날짜 사이에있으면 true 반환
         if(checkIsBetween(Person1.symptom1.getDate())) adapter.addItem(Person1.symptom1.getDate(),
                 Person1.symptom1.getPart()+Person1.symptom1.getPain_level()
                 ,Person1.symptom1.getPart(),Person1.symptom1.getPain_level(),
@@ -296,9 +298,7 @@ public class MeetingDoc extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
     public boolean checkIsBetween(String date){
-        String start = startDate.getText().toString();
-        String end = endDate.getText().toString();
-
+/*
         @SuppressLint("SimpleDateFormat") SimpleDateFormat transFormat = new SimpleDateFormat("yyyy.MM.dd");
 
         Date to,to2;
@@ -309,7 +309,38 @@ public class MeetingDoc extends AppCompatActivity {
                 e.printStackTrace();
                 Log.d("myapp","실패");
          }
-        return true;
+        return true;*/
+
+        try {
+            //startDate,endDate : DatePicker에서 선택한 시작/종료 날짜
+            //wantCheck : 증상이 기록된 날짜
+            String start = startDate.getText().toString();
+            String end = endDate.getText().toString();
+
+            Calendar StartDay,EndDay,CheckDate; //Date객체형으로 바꾼 시작 / 끝 날짜
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd", Locale.KOREA); //형변환을 위한 데이트포멧 객체 생성
+
+            Date date_start = dateFormat.parse(start); //Date형으로 변환
+            Date date_end = dateFormat.parse(end);
+            Date date_wantCheck = dateFormat.parse(date);
+
+            StartDay = Calendar.getInstance(); //Calender형으로 변환
+            StartDay.setTime(date_start);
+            EndDay  = Calendar.getInstance();
+            EndDay.setTime(date_end);
+            CheckDate  = Calendar.getInstance();
+            CheckDate.setTime(date_wantCheck);
+
+            if(CheckDate.before(EndDay)&&!CheckDate.before(StartDay)){
+                Log.d("myapp","통과됨");
+                return true;
+            }
+            Log.d("myapp","통과되지 않음");
+            return false;
+        }catch (Exception e) {
+            Log.d("myapp","예외 발생");
+            return false;
+        }
 /*        //데이터의 날짜가 datePicker에서 선택된 년도 사이에 있는지 판별
         if(Integer.parseInt(start.substring(0,4)) <= Integer.parseInt(date.substring(0,4))
             &&Integer.parseInt(end.substring(0,4)) >= Integer.parseInt(date.substring(0,4))){
