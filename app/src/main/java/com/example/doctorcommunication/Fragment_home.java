@@ -62,12 +62,12 @@ public class Fragment_home extends Fragment {
         wCalender[5] = (CardView)view.findViewById(R.id.wCalender_fri); //금요일
         wCalender[6] = (CardView)view.findViewById(R.id.wCalender_sat); //토요일
 
-        //리스트뷰를 이용한 주간캘린더 날짜별 증상 나타내기
+        //리스트뷰를 이용한 주간캘린더 날짜별 증상 나타내기(정적)
         //ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_MENU) ;
         //ListView listview = (ListView) view.findViewById(R.id.home_listView) ;
         //listview.setAdapter(adapter) ;
 
-        //listView 어댑터 생성
+        //listView 어댑터 생성(동적)
 //        adapter = new HomeListViewAdapter();
 //        //listView 참조 및 Adapter 연결
 //        listView = (ListView)view.findViewById(R.id.home_listView);
@@ -146,6 +146,7 @@ public class Fragment_home extends Fragment {
             //0000.00.00형식의 String 만들기
             String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
             clickedDate += "."+wDate[0].getText().toString();
+            //data의 날짜가 선택된 날짜와 일치하면 isSameDate 속성을 true로 변경
             int sameDatacount = WeekCalendar.setSameDatetoTrue(clickedDate);
             Log.d("myapp"," "+sameDatacount);
 
@@ -155,6 +156,7 @@ public class Fragment_home extends Fragment {
             listView = (ListView)view.findViewById(R.id.home_listView);
             //Adapter 지정
             listView.setAdapter(adapter);
+            //data의 날짜가 선택된 날짜와 일치하면 adapter에 날짜에 해당하는 데이터 추가
             Adapter.getAdapterData(adapter,sameDatacount);
         });
         wCalender[1].setOnClickListener(v -> {
@@ -213,14 +215,30 @@ public class Fragment_home extends Fragment {
 
     //이 클래스 메소드는 각 캘린더의 날짜를 클릭했을 때
     //각각의 날짜별로 어댑터를 생성하여 생성된 어댑터와 일치하는 데이터의 개수를 넘겨줌
-
+    //public void addItem(String title,int image,int content_painLevel,String content_characteristics,String content_situation){
     static class Adapter {
         static void getAdapterData(HomeListViewAdapter adapter,int sameDatacount){
+            Log.d("myapp","getAdapterData 이동");
+            Log.d("myapp",Person1.symptom1.isSameDate+" ");
+            //for(int i=0;i<sameDatacount;i++){}
+            if(Person1.symptom1.isSameDate==true) adapter.addItem(
+                    Person1.symptom1.getPart(),R.drawable.img_pain_sym1,
+                    Person1.symptom1.getPain_level(),Person1.symptom1.getPain_characteristics(),
+                    Person1.symptom1.getPain_situation());
+            if(Person1.symptom2.isSameDate==true) adapter.addItem(
+                    Person1.symptom2.getPart(),R.drawable.img_pain_sym2,
+                    Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),
+                    Person1.symptom2.getPain_situation());
+            if(Person1.symptom3.isSameDate==true) adapter.addItem(
+                    Person1.symptom3.getPart(),R.drawable.img_pain_sym3,
+                    Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),
+                    Person1.symptom3.getPain_situation());
+            if(Person1.symptom4.isSameDate==true) adapter.addItem(
+                    Person1.symptom4.getPart(),R.drawable.img_pain_sym1,
+                    Person1.symptom4.getPain_level(),Person1.symptom4.getPain_characteristics(),
+                    Person1.symptom4.getPain_situation());
 
-            for(int i=0;i<sameDatacount;i++){
-                if(Person1.symptom1.isSameDate==true) adapter.addItem();
-            }
-
+            adapter.notifyDataSetChanged();
 
 
         }
