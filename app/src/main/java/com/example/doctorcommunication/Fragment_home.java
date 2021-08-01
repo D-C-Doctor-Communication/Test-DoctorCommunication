@@ -113,14 +113,6 @@ public class Fragment_home extends Fragment {
 
 //ListView
 
-
-        //addItem를 통해 동적으로 ListView 생성됨 -> (증상제목,이미지(리소스아이디),증상정도,양상,악화상황)
-        //adapter.addItem(Person1.symptom1.getPart(),R.drawable.img_pain_sym1,Person1.symptom1.getPain_level(),Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation());
-        //adapter.addItem(Person1.symptom2.getPart(),R.drawable.img_pain_sym2,Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation());
-        //adapter.addItem(Person1.symptom3.getPart(),R.drawable.img_pain_sym3,Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation());
-        //adapter.notifyDataSetChanged();
-        //Log.d("myapp","home Adapter added");
-
         ListView listView = (ListView)view.findViewById(R.id.home_listView);
 
         //각 날짜를 클릭했을 때 날짜와 일치하는 데이터 불러오기
