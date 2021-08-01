@@ -370,10 +370,12 @@
         android:layout_marginTop="10dp">
 
         <RelativeLayout
+            android:visibility="invisible"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white">
             <TextView
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="날짜를 선택해주세요"
@@ -382,7 +384,7 @@
         </RelativeLayout>
 
         <ListView
-            android:visibility="invisible"
+
             android:id="@+id/home_listView"
             android:layout_width="match_parent"
             android:layout_height="267dp"

@@ -54,25 +54,27 @@ public class Fragment_home extends Fragment {
         Button btn_recording = (Button)view.findViewById(R.id.btn_recording);
         //주간캘린더 - 각 요일별 날짜 카드뷰
         CardView[] wCalender = new CardView[7];
-        wCalender[0] = (CardView)view.findViewById(R.id.wCalender_sun); //일요일
-        wCalender[1] = (CardView)view.findViewById(R.id.wCalender_mon); //월요일
-        wCalender[2] = (CardView)view.findViewById(R.id.wCalender_tue); //화요일
-        wCalender[3] = (CardView)view.findViewById(R.id.wCalender_wed); //수요일
-        wCalender[4] = (CardView)view.findViewById(R.id.wCalender_thu); //목요일
-        wCalender[5] = (CardView)view.findViewById(R.id.wCalender_fri); //금요일
-        wCalender[6] = (CardView)view.findViewById(R.id.wCalender_sat); //토요일
+        wCalender[0] = view.findViewById(R.id.wCalender_sun); //일요일
+        wCalender[1] = view.findViewById(R.id.wCalender_mon); //월요일
+        wCalender[2] = view.findViewById(R.id.wCalender_tue); //화요일
+        wCalender[3] = view.findViewById(R.id.wCalender_wed); //수요일
+        wCalender[4] = view.findViewById(R.id.wCalender_thu); //목요일
+        wCalender[5] = view.findViewById(R.id.wCalender_fri); //금요일
+        wCalender[6] = view.findViewById(R.id.wCalender_sat); //토요일
 
         //리스트뷰를 이용한 주간캘린더 날짜별 증상 나타내기(정적)
         //ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_MENU) ;
         //ListView listview = (ListView) view.findViewById(R.id.home_listView) ;
         //listview.setAdapter(adapter) ;
 
-        //listView 어댑터 생성(동적)
-//        adapter = new HomeListViewAdapter();
-//        //listView 참조 및 Adapter 연결
-//        listView = (ListView)view.findViewById(R.id.home_listView);
-//        listView.setAdapter(adapter);
-        //listView.setOnItemClickListener(listener);
+
+        //Adapter 생성(동적)
+        adapter = new HomeListViewAdapter();
+        //listView 참조 및 Adapter 연결
+        listView = (ListView)view.findViewById(R.id.home_listView);
+        //Adapter 지정
+        listView.setAdapter(adapter);
+        //data의 날짜가 선택된 날짜와 일치하면 adapter에 날짜에 해당하는 데이터 추가
 
 
 //카드1 - 증상등록으로 이동
@@ -118,26 +120,16 @@ public class Fragment_home extends Fragment {
         Date todayDate = new Date();
         weekCalendar.setWeekCalenderDate(view,todayDate,ymTextView,wDate);
 
-        //각 요일을 눌렀을 때 해당 날짜에 대한 정보 가져오기
-        /*
-        for(int i=0;i<7;i++){
-            int finalI = i;
-            wCalender[i].setOnClickListener(v -> {
-                String year = ymTextView.getText().toString().substring(0,4); //0000년 00월 에서 0000
-                String month = ymTextView.getText().toString().substring(6,8); //0000년 00월 에서 00
-                String date = wDate[finalI].getText().toString(); //월요일(wCalendar[1])을 누르면 wDate[1]의 텍스트 받아옴
-
-                String clickedDate = year+"."+month+"."+date;
-
-                if(clickedDate.contentEquals(Person1.symptom1.getDate())){
-
-                }
-
-            });
-        }*/
 
 
 //ListView
+
+
+        //addItem를 통해 동적으로 ListView 생성됨 -> (증상제목,이미지(리소스아이디),증상정도,양상,악화상황)
+        adapter.addItem(Person1.symptom1.getPart(),R.drawable.img_pain_sym1,Person1.symptom1.getPain_level(),Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation());
+        adapter.addItem(Person1.symptom2.getPart(),R.drawable.img_pain_sym2,Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation());
+        adapter.addItem(Person1.symptom3.getPart(),R.drawable.img_pain_sym3,Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation());
+        adapter.notifyDataSetChanged();
 
 
         //각 날짜를 클릭했을 때 날짜와 일치하는 데이터 불러오기
@@ -150,14 +142,6 @@ public class Fragment_home extends Fragment {
             int sameDatacount = WeekCalendar.setSameDatetoTrue(clickedDate);
             Log.d("myapp"," "+sameDatacount);
 
-            //Adapter 생성
-            adapter = new HomeListViewAdapter();
-            //listView 참조 및 Adapter 연결
-            listView = (ListView)view.findViewById(R.id.home_listView);
-            //Adapter 지정
-            listView.setAdapter(adapter);
-            //data의 날짜가 선택된 날짜와 일치하면 adapter에 날짜에 해당하는 데이터 추가
-            Adapter.getAdapterData(adapter,sameDatacount);
         });
         wCalender[1].setOnClickListener(v -> {
             Log.d("myapp","월요일 눌림");
