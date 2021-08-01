@@ -30,7 +30,7 @@ public class Fragment_home extends Fragment {
     //리스트뷰
     private ListView listView;
     private HomeListViewAdapter adapter;
-    //static final String[] LIST_MENU = {"LIST1", "LIST2", "LIST3"} ;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         Log.d("myapp","home탭 열림");
@@ -68,10 +68,10 @@ public class Fragment_home extends Fragment {
         //listview.setAdapter(adapter) ;
 
         //listView 어댑터 생성
-        adapter = new HomeListViewAdapter();
-        //listView 참조 및 Adapter 연결
-        listView = (ListView)view.findViewById(R.id.home_listView);
-        listView.setAdapter(adapter);
+//        adapter = new HomeListViewAdapter();
+//        //listView 참조 및 Adapter 연결
+//        listView = (ListView)view.findViewById(R.id.home_listView);
+//        listView.setAdapter(adapter);
         //listView.setOnItemClickListener(listener);
 
 
@@ -148,6 +148,14 @@ public class Fragment_home extends Fragment {
             clickedDate += "."+wDate[0].getText().toString();
             int sameDatacount = WeekCalendar.setSameDatetoTrue(clickedDate);
             Log.d("myapp"," "+sameDatacount);
+
+            //Adapter 생성
+            adapter = new HomeListViewAdapter();
+            //listView 참조 및 Adapter 연결
+            listView = (ListView)view.findViewById(R.id.home_listView);
+            //Adapter 지정
+            listView.setAdapter(adapter);
+            Adapter.getAdapterData(adapter,sameDatacount);
         });
         wCalender[1].setOnClickListener(v -> {
             Log.d("myapp","월요일 눌림");
@@ -203,7 +211,20 @@ public class Fragment_home extends Fragment {
     }
 
 
+    //이 클래스 메소드는 각 캘린더의 날짜를 클릭했을 때
+    //각각의 날짜별로 어댑터를 생성하여 생성된 어댑터와 일치하는 데이터의 개수를 넘겨줌
 
+    static class Adapter {
+        static void getAdapterData(HomeListViewAdapter adapter,int sameDatacount){
+
+            for(int i=0;i<sameDatacount;i++){
+                if(Person1.symptom1.isSameDate==true) adapter.addItem();
+            }
+
+
+
+        }
+    }
 
     //주간캘린더 관련 작업 모아둔 클래스
     static class WeekCalendar{
