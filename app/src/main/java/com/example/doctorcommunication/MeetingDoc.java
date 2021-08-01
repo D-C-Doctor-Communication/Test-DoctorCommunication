@@ -298,19 +298,6 @@ public class MeetingDoc extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
     public boolean checkIsBetween(String date){
-/*
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat transFormat = new SimpleDateFormat("yyyy.MM.dd");
-
-        Date to,to2;
-         try {
-             to =(Date) transFormat.parse(start);
-             to2 =(Date) transFormat.parse(end);
-         }catch (ParseException e) {
-                e.printStackTrace();
-                Log.d("myapp","실패");
-         }
-        return true;*/
-
         try {
             //startDate,endDate : DatePicker에서 선택한 시작/종료 날짜
             //wantCheck : 증상이 기록된 날짜
@@ -341,22 +328,6 @@ public class MeetingDoc extends AppCompatActivity {
             Log.d("myapp","예외 발생");
             return false;
         }
-/*        //데이터의 날짜가 datePicker에서 선택된 년도 사이에 있는지 판별
-        if(Integer.parseInt(start.substring(0,4)) <= Integer.parseInt(date.substring(0,4))
-            &&Integer.parseInt(end.substring(0,4)) >= Integer.parseInt(date.substring(0,4))){
-            //데이터의 날짜가 datePicker에서 선택된 달 사이에 있는지 판별
-            if(Integer.parseInt(start.substring(4,6)) <= Integer.parseInt(date.substring(4,6))
-                    &&Integer.parseInt(end.substring(5,7)) >= Integer.parseInt(date.substring(5,7))){
-                //데이터의 날짜가 datePicker에서 선택된 일 사이에 있는지 판별
-                if(Integer.parseInt(start.substring(8,10)) <= Integer.parseInt(date.substring(8,10))
-                        &&Integer.parseInt(end.substring(8,10)) >= Integer.parseInt(date.substring(8,10))) {
-                    return true;
-                }
-                return false;
-            }
-            return false;
-        }
-        return false;*/
 
     }
 }

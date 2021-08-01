@@ -63,38 +63,7 @@ public class Data{
         this.isSameDate = true;
     }
 
-    //증상이 기록된 날짜가 의사와의 만남 DatePicker 날짜의 사이에 있는지 검사하는 메소드 -> 사이에 있으면 true 반환
-    public boolean checkDate(String startDate,String endDate){
-        try {
-            //startDate,endDate : DatePicker에서 선택한 시작/종료 날짜
-            //wantCheck : 증상이 기록된 날짜
 
-            Calendar StartDay,EndDay,CheckDate; //Date객체형으로 바꾼 시작 / 끝 날짜
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd", Locale.KOREA); //형변환을 위한 데이트포멧 객체 생성
-
-            Date date_start = dateFormat.parse(startDate); //Date형으로 변환
-            Date date_end = dateFormat.parse(endDate);
-            Date date_wantCheck = dateFormat.parse(date);
-
-            StartDay = Calendar.getInstance(); //Calender형으로 변환
-            StartDay.setTime(date_start);
-            EndDay  = Calendar.getInstance();
-            EndDay.setTime(date_end);
-            CheckDate  = Calendar.getInstance();
-            CheckDate.setTime(date_wantCheck);
-
-            if(CheckDate.before(EndDay)&&CheckDate.after(StartDay)){
-                System.out.println("통과됨");
-                return true;
-            }
-            System.out.println("통과되지 않음");
-            return false;
-        }catch (Exception e) {
-            System.out.println("예외 발생");
-            return false;
-        }
-
-    }
 }
 
 class Person1{
