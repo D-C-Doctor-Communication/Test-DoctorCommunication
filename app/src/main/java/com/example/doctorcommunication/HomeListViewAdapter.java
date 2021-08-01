@@ -1,16 +1,12 @@
 package com.example.doctorcommunication;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -23,7 +19,7 @@ public class HomeListViewAdapter extends BaseAdapter {
     private TextView record_content_situation;
     private int countList = 0;
 
-    private ArrayList<ListViewItem> listViewItemArrayList = new ArrayList<>();
+    private ArrayList<HomeListViewItem> listViewItemArrayHomeList = new ArrayList<>();
 
     public HomeListViewAdapter(){} //HomeListViewAdapter클래스 기본 생성자
 
@@ -37,7 +33,7 @@ public class HomeListViewAdapter extends BaseAdapter {
     //지정한 위치에 있는 아이템 반환
     @Override
     public Object getItem(int position) {
-        return listViewItemArrayList.get(position);
+        return listViewItemArrayHomeList.get(position);
     }
     //지정한 위치와 관련있는 아이템의 Id값 반환
     @Override
@@ -67,27 +63,27 @@ public class HomeListViewAdapter extends BaseAdapter {
 
 
 
-        ListViewItem listViewItem = listViewItemArrayList.get(posision);
+        HomeListViewItem homeListViewItem = listViewItemArrayHomeList.get(posision);
 
         //아이템의 각 위치에 데이터를 적용
-        record_img.setImageResource(listViewItem.getImage()); //get
-        record_title.setText(listViewItem.getTitle());
-        record_content_painLevel.setText(listViewItem.getPainLevel());
-        record_content_characteristics.setText(listViewItem.getCharacteristics());
-        record_content_situation.setText(listViewItem.getSituation());
+        record_img.setImageResource(homeListViewItem.getImage()); //get
+        record_title.setText(homeListViewItem.getTitle());
+        record_content_painLevel.setText(homeListViewItem.getPainLevel());
+        record_content_characteristics.setText(homeListViewItem.getCharacteristics());
+        record_content_situation.setText(homeListViewItem.getSituation());
 
         return convertView;
     }
 
     public void addItem(String title,int image,int content_painLevel,String content_characteristics,String content_situation){
-        ListViewItem item = new ListViewItem();
+        HomeListViewItem item = new HomeListViewItem();
         item.setImage(image);
         item.setTitle(title);
         item.setPainLevel(content_painLevel);
         item.setCharacteristics(content_characteristics);
         item.setSituation(content_situation);
         //countList
-        listViewItemArrayList.add(item);
+        listViewItemArrayHomeList.add(item);
     }
 }
 

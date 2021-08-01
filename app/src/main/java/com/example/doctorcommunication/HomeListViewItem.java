@@ -3,7 +3,7 @@ package com.example.doctorcommunication;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ListViewItem {
+public class HomeListViewItem {
     private int record_img;
     private String record_title;
     private int record_content_painLevel;

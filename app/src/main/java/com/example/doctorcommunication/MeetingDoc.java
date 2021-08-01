@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -34,6 +36,9 @@ public class MeetingDoc extends AppCompatActivity {
     Button btn_1_symptom;
     Button btn_2_symptom;
     Button btn_3_symptom;
+    //리스트 레이아웃 / 버튼 클릭시 사라질 "선택해주세요"레이아웃
+    RelativeLayout symthom_description_notSelected;
+    ListView DC_listView;
 
 
     @Override
@@ -78,17 +83,29 @@ public class MeetingDoc extends AppCompatActivity {
         btn_2_symptom = findViewById(R.id.btn_2_symptom);
         btn_3_symptom = findViewById(R.id.btn_3_symptom);
 
+        //리스트 레이아웃 / 버튼 클릭시 사라질 "선택해주세요"레이아웃
+        symthom_description_notSelected = findViewById(R.id.symthom_description_notSelected);
+        DC_listView = findViewById(R.id.DC_listView);
+
 // -> 증상 선택 기능
+        RelativeLayout testLayout;
+
         btn_1_symptom.setOnClickListener(v -> {
             symptom_title.setText("가래");
+            DC_listView.setVisibility(View.VISIBLE);
+            symthom_description_notSelected.setVisibility(View.INVISIBLE);
         });
 
         btn_2_symptom.setOnClickListener(v -> {
             symptom_title.setText("발열");
+            DC_listView.setVisibility(View.VISIBLE);
+            symthom_description_notSelected.setVisibility(View.INVISIBLE);
         });
 
         btn_3_symptom.setOnClickListener(v -> {
             symptom_title.setText("두통");
+            DC_listView.setVisibility(View.VISIBLE);
+            symthom_description_notSelected.setVisibility(View.INVISIBLE);
         });
 
 // -> 날짜 선택 기능

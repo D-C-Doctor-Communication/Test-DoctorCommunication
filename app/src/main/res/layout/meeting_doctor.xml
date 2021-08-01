@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/meeting_doctor_Frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/meeting_doctor">
 
     <androidx.appcompat.widget.Toolbar
@@ -261,8 +260,8 @@
         </LinearLayout>
     </HorizontalScrollView>
 
+
     <FrameLayout
-        android:id="@+id/symthom_description_notSelected"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/horizontalScrollView"
@@ -271,6 +270,27 @@
         android:layout_marginBottom="0dp"
         android:layout_weight="1"
         android:background="@color/white">
+
+        <RelativeLayout
+            android:visibility="visible"
+            android:id="@+id/symthom_description_notSelected"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:background="@color/white">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="버튼이 선택되지 않았습니다." />
+        </RelativeLayout>
+
+
+        <ListView
+            android:id="@+id/DC_listView"
+            android:layout_width="match_parent"
+            android:layout_height="443dp"
+            android:layout_marginTop="10dp"
+            android:scrollbars="none"
+            android:visibility="invisible" />
 
 
     </FrameLayout>
