@@ -27,9 +27,7 @@ import java.util.Locale;
 
 
 public class Fragment_home extends Fragment {
-    //리스트뷰
-    private ListView listView;
-    private HomeListViewAdapter adapter;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -60,11 +58,11 @@ public class Fragment_home extends Fragment {
 
 
         //Adapter 생성(동적)
-        adapter = new HomeListViewAdapter();
+        //adapter = new HomeListViewAdapter();
         //listView 참조 및 Adapter 연결
-        listView = (ListView)view.findViewById(R.id.home_listView);
+        //listView = (ListView)view.findViewById(R.id.home_listView);
         //Adapter 지정
-        listView.setAdapter(adapter);
+        //listView.setAdapter(adapter);
         //data의 날짜가 선택된 날짜와 일치하면 adapter에 날짜에 해당하는 데이터 추가
 
 
@@ -117,72 +115,43 @@ public class Fragment_home extends Fragment {
 
 
         //addItem를 통해 동적으로 ListView 생성됨 -> (증상제목,이미지(리소스아이디),증상정도,양상,악화상황)
-        adapter.addItem(Person1.symptom1.getPart(),R.drawable.img_pain_sym1,Person1.symptom1.getPain_level(),Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation());
-        adapter.addItem(Person1.symptom2.getPart(),R.drawable.img_pain_sym2,Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation());
-        adapter.addItem(Person1.symptom3.getPart(),R.drawable.img_pain_sym3,Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation());
-        adapter.notifyDataSetChanged();
-        Log.d("myapp","home Adapter added");
+        //adapter.addItem(Person1.symptom1.getPart(),R.drawable.img_pain_sym1,Person1.symptom1.getPain_level(),Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation());
+        //adapter.addItem(Person1.symptom2.getPart(),R.drawable.img_pain_sym2,Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation());
+        //adapter.addItem(Person1.symptom3.getPart(),R.drawable.img_pain_sym3,Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation());
+        //adapter.notifyDataSetChanged();
+        //Log.d("myapp","home Adapter added");
+
+        ListView listView = (ListView)view.findViewById(R.id.home_listView);
 
         //각 날짜를 클릭했을 때 날짜와 일치하는 데이터 불러오기
         wCalender[0].setOnClickListener(v -> { //일요일
             Log.d("myapp","일요일 눌림");
-            //0000.00.00형식의 String 만들기
-            String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
-            clickedDate += "."+wDate[0].getText().toString();
-            //data의 날짜가 선택된 날짜와 일치하면 isSameDate 속성을 true로 변경
-            int sameDatacount = WeekCalendar.setSameDatetoTrue(clickedDate);
-            Log.d("myapp"," "+sameDatacount);
-
+            WeekCalendar.createDataList(ymTextView,wDate,0,listView);
         });
         wCalender[1].setOnClickListener(v -> {
             Log.d("myapp","월요일 눌림");
-            //0000.00.00형식의 String 만들기
-            String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
-            clickedDate += "."+wDate[1].getText().toString();
-            int sameDatacount = WeekCalendar.setSameDatetoTrue(clickedDate);
-            Log.d("myapp"," "+sameDatacount);
+            WeekCalendar.createDataList(ymTextView,wDate,1,listView);
         });
         wCalender[2].setOnClickListener(v -> {
             Log.d("myapp","화요일 눌림");
-            //0000.00.00형식의 String 만들기
-            String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
-            clickedDate += "."+wDate[2].getText().toString();
-            int sameDatacount = WeekCalendar.setSameDatetoTrue(clickedDate);
-            Log.d("myapp"," "+sameDatacount);
+            WeekCalendar.createDataList(ymTextView,wDate,2,listView);
         });
         wCalender[3].setOnClickListener(v -> {
             Log.d("myapp","수요일 눌림");
-            //0000.00.00형식의 String 만들기
-            String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
-            clickedDate += "."+wDate[3].getText().toString();
-            int sameDatacount = WeekCalendar.setSameDatetoTrue(clickedDate);
-            Log.d("myapp"," "+sameDatacount);
+            WeekCalendar.createDataList(ymTextView,wDate,3,listView);
         });
         wCalender[4].setOnClickListener(v -> {
             Log.d("myapp","목요일 눌림");
-            //0000.00.00형식의 String 만들기
-            String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
-            clickedDate += "."+wDate[4].getText().toString();
-            int sameDatacount = WeekCalendar.setSameDatetoTrue(clickedDate);
-            Log.d("myapp"," "+sameDatacount);
+            WeekCalendar.createDataList(ymTextView,wDate,4,listView);
         });
         wCalender[5].setOnClickListener(v -> {
             Log.d("myapp","금요일 눌림");
-            //0000.00.00형식의 String 만들기
-            String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
-            clickedDate += "."+wDate[5].getText().toString();
-            int sameDatacount = WeekCalendar.setSameDatetoTrue(clickedDate);
-            Log.d("myapp"," "+sameDatacount);
+            WeekCalendar.createDataList(ymTextView,wDate,5,listView);
         });
         wCalender[6].setOnClickListener(v -> {
             Log.d("myapp","토요일 눌림");
-            //0000.00.00형식의 String 만들기
-            String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
-            clickedDate += "."+wDate[6].getText().toString();
-            int sameDatacount = WeekCalendar.setSameDatetoTrue(clickedDate);
-            Log.d("myapp"," "+sameDatacount);
+            WeekCalendar.createDataList(ymTextView,wDate,6,listView);
         });
-        //int sameDatacount = 0일 경우 : 날짜를 선택해 주십시오 or 기록된 통증이 없습니다.
 
         return view;
     }
@@ -191,37 +160,80 @@ public class Fragment_home extends Fragment {
     //이 클래스 메소드는 각 캘린더의 날짜를 클릭했을 때
     //각각의 날짜별로 어댑터를 생성하여 생성된 어댑터와 일치하는 데이터의 개수를 넘겨줌
     //public void addItem(String title,int image,int content_painLevel,String content_characteristics,String content_situation){
-    static class Adapter {
+    /*static class Adapter {
         static void getAdapterData(HomeListViewAdapter adapter,int sameDatacount){
             Log.d("myapp","getAdapterData 이동");
             Log.d("myapp",Person1.symptom1.isSameDate+" ");
             //for(int i=0;i<sameDatacount;i++){}
-            if(Person1.symptom1.isSameDate==true) adapter.addItem(
+            if(Person1.symptom1.isSameDate) adapter.addItem(
                     Person1.symptom1.getPart(),R.drawable.img_pain_sym1,
                     Person1.symptom1.getPain_level(),Person1.symptom1.getPain_characteristics(),
                     Person1.symptom1.getPain_situation());
-            if(Person1.symptom2.isSameDate==true) adapter.addItem(
+            if(Person1.symptom2.isSameDate) adapter.addItem(
                     Person1.symptom2.getPart(),R.drawable.img_pain_sym2,
                     Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),
                     Person1.symptom2.getPain_situation());
-            if(Person1.symptom3.isSameDate==true) adapter.addItem(
+            if(Person1.symptom3.isSameDate) adapter.addItem(
                     Person1.symptom3.getPart(),R.drawable.img_pain_sym3,
                     Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),
                     Person1.symptom3.getPain_situation());
-            if(Person1.symptom4.isSameDate==true) adapter.addItem(
+            if(Person1.symptom4.isSameDate) adapter.addItem(
                     Person1.symptom4.getPart(),R.drawable.img_pain_sym1,
                     Person1.symptom4.getPain_level(),Person1.symptom4.getPain_characteristics(),
                     Person1.symptom4.getPain_situation());
 
             adapter.notifyDataSetChanged();
-
-
         }
-    }
+    }*/
 
     //주간캘린더 관련 작업 모아둔 클래스
     static class WeekCalendar{
+        static void createDataList(TextView ymTextView,TextView[] wDate,int index,ListView listView){
+            //각 요일별 isSameDate속성 false로 초기화
+            initializeisSameDate();
+            //0000.00.00형식의 String 만들기
+            String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
+            clickedDate += "."+wDate[index].getText().toString();
+            //data의 날짜가 선택된 날짜와 일치하면 isSameDate 속성을 true로 변경
+            int sameDatacount = WeekCalendar.setSameDatetoTrue(clickedDate);
+            Log.d("myapp"," "+sameDatacount); //이후에 객체를 배열로 만들면 for문에 sameDataCount 사용
 
+            //listView 참조 및 Adapter 연결
+            HomeListViewAdapter adapter = new HomeListViewAdapter();
+            //Adapter 지정
+            listView.setAdapter(adapter);
+            //선택한 날짜와 같은 데이터일때 어댑터에 아이템 추가
+            if(Person1.symptom1.isSameDate) adapter.addItem(Person1.symptom1.getPart(),R.drawable.img_pain_sym1,Person1.symptom1.getPain_level(),Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation());
+            if(Person1.symptom2.isSameDate) adapter.addItem(Person1.symptom2.getPart(),R.drawable.img_pain_sym2,Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation());
+            if(Person1.symptom3.isSameDate) adapter.addItem(Person1.symptom3.getPart(),R.drawable.img_pain_sym3,Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation());
+            if(Person1.symptom4.isSameDate) adapter.addItem(Person1.symptom1.getPart(),R.drawable.img_pain_sym1,Person1.symptom1.getPain_level(),Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation());
+            if(Person1.symptom5.isSameDate) adapter.addItem(Person1.symptom2.getPart(),R.drawable.img_pain_sym2,Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation());
+            if(Person1.symptom6.isSameDate) adapter.addItem(Person1.symptom3.getPart(),R.drawable.img_pain_sym3,Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation());
+            if(Person1.symptom7.isSameDate) adapter.addItem(Person1.symptom1.getPart(),R.drawable.img_pain_sym1,Person1.symptom1.getPain_level(),Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation());
+            if(Person1.symptom8.isSameDate) adapter.addItem(Person1.symptom2.getPart(),R.drawable.img_pain_sym2,Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation());
+            if(Person1.symptom9.isSameDate) adapter.addItem(Person1.symptom3.getPart(),R.drawable.img_pain_sym3,Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation());
+            if(Person1.symptom10.isSameDate) adapter.addItem(Person1.symptom1.getPart(),R.drawable.img_pain_sym1,Person1.symptom1.getPain_level(),Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation());
+            if(Person1.symptom11.isSameDate) adapter.addItem(Person1.symptom2.getPart(),R.drawable.img_pain_sym2,Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation());
+            if(Person1.symptom12.isSameDate) adapter.addItem(Person1.symptom3.getPart(),R.drawable.img_pain_sym3,Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation());
+
+            adapter.notifyDataSetChanged();
+            Log.d("myapp","Adapter added");
+
+        }
+        static void initializeisSameDate(){
+            Person1.symptom1.isSameDate = false;
+            Person1.symptom2.isSameDate = false;
+            Person1.symptom3.isSameDate = false;
+            Person1.symptom4.isSameDate = false;
+            Person1.symptom5.isSameDate = false;
+            Person1.symptom6.isSameDate = false;
+            Person1.symptom7.isSameDate = false;
+            Person1.symptom8.isSameDate = false;
+            Person1.symptom9.isSameDate = false;
+            Person1.symptom10.isSameDate = false;
+            Person1.symptom11.isSameDate = false;
+            Person1.symptom12.isSameDate = false;
+        }
         static int setSameDatetoTrue(String date){
             int countSameDate = 0;
             if(Person1.symptom1.getDate().equals(date)){
