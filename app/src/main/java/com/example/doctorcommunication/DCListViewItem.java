@@ -78,7 +78,10 @@ public class DCListViewItem {
         this.dc_list_content_accompany_pain = dc_list_content_accompany_pain;
     }
     public void setAdditional(String dc_list_content_additional) {
+        if(dc_list_content_additional!=null)
         this.dc_list_content_additional = dc_list_content_additional;
+        else this.dc_list_content_additional = "해당없음";
+
     }
 
 

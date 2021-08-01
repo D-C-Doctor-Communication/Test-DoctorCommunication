@@ -52,7 +52,10 @@ public class Data{
     String getPain_characteristics(){ return pain_characteristics; }
     String getPain_situation(){ return pain_situation; }
     String getAccompany_pain(){ return accompany_pain; }
-    String getAdditional(){ return additional; }
+    String getAdditional(){
+        if(additional!=null) return additional;
+        return "해당없음";
+    }
 
 
     //home listview에서 클릭한 날짜와 일치하는지 확인 -> 일치하면 true

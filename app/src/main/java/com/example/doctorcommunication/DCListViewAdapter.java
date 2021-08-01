@@ -1,6 +1,7 @@
 package com.example.doctorcommunication;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,7 @@ public class DCListViewAdapter extends BaseAdapter {
         dc_list_content_accompany_pain = convertView.findViewById(R.id.dc_list_content_accompany_pain);
         dc_list_content_additional = convertView.findViewById(R.id.dc_list_content_additional);
 
-        DCListViewItem dcListViewItem = listViewItemArrayDCList.get(position);
+        DCListViewItem dcListViewItem = listViewItemArrayDCList.get(pos);
 
         dc_list_title_date.setText(dcListViewItem.getTitleDate());
         dc_list_title_partAndLevel.setText(dcListViewItem.getTitlePartAndLevel());
@@ -67,7 +68,7 @@ public class DCListViewAdapter extends BaseAdapter {
 
 
 
-        return null;
+        return convertView;
     }
 
 
@@ -102,6 +103,7 @@ public class DCListViewAdapter extends BaseAdapter {
                         String dc_list_content_accompany_pain,
                         String dc_list_content_additional){
 
+        Log.d("myapp","addItem 진입");
         DCListViewItem item = new DCListViewItem();
         item.setTitleDate(dc_list_title_date);
         item.setTitlePartAndLevel(dc_list_title_partAndLevel);
@@ -110,7 +112,10 @@ public class DCListViewAdapter extends BaseAdapter {
         item.setChar(dc_list_content_characteristics);
         item.setSituation(dc_list_content_situation);
         item.setAccompany(dc_list_content_accompany_pain);
-        item.setAdditional(dc_list_content_additional);
+        if(dc_list_content_additional!=null||dc_list_content_additional!="") item.setAdditional(dc_list_content_additional);
+        else item.setAdditional("해당없음");
+
+        listViewItemArrayDCList.add(item);
     }
 
 

@@ -89,28 +89,30 @@ public class MeetingDoc extends AppCompatActivity {
         btn_3_symptom = findViewById(R.id.btn_3_symptom);
 
         //리스트 레이아웃 / 버튼 클릭시 사라질 "선택해주세요"레이아웃
-        symthom_description_notSelected = findViewById(R.id.symthom_description_notSelected);
+        //symthom_description_notSelected = findViewById(R.id.symthom_description_notSelected);
         DC_listView = findViewById(R.id.DC_listView);
 
 // -> 증상 선택 기능
-        RelativeLayout testLayout;
 
         btn_1_symptom.setOnClickListener(v -> {
+            Log.d("myapp","가래 버튼 눌림");
             symptom_title.setText("가래");
-            DC_listView.setVisibility(View.VISIBLE);
-            symthom_description_notSelected.setVisibility(View.INVISIBLE);
+//            DC_listView.setVisibility(View.VISIBLE);
+//            symthom_description_notSelected.setVisibility(View.INVISIBLE);
         });
 
         btn_2_symptom.setOnClickListener(v -> {
+            Log.d("myapp","발열 버튼 눌림");
             symptom_title.setText("발열");
-            DC_listView.setVisibility(View.VISIBLE);
-            symthom_description_notSelected.setVisibility(View.INVISIBLE);
+//            DC_listView.setVisibility(View.VISIBLE);
+//            symthom_description_notSelected.setVisibility(View.INVISIBLE);
         });
 
         btn_3_symptom.setOnClickListener(v -> {
+            Log.d("myapp","두통 버튼 눌림");
             symptom_title.setText("두통");
-            DC_listView.setVisibility(View.VISIBLE);
-            symthom_description_notSelected.setVisibility(View.INVISIBLE);
+//            DC_listView.setVisibility(View.VISIBLE);
+//            symthom_description_notSelected.setVisibility(View.INVISIBLE);
         });
 
 // -> 날짜 선택 기능
@@ -174,14 +176,28 @@ public class MeetingDoc extends AppCompatActivity {
         //dc_list_content_situation
         //dc_list_content_accompany_pain
         //dc_list_content_additional
-
+        //if(dcListViewAdapter.getCount()!=0) dcListView.setVisibility(View.VISIBLE);
+        Log.d("myapp","adapter addItem 전");
         dcListViewAdapter.addItem(Person1.symptom1.getDate(),
                 Person1.symptom1.getPart()+Person1.symptom1.getPain_level()
                 ,Person1.symptom1.getPart(),Person1.symptom1.getPain_level(),
                 Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation(),
                 Person1.symptom1.getAccompany_pain(),Person1.symptom1.getAdditional());
-
+        dcListViewAdapter.addItem(Person1.symptom2.getDate(),
+                Person1.symptom2.getPart()+Person1.symptom2.getPain_level()
+                ,Person1.symptom2.getPart(),Person1.symptom2.getPain_level(),
+                Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation(),
+                Person1.symptom2.getAccompany_pain(),Person1.symptom2.getAdditional());
+        dcListViewAdapter.addItem(Person1.symptom3.getDate(),
+                Person1.symptom3.getPart()+Person1.symptom3.getPain_level()
+                ,Person1.symptom3.getPart(),Person1.symptom3.getPain_level(),
+                Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation(),
+                Person1.symptom3.getAccompany_pain(),Person1.symptom3.getAdditional());
+        Log.d("myapp","dc Adapter added");
         dcListViewAdapter.notifyDataSetChanged();
+        Log.d("myapp","adapter addItem 후");
+
+
     }
 
 
