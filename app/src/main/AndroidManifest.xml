@@ -9,8 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DoctorCommunication">
-        <activity android:name=".MeetingDoc" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-        <activity android:name=".AddSymptom" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity
+            android:name=".MeetingDoc"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".AddSymptom"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <!--<activity android:name=".FrameLayoutTest" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>-->
         <activity android:name=".SettingActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
@@ -21,8 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Recording" android:theme="@style/Theme.AppCompat.Light.NoActionBar" /></application>
+        <activity android:name=".Recording" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-
-
+    </application>
 </manifest>
