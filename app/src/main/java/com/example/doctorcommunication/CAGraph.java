@@ -28,7 +28,6 @@ public class CAGraph extends View {
 
     public CAGraph(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         setTypes(context, attrs);
     }
 

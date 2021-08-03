@@ -80,6 +80,18 @@ public class Fragment_conditionAnalysis extends Fragment {
         //증상 순위
         setRanking(dataString,firstSymptom,secondSymptom,thirdSymptom);
 
+        //그래프
+        int[] points = getAverageOfWeek(dataString); //주당 심각도의 평균이 배열값으로 들어감
+        //그래프
+        CAGraph graphview = (CAGraph) view.findViewById(R.id.GraphView);
+        //단위 2, 원점 0, 총(세로) 5줄로 나누어진 그래프
+        graphview.setPoints(points, 2, 0, 5);
+        //세팅된대로 그래프를 그림
+        graphview.drawForBeforeDrawView();
+
+
+
+
 
 
 
@@ -93,6 +105,13 @@ public class Fragment_conditionAnalysis extends Fragment {
             reservation_count.setText(OrganizedData.appointmentDC(dataStr)+"회");
             severity_more_5.setText(OrganizedData.moreThanFive(dataStr)+"회");
             accrue_symptom_count.setText(OrganizedData.accruedData(dataStr)+"개");
+
+            //그래프
+            int[] repoints = getAverageOfWeek(dataStr); //주당 심각도의 평균이 배열값으로 들어감
+            //단위 2, 원점 0, 총(세로) 5줄로 나누어진 그래프
+            graphview.setPoints(repoints, 2, 0, 5);
+            //세팅된대로 그래프를 그림
+            graphview.drawForBeforeDrawView();
 
             //증상 순위
             setRanking(dataStr,firstSymptom,secondSymptom,thirdSymptom);
@@ -110,27 +129,20 @@ public class Fragment_conditionAnalysis extends Fragment {
             reservation_count.setText(OrganizedData.appointmentDC(dataStr)+"회");
             severity_more_5.setText(OrganizedData.moreThanFive(dataStr)+"회");
             accrue_symptom_count.setText(OrganizedData.accruedData(dataStr)+"개");
-
+            //그래프
+            int[] repoints = getAverageOfWeek(dataStr); //주당 심각도의 평균이 배열값으로 들어감
+            Log.d("check",dataStr + " and " + repoints[0]+ " and " + repoints[1]+ " and " + repoints[2]+ " and " + repoints[3]);
+            //단위 2, 원점 0, 총(세로) 5줄로 나누어진 그래프
+            graphview.setPoints(repoints, 2, 0, 5);
+            //세팅된대로 그래프를 그림
+            graphview.drawForBeforeDrawView();
 
             //증상 순위
             setRanking(dataStr,firstSymptom,secondSymptom,thirdSymptom);
         });
 
 
-        //그래프
-        //그래프에 들어갈 점 배열
-        //주간 심각도 평균 구하기
 
-
-
-        int[] points = {4,3,6,3}; //차례대로 1주차,2주차,3주차,4주차
-
-        CAGraph graphview = (CAGraph) view.findViewById(R.id.GraphView);
-
-        //단위 1, 원점 0, 총 10줄로 나누어진 그래프
-        graphview.setPoints(points, 2, 0, 5);
-        //세팅된대로 그래프를 그림
-        graphview.drawForBeforeDrawView();
 
 
         return view;
@@ -147,7 +159,6 @@ public class Fragment_conditionAnalysis extends Fragment {
     }
     //데이터의 기록 날짜가 상단 바에서 선택한 달과 일치하면 true 반환
     public static boolean isInSameMonth(String recordedDate,String strDate){ //0000년 00월
-        Log.d("myapp","isInSameMonth 진입");
         //0000.00.00(데이터.getDate())과 선택한(0000.00) 달 비교
         if(recordedDate.substring(0,7).equals(strDate)) return true;
         return false;
@@ -190,8 +201,11 @@ public class Fragment_conditionAnalysis extends Fragment {
 
 
 //그래프의 x값(각 주별 심각도 평균)
-    static int[] getAverageOfWeek(String strDate){
+    static int[] getAverageOfWeek(String strDate){ //상단바에서 선택한 날짜
         int[] graphData = new int[4];   //그래프의 x좌표
+        for(int i=0;i<graphData.length;i++){
+            graphData[i] = 0;
+        }
         int firstWeek = 0,fNum = 0;     //1주차 심각도의 총합과 개수
         int secondWeek = 0,sNum = 0;    //2주차 심각도의 총합과 개수
         int thirdWeek = 0,tNum = 0;     //3주차 심각도의 총합과 개수
@@ -217,10 +231,24 @@ public class Fragment_conditionAnalysis extends Fragment {
             }
         }
 
-        graphData[0] = (int)(firstWeek/fNum);
-        graphData[1] = (int)(secondWeek/sNum);
-        graphData[2] = (int)(thirdWeek/tNum);
-        graphData[3] = (int)(fourthWeek/foNum);
+        //각 데이터의 값이 0일경우 그래프에도 0으로 표시
+        if(fNum!=0) {
+            graphData[0] = firstWeek/fNum;
+            Log.d("check",firstWeek+" / "+fNum+" : "+graphData[0]);
+        }
+        if(sNum!=0){
+            graphData[1] = secondWeek/sNum;
+            Log.d("check",secondWeek+" / "+sNum+" : "+graphData[1]);
+        }
+        if(tNum!=0) {
+            graphData[2] = thirdWeek/tNum;
+            Log.d("check",thirdWeek+" / "+tNum+" : "+graphData[2]);
+        }
+        if(foNum!=0) {
+            graphData[3] = fourthWeek/foNum;
+            Log.d("check",fourthWeek+" / "+foNum+" : "+graphData[3]);
+        }
+
 
 
         return graphData;
@@ -233,9 +261,9 @@ public class Fragment_conditionAnalysis extends Fragment {
         if(recordedDate.substring(0,7).equals(strDate)){
             int checkDate = Integer.parseInt(recordedDate.substring(8)); //몇일인지 저장
             if(checkDate>=1&&checkDate<=7) return 1;
-            else if(checkDate>=8&&checkDate<=14) return 1;
-            else if(checkDate>=15&&checkDate<=21) return 1;
-            else return 4;
+            else if(checkDate>=8&&checkDate<=14) return 2;
+            else if(checkDate>=15&&checkDate<=21) return 3;
+            else if(checkDate>=22&&checkDate<=31) return 4;
         }
         return 0;
     }
@@ -246,8 +274,6 @@ public class Fragment_conditionAnalysis extends Fragment {
     static class OrganizedData{
         //총 기록된 통증 수
         public static int accruedData(String strDate){
-            Log.d("myapp","accruedData 진입");
-
             int numberOfData = 0;
             for(int i=0;i<Person1.symptom.length;i++){
                 //데이터가 기록된 날짜가 선택된 달과 일치할경우 1씩 증가
