@@ -15,11 +15,8 @@ public class Data{
     private String pain_situation; //악화 상황
     private String accompany_pain; //동반 증상
     private String additional; //추가사항
-    static int number = 0; //추가된 증상 개수
     boolean isSameDate = false; //home listview에서 클릭한 날짜와 일치하는지 확인
 
-    Data(){
-    }
     //추가사항 없는 값 생성자
     Data(String date,String part,int pain_level,String pain_characteristics
             ,String pain_situation,String accompany_pain){
@@ -30,8 +27,6 @@ public class Data{
         this.pain_situation = pain_situation;
         this.accompany_pain = accompany_pain;
         this.additional = "해당 없음";
-        number++; //기록된 증상 개수
-
     }
     //추가사항 있는 값 생성자
     Data(String date,String part,int pain_level,String pain_characteristics
@@ -43,7 +38,6 @@ public class Data{
         this.pain_situation = pain_situation;
         this.accompany_pain = accompany_pain;
         this.additional = additional;
-        number++; //기록된 증상 개수
     }
 
     //각 값별 get메서드
