@@ -12,17 +12,15 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.LongFunction;
+
 
 public class Fragment_conditionAnalysis extends Fragment {
 
@@ -166,9 +164,12 @@ public class Fragment_conditionAnalysis extends Fragment {
             }
         });
 
-        one.setText(list_entries.get(0).getKey());
-        two.setText(list_entries.get(1).getKey());
-        three.setText(list_entries.get(2).getKey());
+        if(list_entries.get(0).getValue()!=0) one.setText(list_entries.get(0).getKey());
+        else one.setText("해당없음");
+        if(list_entries.get(1).getValue()!=0) two.setText(list_entries.get(1).getKey());
+        else two.setText("해당없음");
+        if(list_entries.get(2).getValue()!=0) three.setText(list_entries.get(2).getKey());
+        else three.setText("해당없음");
         //값을 받으려면 list_entries.get(i).getValue().toString();
 
     }
