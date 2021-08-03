@@ -151,97 +151,27 @@ public class Fragment_home extends Fragment {
             //Adapter 지정
             listView.setAdapter(adapter);
             //선택한 날짜와 같은 데이터일때 어댑터에 아이템 추가
-        for(int i = 0; i<Person1.symptom.length; i++){
-            if(Person1.symptom[i].isSameDate) adapter.addItem(Person1.symptom[i].getPart(),R.drawable.img_pain_sym1,Person1.symptom[i].getPain_level(),Person1.symptom[i].getPain_characteristics(),Person1.symptom[i].getPain_situation());
-        }
-
-//            if(Person1.symptom1.isSameDate) adapter.addItem(Person1.symptom1.getPart(),R.drawable.img_pain_sym1,Person1.symptom1.getPain_level(),Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation());
-//            if(Person1.symptom2.isSameDate) adapter.addItem(Person1.symptom2.getPart(),R.drawable.img_pain_sym2,Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation());
-//            if(Person1.symptom3.isSameDate) adapter.addItem(Person1.symptom3.getPart(),R.drawable.img_pain_sym3,Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation());
-//            if(Person1.symptom4.isSameDate) adapter.addItem(Person1.symptom1.getPart(),R.drawable.img_pain_sym1,Person1.symptom1.getPain_level(),Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation());
-//            if(Person1.symptom5.isSameDate) adapter.addItem(Person1.symptom2.getPart(),R.drawable.img_pain_sym2,Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation());
-//            if(Person1.symptom6.isSameDate) adapter.addItem(Person1.symptom3.getPart(),R.drawable.img_pain_sym3,Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation());
-//            if(Person1.symptom7.isSameDate) adapter.addItem(Person1.symptom1.getPart(),R.drawable.img_pain_sym1,Person1.symptom1.getPain_level(),Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation());
-//            if(Person1.symptom8.isSameDate) adapter.addItem(Person1.symptom2.getPart(),R.drawable.img_pain_sym2,Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation());
-//            if(Person1.symptom9.isSameDate) adapter.addItem(Person1.symptom3.getPart(),R.drawable.img_pain_sym3,Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation());
-//            if(Person1.symptom10.isSameDate) adapter.addItem(Person1.symptom1.getPart(),R.drawable.img_pain_sym1,Person1.symptom1.getPain_level(),Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation());
-//            if(Person1.symptom11.isSameDate) adapter.addItem(Person1.symptom2.getPart(),R.drawable.img_pain_sym2,Person1.symptom2.getPain_level(),Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation());
-//            if(Person1.symptom12.isSameDate) adapter.addItem(Person1.symptom3.getPart(),R.drawable.img_pain_sym3,Person1.symptom3.getPain_level(),Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation());
-
+            for(int i = 0; i<Person1.symptom.length; i++){
+                if(Person1.symptom[i].isSameDate) adapter.addItem(Person1.symptom[i].getPart(),R.drawable.img_pain_sym1,Person1.symptom[i].getPain_level(),Person1.symptom[i].getPain_characteristics(),Person1.symptom[i].getPain_situation());
+            }
             adapter.notifyDataSetChanged();
             Log.d("myapp","Adapter added");
+        }
 
-        }
         static void initializeisSameDate(){
-        for(int i=0;i<Person1.symptom.length;i++){
-            Person1.symptom[i].isSameDate = false;
-        }
-//            Person1.symptom1.isSameDate = false;
-//            Person1.symptom2.isSameDate = false;
-//            Person1.symptom3.isSameDate = false;
-//            Person1.symptom4.isSameDate = false;
-//            Person1.symptom5.isSameDate = false;
-//            Person1.symptom6.isSameDate = false;
-//            Person1.symptom7.isSameDate = false;
-//            Person1.symptom8.isSameDate = false;
-//            Person1.symptom9.isSameDate = false;
-//            Person1.symptom10.isSameDate = false;
-//            Person1.symptom11.isSameDate = false;
-//            Person1.symptom12.isSameDate = false;
-        }
-        static int setSameDatetoTrue(String date){
-            int countSameDate = 0;
-        for(int i=0;i<Person1.symptom.length;i++) {
-            if(Person1.symptom[i].getDate().equals(date)){
-                Person1.symptom[i].checkSameDate();
-                countSameDate++;
+            for(int i=0;i<Person1.symptom.length;i++){
+                Person1.symptom[i].isSameDate = false;
             }
         }
 
-//            if(Person1.symptom2.getDate().equals(date)){
-//                Person1.symptom2.checkSameDate();
-//                countSameDate++;
-//            }
-//            if(Person1.symptom3.getDate().equals(date)){
-//                Person1.symptom3.checkSameDate();
-//                countSameDate++;
-//            }
-//            if(Person1.symptom4.getDate().equals(date)){
-//                Person1.symptom4.checkSameDate();
-//                countSameDate++;
-//            }
-//            if(Person1.symptom5.getDate().equals(date)){
-//                Person1.symptom5.checkSameDate();
-//                countSameDate++;
-//            }
-//            if(Person1.symptom6.getDate().equals(date)){
-//                Person1.symptom6.checkSameDate();
-//                countSameDate++;
-//            }
-//            if(Person1.symptom7.getDate().equals(date)){
-//                Person1.symptom7.checkSameDate();
-//                countSameDate++;
-//            }
-//            if(Person1.symptom8.getDate().equals(date)){
-//                Person1.symptom8.checkSameDate();
-//                countSameDate++;
-//            }
-//            if(Person1.symptom9.getDate().equals(date)){
-//                Person1.symptom9.checkSameDate();
-//                countSameDate++;
-//            }
-//            if(Person1.symptom10.getDate().equals(date)){
-//                Person1.symptom10.checkSameDate();
-//                countSameDate++;
-//            }
-//            if(Person1.symptom11.getDate().equals(date)){
-//                Person1.symptom11.checkSameDate();
-//                countSameDate++;
-//            }
-//            if(Person1.symptom12.getDate().equals(date)){
-//                Person1.symptom12.checkSameDate();
-//                countSameDate++;
-//            }
+        static int setSameDatetoTrue(String date){
+            int countSameDate = 0;
+            for(int i=0;i<Person1.symptom.length;i++) {
+                if(Person1.symptom[i].getDate().equals(date)){
+                    Person1.symptom[i].checkSameDate();
+                    countSameDate++;
+                }
+            }
 
             return countSameDate;
         }
