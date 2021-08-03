@@ -189,32 +189,57 @@ public class Fragment_conditionAnalysis extends Fragment {
     }
 
 
-    static boolean isInSameWeek(String recordedDate,String strDate){
-
-        Log.d("myapp","isInSameMonth 진입");
-        //0000.00.00(데이터.getDate())과 선택한(0000.00) 달 비교
-        if(recordedDate.substring(0,7).equals(strDate)){
-            if()
-        }
-
-        return false;
-    }
 //그래프의 x값(각 주별 심각도 평균)
-    static int getAverageOfWeek(int num,String strDate){
-        int dataNum;
-        switch (num){
-            case 1 : {
-                for(int i=0;i<Person1.symptom.length;i++){
-                    if(isInSameMonth(Person1.symptom[i].getDate(),strDate)){
-
-                    }
-                }
+    static int[] getAverageOfWeek(String strDate){
+        int[] graphData = new int[4];   //그래프의 x좌표
+        int firstWeek = 0,fNum = 0;     //1주차 심각도의 총합과 개수
+        int secondWeek = 0,sNum = 0;    //2주차 심각도의 총합과 개수
+        int thirdWeek = 0,tNum = 0;     //3주차 심각도의 총합과 개수
+        int fourthWeek = 0,foNum = 0;   //4주차 심각도의 총합과 개수
+        for(int i=0;i<Person1.symptom.length;i++){
+            switch (isInSameWeek(Person1.symptom[i].getDate(),strDate)){
+                case 1 : //1주차
+                    firstWeek += Person1.symptom[i].getPain_level();
+                    fNum++;
+                    break;
+                case 2 : //2주차
+                    secondWeek += Person1.symptom[i].getPain_level();
+                    sNum++;
+                    break;
+                case 3 : //3주차
+                    thirdWeek += Person1.symptom[i].getPain_level();
+                    tNum++;
+                    break;
+                case 4 : //4주차
+                    fourthWeek += Person1.symptom[i].getPain_level();
+                    foNum++;
+                    break;
             }
         }
 
+        graphData[0] = (int)(firstWeek/fNum);
+        graphData[1] = (int)(secondWeek/sNum);
+        graphData[2] = (int)(thirdWeek/tNum);
+        graphData[3] = (int)(fourthWeek/foNum);
 
+
+        return graphData;
+    }
+    //각 날짜가 선택한 달과 일치하지 않으면 0 반환
+    //1주차에 존재하면 1 반환
+    //2주차 : 2, 3주차 : 3, 4주차 : 4
+    static int isInSameWeek(String recordedDate,String strDate){ //각각 데이터가 입력된 날짜, 상단 바에서 선택한 날짜
+        //0000.00.00(데이터.getDate())과 선택한(0000.00) 달 비교
+        if(recordedDate.substring(0,7).equals(strDate)){
+            int checkDate = Integer.parseInt(recordedDate.substring(8)); //몇일인지 저장
+            if(checkDate>=1&&checkDate<=7) return 1;
+            else if(checkDate>=8&&checkDate<=14) return 1;
+            else if(checkDate>=15&&checkDate<=21) return 1;
+            else return 4;
+        }
         return 0;
     }
+
 
 
 //[병원 예약 횟수, 심각도 5 이상, 총 기록된 통증 수]와 관련된 작업 클래스
