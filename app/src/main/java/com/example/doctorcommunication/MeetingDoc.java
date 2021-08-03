@@ -36,9 +36,7 @@ public class MeetingDoc extends AppCompatActivity {
     //날짜선택 버튼 위 증상 텍스트
     TextView symptom_title;
     //증상선택 버튼
-    Button btn_1_symptom;
-    Button btn_2_symptom;
-    Button btn_3_symptom;
+    Button[] symptomBtn = new Button[3]; //증상 개수(임시 3)
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -78,9 +76,9 @@ public class MeetingDoc extends AppCompatActivity {
         symptom_title = findViewById(R.id.symptom_title);
 
         //각 증상 선택 버튼을 눌렀을때 누른 버튼의 아이디값을 받아옴
-        btn_1_symptom = findViewById(R.id.btn_1_symptom);
-        btn_2_symptom = findViewById(R.id.btn_2_symptom);
-        btn_3_symptom = findViewById(R.id.btn_3_symptom);
+        symptomBtn[0] = findViewById(R.id.btn_1_symptom);
+        symptomBtn[1] = findViewById(R.id.btn_2_symptom);
+        symptomBtn[2] = findViewById(R.id.btn_3_symptom);
 
 
 // -> 증상 선택 기능
@@ -90,28 +88,22 @@ public class MeetingDoc extends AppCompatActivity {
         ListView dcListView = findViewById(R.id.DC_listView);
 
         ListView finalDcListView = dcListView;
-        btn_1_symptom.setOnClickListener(v -> {
+        symptomBtn[0].setOnClickListener(v -> {
             Log.d("myapp","가래 버튼 눌림");
             symptom_title.setText("가래");
-//              DC_listView.setVisibility(View.VISIBLE);
-//              symthom_description_notSelected.setVisibility(View.INVISIBLE);
-                createDCList(finalDcListView);
+            createDCList(0,finalDcListView);
         });
 
-        btn_2_symptom.setOnClickListener(v -> {
+        symptomBtn[1].setOnClickListener(v -> {
             Log.d("myapp","발열 버튼 눌림");
             symptom_title.setText("발열");
-            createDCList(finalDcListView);
-//            DC_listView.setVisibility(View.VISIBLE);
-//            symthom_description_notSelected.setVisibility(View.INVISIBLE);
+            createDCList(1,finalDcListView);
         });
 
-        btn_3_symptom.setOnClickListener(v -> {
+        symptomBtn[2].setOnClickListener(v -> {
             Log.d("myapp","두통 버튼 눌림");
             symptom_title.setText("두통");
-            createDCList(finalDcListView);
-//            DC_listView.setVisibility(View.VISIBLE);
-//            symthom_description_notSelected.setVisibility(View.INVISIBLE);
+            createDCList(2,finalDcListView);
         });
 
 // -> 날짜 선택 기능
@@ -128,11 +120,11 @@ public class MeetingDoc extends AppCompatActivity {
                     this,
                     //0000.00.00의 형식으로 입력받은 날짜를 startDate 텍스트뷰의 텍스트로 지정
                     (view, year, month, dayOfMonth) ->{
-                        String PickedDate = year + "." + (month + 1) + "." + dayOfMonth;
+                        String PickedDate = year + "." + (month+1) + "." + dayOfMonth;
                         startDate.setText(PickedDate);
                     }
                     //기본 세팅 날짜 지정 (위의 변수대로)
-                    ,2021,8,1
+                    ,mYear,mMonth,mDay
             );
             //DatePickerDialog 표시
             datePickerDialog.show();
@@ -151,11 +143,11 @@ public class MeetingDoc extends AppCompatActivity {
                     this,
                     //0000.00.00의 형식으로 입력받은 날짜를 startDate 텍스트뷰의 텍스트로 지정
                     (view, year, month, dayOfMonth) -> {
-                        String PickedDate = year + "." + (month + 1) + "." + dayOfMonth;
+                        String PickedDate = year + "." + (month+1) + "." + dayOfMonth;
                         endDate.setText(PickedDate);
                     }
                     //기본 세팅 날짜 지정 (위의 변수대로)
-                    ,2021,8,1
+                    ,mYear,mMonth,mDay
             );
             //DatePickerDialog 표시
             datePickerDialog.show();
@@ -163,11 +155,6 @@ public class MeetingDoc extends AppCompatActivity {
 
 
 // -> List View 기능
-        //Adapter 생성
-        DCListViewAdapter dcListViewAdapter = new DCListViewAdapter();
-        //ListView 참조 및 어댑터 연결
-        dcListView = (ListView)findViewById(R.id.DC_listView);
-        dcListView.setAdapter(dcListViewAdapter);
 
         //addItem시 데이터 삽입 순서
         //dc_list_title_date
@@ -179,28 +166,6 @@ public class MeetingDoc extends AppCompatActivity {
         //dc_list_content_accompany_pain
         //dc_list_content_additional
         //if(dcListViewAdapter.getCount()!=0) dcListView.setVisibility(View.VISIBLE);
-        /*
-        Log.d("myapp","adapter addItem 전");
-        dcListViewAdapter.addItem(Person1.symptom1.getDate(),
-                Person1.symptom1.getPart()+Person1.symptom1.getPain_level()
-                ,Person1.symptom1.getPart(),Person1.symptom1.getPain_level(),
-                Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation(),
-                Person1.symptom1.getAccompany_pain(),Person1.symptom1.getAdditional());
-        dcListViewAdapter.addItem(Person1.symptom2.getDate(),
-                Person1.symptom2.getPart()+Person1.symptom2.getPain_level()
-                ,Person1.symptom2.getPart(),Person1.symptom2.getPain_level(),
-                Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation(),
-                Person1.symptom2.getAccompany_pain(),Person1.symptom2.getAdditional());
-        dcListViewAdapter.addItem(Person1.symptom3.getDate(),
-                Person1.symptom3.getPart()+Person1.symptom3.getPain_level()
-                ,Person1.symptom3.getPart(),Person1.symptom3.getPain_level(),
-                Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation(),
-                Person1.symptom3.getAccompany_pain(),Person1.symptom3.getAdditional());
-        Log.d("myapp","dc Adapter added");
-        dcListViewAdapter.notifyDataSetChanged();
-        Log.d("myapp","adapter addItem 후");
-*/
-
     }
 
 
@@ -228,75 +193,102 @@ public class MeetingDoc extends AppCompatActivity {
         return true;
     }
 
-    public void createDCList(ListView listView){
+    //클릭한 버튼의 증상명과 데이터의 증상이 일치한지 확인
+    public boolean checkSymptom(int index,String part){
+        //버튼별 증상 배열
+        String[] btnString = new String[]{"가래","복통","두통"};
+        if(part.equals(btnString[index])) return true;
+        return false;
+    }
+    public void createDCList(int index,ListView listView){
         //listView 참조 및 Adapter 연결
         DCListViewAdapter adapter = new DCListViewAdapter();
         //Adapter 지정
         listView.setAdapter(adapter);
-        //데이터의 날짜가 datePicker의 두 날짜 사이에있으면 true 반환
-        if(checkIsBetween(Person1.symptom1.getDate())) adapter.addItem(Person1.symptom1.getDate(),
-                Person1.symptom1.getPart()+Person1.symptom1.getPain_level()
-                ,Person1.symptom1.getPart(),Person1.symptom1.getPain_level(),
-                Person1.symptom1.getPain_characteristics(),Person1.symptom1.getPain_situation(),
-                Person1.symptom1.getAccompany_pain(),Person1.symptom1.getAdditional());
-        if(checkIsBetween(Person1.symptom2.getDate())) adapter.addItem(Person1.symptom2.getDate(),
-                Person1.symptom2.getPart()+Person1.symptom2.getPain_level()
-                ,Person1.symptom2.getPart(),Person1.symptom2.getPain_level(),
-                Person1.symptom2.getPain_characteristics(),Person1.symptom2.getPain_situation(),
-                Person1.symptom2.getAccompany_pain(),Person1.symptom2.getAdditional());
-        if(checkIsBetween(Person1.symptom3.getDate())) adapter.addItem(Person1.symptom3.getDate(),
-                Person1.symptom3.getPart()+Person1.symptom3.getPain_level()
-                ,Person1.symptom3.getPart(),Person1.symptom3.getPain_level(),
-                Person1.symptom3.getPain_characteristics(),Person1.symptom3.getPain_situation(),
-                Person1.symptom3.getAccompany_pain(),Person1.symptom3.getAdditional());
-        if(checkIsBetween(Person1.symptom4.getDate())) adapter.addItem(Person1.symptom4.getDate(),
-                Person1.symptom4.getPart()+Person1.symptom4.getPain_level()
-                ,Person1.symptom4.getPart(),Person1.symptom4.getPain_level(),
-                Person1.symptom4.getPain_characteristics(),Person1.symptom4.getPain_situation(),
-                Person1.symptom4.getAccompany_pain(),Person1.symptom4.getAdditional());
-        if(checkIsBetween(Person1.symptom5.getDate())) adapter.addItem(Person1.symptom5.getDate(),
-                Person1.symptom5.getPart()+Person1.symptom5.getPain_level()
-                ,Person1.symptom5.getPart(),Person1.symptom5.getPain_level(),
-                Person1.symptom5.getPain_characteristics(),Person1.symptom5.getPain_situation(),
-                Person1.symptom5.getAccompany_pain(),Person1.symptom5.getAdditional());
-        if(checkIsBetween(Person1.symptom6.getDate())) adapter.addItem(Person1.symptom6.getDate(),
-                Person1.symptom6.getPart()+Person1.symptom6.getPain_level()
-                ,Person1.symptom6.getPart(),Person1.symptom6.getPain_level(),
-                Person1.symptom6.getPain_characteristics(),Person1.symptom6.getPain_situation(),
-                Person1.symptom6.getAccompany_pain(),Person1.symptom6.getAdditional());
-        if(checkIsBetween(Person1.symptom7.getDate())) adapter.addItem(Person1.symptom7.getDate(),
-                Person1.symptom7.getPart()+Person1.symptom7.getPain_level()
-                ,Person1.symptom7.getPart(),Person1.symptom7.getPain_level(),
-                Person1.symptom7.getPain_characteristics(),Person1.symptom7.getPain_situation(),
-                Person1.symptom7.getAccompany_pain(),Person1.symptom7.getAdditional());
-        if(checkIsBetween(Person1.symptom8.getDate())) adapter.addItem(Person1.symptom8.getDate(),
-                Person1.symptom8.getPart()+Person1.symptom8.getPain_level()
-                ,Person1.symptom8.getPart(),Person1.symptom8.getPain_level(),
-                Person1.symptom8.getPain_characteristics(),Person1.symptom8.getPain_situation(),
-                Person1.symptom8.getAccompany_pain(),Person1.symptom8.getAdditional());
-        if(checkIsBetween(Person1.symptom9.getDate())) adapter.addItem(Person1.symptom9.getDate(),
-                Person1.symptom9.getPart()+Person1.symptom9.getPain_level()
-                ,Person1.symptom9.getPart(),Person1.symptom9.getPain_level(),
-                Person1.symptom9.getPain_characteristics(),Person1.symptom9.getPain_situation(),
-                Person1.symptom9.getAccompany_pain(),Person1.symptom9.getAdditional());
-        if(checkIsBetween(Person1.symptom10.getDate())) adapter.addItem(Person1.symptom10.getDate(),
-                Person1.symptom10.getPart()+Person1.symptom10.getPain_level()
-                ,Person1.symptom10.getPart(),Person1.symptom10.getPain_level(),
-                Person1.symptom10.getPain_characteristics(),Person1.symptom10.getPain_situation(),
-                Person1.symptom10.getAccompany_pain(),Person1.symptom10.getAdditional());
-        if(checkIsBetween(Person1.symptom11.getDate())) adapter.addItem(Person1.symptom11.getDate(),
-                Person1.symptom11.getPart()+Person1.symptom11.getPain_level()
-                ,Person1.symptom11.getPart(),Person1.symptom11.getPain_level(),
-                Person1.symptom11.getPain_characteristics(),Person1.symptom11.getPain_situation(),
-                Person1.symptom11.getAccompany_pain(),Person1.symptom11.getAdditional());
-        if(checkIsBetween(Person1.symptom12.getDate())) adapter.addItem(Person1.symptom12.getDate(),
-                Person1.symptom12.getPart()+Person1.symptom12.getPain_level()
-                ,Person1.symptom12.getPart(),Person1.symptom12.getPain_level(),
-                Person1.symptom12.getPain_characteristics(),Person1.symptom12.getPain_situation(),
-                Person1.symptom12.getAccompany_pain(),Person1.symptom12.getAdditional());
+            //데이터의 날짜가 datePicker의 두 날짜 사이에있으면 true 반환
+        for(int i=0;i<Person1.symptom.length;i++){
+            if (checkIsBetween(Person1.symptom[i].getDate())&&checkSymptom(index,Person1.symptom[i].getPart()))
+                adapter.addItem(Person1.symptom[i].getDate(),
+                        Person1.symptom[i].getPart() + Person1.symptom[i].getPain_level()
+                        , Person1.symptom[i].getPart(), Person1.symptom[i].getPain_level(),
+                        Person1.symptom[i].getPain_characteristics(), Person1.symptom[i].getPain_situation(),
+                        Person1.symptom[i].getAccompany_pain(), Person1.symptom[i].getAdditional());
+        }
+
+//            if (checkIsBetween(Person1.symptom2.getDate())&&checkSymptom(index,Person1.symptom2.getPart()))
+//                adapter.addItem(Person1.symptom2.getDate(),
+//                        Person1.symptom2.getPart() + Person1.symptom2.getPain_level()
+//                        , Person1.symptom2.getPart(), Person1.symptom2.getPain_level(),
+//                        Person1.symptom2.getPain_characteristics(), Person1.symptom2.getPain_situation(),
+//                        Person1.symptom2.getAccompany_pain(), Person1.symptom2.getAdditional());
+//            if (checkIsBetween(Person1.symptom3.getDate())&&checkSymptom(index,Person1.symptom3.getPart()))
+//                adapter.addItem(Person1.symptom3.getDate(),
+//                        Person1.symptom3.getPart() + Person1.symptom3.getPain_level()
+//                        , Person1.symptom3.getPart(), Person1.symptom3.getPain_level(),
+//                        Person1.symptom3.getPain_characteristics(), Person1.symptom3.getPain_situation(),
+//                        Person1.symptom3.getAccompany_pain(), Person1.symptom3.getAdditional());
+//            if (checkIsBetween(Person1.symptom4.getDate())&&checkSymptom(index,Person1.symptom4.getPart()))
+//                adapter.addItem(Person1.symptom4.getDate(),
+//                        Person1.symptom4.getPart() + Person1.symptom4.getPain_level()
+//                        , Person1.symptom4.getPart(), Person1.symptom4.getPain_level(),
+//                        Person1.symptom4.getPain_characteristics(), Person1.symptom4.getPain_situation(),
+//                        Person1.symptom4.getAccompany_pain(), Person1.symptom4.getAdditional());
+//            if (checkIsBetween(Person1.symptom5.getDate())&&checkSymptom(index,Person1.symptom5.getPart()))
+//                adapter.addItem(Person1.symptom5.getDate(),
+//                        Person1.symptom5.getPart() + Person1.symptom5.getPain_level()
+//                        , Person1.symptom5.getPart(), Person1.symptom5.getPain_level(),
+//                        Person1.symptom5.getPain_characteristics(), Person1.symptom5.getPain_situation(),
+//                        Person1.symptom5.getAccompany_pain(), Person1.symptom5.getAdditional());
+//            if (checkIsBetween(Person1.symptom6.getDate())&&checkSymptom(index,Person1.symptom6.getPart()))
+//                adapter.addItem(Person1.symptom6.getDate(),
+//                        Person1.symptom6.getPart() + Person1.symptom6.getPain_level()
+//                        , Person1.symptom6.getPart(), Person1.symptom6.getPain_level(),
+//                        Person1.symptom6.getPain_characteristics(), Person1.symptom6.getPain_situation(),
+//                        Person1.symptom6.getAccompany_pain(), Person1.symptom6.getAdditional());
+//            if (checkIsBetween(Person1.symptom7.getDate())&&checkSymptom(index,Person1.symptom7.getPart()))
+//                adapter.addItem(Person1.symptom7.getDate(),
+//                        Person1.symptom7.getPart() + Person1.symptom7.getPain_level()
+//                        , Person1.symptom7.getPart(), Person1.symptom7.getPain_level(),
+//                        Person1.symptom7.getPain_characteristics(), Person1.symptom7.getPain_situation(),
+//                        Person1.symptom7.getAccompany_pain(), Person1.symptom7.getAdditional());
+//            if (checkIsBetween(Person1.symptom8.getDate())&&checkSymptom(index,Person1.symptom8.getPart()))
+//                adapter.addItem(Person1.symptom8.getDate(),
+//                        Person1.symptom8.getPart() + Person1.symptom8.getPain_level()
+//                        , Person1.symptom8.getPart(), Person1.symptom8.getPain_level(),
+//                        Person1.symptom8.getPain_characteristics(), Person1.symptom8.getPain_situation(),
+//                        Person1.symptom8.getAccompany_pain(), Person1.symptom8.getAdditional());
+//            if (checkIsBetween(Person1.symptom9.getDate())&&checkSymptom(index,Person1.symptom9.getPart()))
+//                adapter.addItem(Person1.symptom9.getDate(),
+//                        Person1.symptom9.getPart() + Person1.symptom9.getPain_level()
+//                        , Person1.symptom9.getPart(), Person1.symptom9.getPain_level(),
+//                        Person1.symptom9.getPain_characteristics(), Person1.symptom9.getPain_situation(),
+//                        Person1.symptom9.getAccompany_pain(), Person1.symptom9.getAdditional());
+//            if (checkIsBetween(Person1.symptom10.getDate())&&checkSymptom(index,Person1.symptom10.getPart()))
+//                adapter.addItem(Person1.symptom10.getDate(),
+//                        Person1.symptom10.getPart() + Person1.symptom10.getPain_level()
+//                        , Person1.symptom10.getPart(), Person1.symptom10.getPain_level(),
+//                        Person1.symptom10.getPain_characteristics(), Person1.symptom10.getPain_situation(),
+//                        Person1.symptom10.getAccompany_pain(), Person1.symptom10.getAdditional());
+//            if (checkIsBetween(Person1.symptom11.getDate())&&checkSymptom(index,Person1.symptom11.getPart()))
+//                adapter.addItem(Person1.symptom11.getDate(),
+//                        Person1.symptom11.getPart() + Person1.symptom11.getPain_level()
+//                        , Person1.symptom11.getPart(), Person1.symptom11.getPain_level(),
+//                        Person1.symptom11.getPain_characteristics(), Person1.symptom11.getPain_situation(),
+//                        Person1.symptom11.getAccompany_pain(), Person1.symptom11.getAdditional());
+//            if (checkIsBetween(Person1.symptom12.getDate())&&checkSymptom(index,Person1.symptom12.getPart()))
+//                adapter.addItem(Person1.symptom12.getDate(),
+//                        Person1.symptom12.getPart() + Person1.symptom12.getPain_level()
+//                        , Person1.symptom12.getPart(), Person1.symptom12.getPain_level(),
+//                        Person1.symptom12.getPain_characteristics(), Person1.symptom12.getPain_situation(),
+//                        Person1.symptom12.getAccompany_pain(), Person1.symptom12.getAdditional());
 
         adapter.notifyDataSetChanged();
     }
+
+
+
+
+    //데이터의 날짜가 datePicker의 두 날짜 사이에있으면 true 반환
     public boolean checkIsBetween(String date){
         try {
             //startDate,endDate : DatePicker에서 선택한 시작/종료 날짜
@@ -318,7 +310,7 @@ public class MeetingDoc extends AppCompatActivity {
             CheckDate  = Calendar.getInstance();
             CheckDate.setTime(date_wantCheck);
 
-            if(CheckDate.before(EndDay)&&!CheckDate.before(StartDay)){
+            if((CheckDate.before(EndDay)||CheckDate.equals(EndDay))&&!CheckDate.before(StartDay)){
                 Log.d("myapp","통과됨");
                 return true;
             }
