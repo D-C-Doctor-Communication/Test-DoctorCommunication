@@ -15,26 +15,30 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/CA_move_to_left"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:id="@+id/previous_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="60dp"
-            android:background="@drawable/ic_move_to_left" />
+            android:background="@drawable/ic_previous_btn"
+            android:backgroundTint="@color/black"/>
 
         <TextView
-            android:layout_width="123dp"
-            android:layout_height="42dp"
+            android:id="@+id/month_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="60dp"
             android:text="2021년 7월"
-            android:textSize="25dp" />
+            android:textSize="20sp"/>
 
         <Button
-            android:id="@+id/CA_move_to_right"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="50dp"
-            android:background="@drawable/ic_move_to_left" />
+            android:id="@+id/next_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="60dp"
+            android:background="@drawable/ic_next_btn"
+            android:backgroundTint="@color/black" />
+
     </LinearLayout>
 
 
@@ -107,16 +111,6 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chart"
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_below="@id/group_num"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="201dp"
-        tools:ignore="MissingClass" />
 
 
 </RelativeLayout>

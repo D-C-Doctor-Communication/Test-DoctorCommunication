@@ -3,13 +3,7 @@ plugins {
 }
 
 android {
-    repositories {
-        maven { url 'https://jitpack.io' }
-    }
 
-    dependencies {
-        implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
