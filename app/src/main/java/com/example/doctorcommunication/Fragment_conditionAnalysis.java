@@ -100,7 +100,7 @@ public class Fragment_conditionAnalysis extends Fragment {
         });
 
 
-        //상단 날짜 선택 바 -> 다음음 버튼 눌렀을 경우 1달씩 림
+        //상단 날짜 선택 바 -> 다음음 버튼 눌렀을 경우 1달씩 늘림
         nextBtn.setOnClickListener(v -> {
             time.add(Calendar.MONTH , +1);
             String nextMonthText = simpleFormatting.format(time.getTime());
@@ -117,6 +117,20 @@ public class Fragment_conditionAnalysis extends Fragment {
         });
 
 
+        //그래프
+        //그래프에 들어갈 점 배열
+        //주간 심각도 평균 구하기
+
+
+
+        int[] points = {4,3,6,3}; //차례대로 1주차,2주차,3주차,4주차
+
+        CAGraph graphview = (CAGraph) view.findViewById(R.id.GraphView);
+
+        //단위 1, 원점 0, 총 10줄로 나누어진 그래프
+        graphview.setPoints(points, 2, 0, 5);
+        //세팅된대로 그래프를 그림
+        graphview.drawForBeforeDrawView();
 
 
         return view;
@@ -132,10 +146,10 @@ public class Fragment_conditionAnalysis extends Fragment {
         return strDate;
     }
     //데이터의 기록 날짜가 상단 바에서 선택한 달과 일치하면 true 반환
-    public static boolean isInSameMonth(String recordDate,String strDate){ //0000년 00월
+    public static boolean isInSameMonth(String recordedDate,String strDate){ //0000년 00월
         Log.d("myapp","isInSameMonth 진입");
         //0000.00.00(데이터.getDate())과 선택한(0000.00) 달 비교
-        if(recordDate.substring(0,7).equals(strDate)) return true;
+        if(recordedDate.substring(0,7).equals(strDate)) return true;
         return false;
     }
 
@@ -175,6 +189,32 @@ public class Fragment_conditionAnalysis extends Fragment {
     }
 
 
+    static boolean isInSameWeek(String recordedDate,String strDate){
+
+        Log.d("myapp","isInSameMonth 진입");
+        //0000.00.00(데이터.getDate())과 선택한(0000.00) 달 비교
+        if(recordedDate.substring(0,7).equals(strDate)){
+            if()
+        }
+
+        return false;
+    }
+//그래프의 x값(각 주별 심각도 평균)
+    static int getAverageOfWeek(int num,String strDate){
+        int dataNum;
+        switch (num){
+            case 1 : {
+                for(int i=0;i<Person1.symptom.length;i++){
+                    if(isInSameMonth(Person1.symptom[i].getDate(),strDate)){
+
+                    }
+                }
+            }
+        }
+
+
+        return 0;
+    }
 
 
 //[병원 예약 횟수, 심각도 5 이상, 총 기록된 통증 수]와 관련된 작업 클래스
