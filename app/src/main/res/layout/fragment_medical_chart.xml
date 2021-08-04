@@ -1,14 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:id="@+id/select_user"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#D8D8D8"
+        android:layout_marginTop="?attr/actionBarSize"/>
+
+
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:layout_below="@+id/select_user"
+        android:layout_alignParentStart="true"
+        app:mcv_selectionColor="#E9F4FC"
+        app:mcv_showOtherDates="all"
+        app:mcv_headerTextAppearance="@style/Monthlycalendar_header"
+/>
+
     <TextView
-        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="진료기록"
-        android:textSize="50sp"/>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="31dp"
+        android:layout_marginBottom="249dp" />
+
+    <!--
+            app:mcv_calendarMode="mode"
+            app:mcv_firstDayOfWeek="enum"
+
+            app:mcv_showOtherDates="option"
+            app:mcv_arrowColor="color"
+            app:mcv_selectionColor="color"
+            app:mcv_headerTextAppearance="style"
+            app:mcv_dateTextAppearance="style"
+            app:mcv_weekDayTextAppearance="style"
+            app:mcv_weekDayLabels="array"
+            app:mcv_monthLabels="array"
+            app:mcv_tileSize="dimension"
+            app:mcv_tileWidth="dimension"
+            app:mcv_tileHeight="dimension"
+            app:mcv_firstDayOfWeek="enum"
+            app:mcv_leftArrowMask="drawable"
+            app:mcv_rightArrowMask="drawable"
+            app:mcv_calendarMode="mode"
+
+    -->
 
 </RelativeLayout>

@@ -7,6 +7,15 @@
         <item name="android:background">#4B000000</item>
     </style>
 
+
+
+    <!--Calendar-->
+    <style name="Monthlycalendar_header">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+
+
     <!--HOME_CARDS-->
     <style name="cards">
         <item name="android:layout_width">141dp</item>
