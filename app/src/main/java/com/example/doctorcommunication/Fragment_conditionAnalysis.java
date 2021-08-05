@@ -80,18 +80,6 @@ public class Fragment_conditionAnalysis extends Fragment {
         //증상 순위
         setRanking(dataString,firstSymptom,secondSymptom,thirdSymptom);
 
-        //그래프
-        int[] points = getAverageOfWeek(dataString); //주당 심각도의 평균이 배열값으로 들어감
-        //그래프
-        CAGraph graphview = (CAGraph) view.findViewById(R.id.GraphView);
-        //단위 2, 원점 0, 총(세로) 5줄로 나누어진 그래프
-        graphview.setPoints(points, 2, 0, 5);
-        //세팅된대로 그래프를 그림
-        graphview.drawForBeforeDrawView();
-
-
-
-
 
 
 
@@ -106,12 +94,6 @@ public class Fragment_conditionAnalysis extends Fragment {
             severity_more_5.setText(OrganizedData.moreThanFive(dataStr)+"회");
             accrue_symptom_count.setText(OrganizedData.accruedData(dataStr)+"개");
 
-            //그래프
-            int[] repoints = getAverageOfWeek(dataStr); //주당 심각도의 평균이 배열값으로 들어감
-            //단위 2, 원점 0, 총(세로) 5줄로 나누어진 그래프
-            graphview.setPoints(repoints, 2, 0, 5);
-            //세팅된대로 그래프를 그림
-            graphview.drawForBeforeDrawView();
 
             //증상 순위
             setRanking(dataStr,firstSymptom,secondSymptom,thirdSymptom);
@@ -129,13 +111,6 @@ public class Fragment_conditionAnalysis extends Fragment {
             reservation_count.setText(OrganizedData.appointmentDC(dataStr)+"회");
             severity_more_5.setText(OrganizedData.moreThanFive(dataStr)+"회");
             accrue_symptom_count.setText(OrganizedData.accruedData(dataStr)+"개");
-            //그래프
-            int[] repoints = getAverageOfWeek(dataStr); //주당 심각도의 평균이 배열값으로 들어감
-            Log.d("check",dataStr + " and " + repoints[0]+ " and " + repoints[1]+ " and " + repoints[2]+ " and " + repoints[3]);
-            //단위 2, 원점 0, 총(세로) 5줄로 나누어진 그래프
-            graphview.setPoints(repoints, 2, 0, 5);
-            //세팅된대로 그래프를 그림
-            graphview.drawForBeforeDrawView();
 
             //증상 순위
             setRanking(dataStr,firstSymptom,secondSymptom,thirdSymptom);
