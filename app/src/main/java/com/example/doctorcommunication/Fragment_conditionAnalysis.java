@@ -3,6 +3,7 @@ package com.example.doctorcommunication;
 //android 버전 30쓸거면 androidx.Fragment 사용할것
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -51,25 +52,26 @@ import java.util.Map;
 public class Fragment_conditionAnalysis extends Fragment {
 
     //상단 날짜 선택 바
-    Button nextBtn,previousBtn;
-    TextView monthSelect;
+    private Button nextBtn,previousBtn;
+    private TextView monthSelect;
 
     //[병원 예약 횟수, 심각도 5 이상, 총 기록된 통증 수]
     //병원 예약 횟수 텍스트
-    TextView reservation_count;
+    private TextView reservation_count;
     //심각도 5 이상 텍스트
-    TextView severity_more_5;
+    private TextView severity_more_5;
     //총 기록된 통증 수 텍스트
-    TextView accrue_symptom_count;
+    private TextView accrue_symptom_count;
 
     //그래프
     private LineChart lineChart;
-
+    //그래프 증상 선택 버튼
+    private Button select_symptom;
 
     //증상 빈도 순위
-    TextView firstSymptom;
-    TextView secondSymptom;
-    TextView thirdSymptom;
+    private TextView firstSymptom;
+    private TextView secondSymptom;
+    private TextView thirdSymptom;
 
 
     @SuppressLint("SetTextI18n")
@@ -94,7 +96,8 @@ public class Fragment_conditionAnalysis extends Fragment {
         thirdSymptom = view.findViewById(R.id.third_symptom);
         //그래프
         lineChart = view.findViewById(R.id.condition_chart);
-
+        //그래프 증상선택
+        select_symptom = view.findViewById(R.id.select_symptom);
 
 
 
@@ -116,6 +119,19 @@ public class Fragment_conditionAnalysis extends Fragment {
 
 
 
+        //그래프 증상선택 버튼 이벤트
+        select_symptom.setOnClickListener(v -> {
+            final View popupView = getLayoutInflater().inflate(R.layout.popup_selectsymptom, null);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setView(popupView);
+
+            final AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+
+            //취소버튼
+            Button btnApplySym = popupView.findViewById(R.id.btn_apply_symptom);
+            btnApplySym.setOnClickListener(v1 -> alertDialog.dismiss());
+        });
 
 
 
