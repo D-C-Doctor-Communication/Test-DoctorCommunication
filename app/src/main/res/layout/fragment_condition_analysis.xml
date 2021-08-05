@@ -109,19 +109,6 @@
         android:layout_below="@+id/group_num"
         android:layout_alignParentStart="true" />
 
-
-    <com.example.doctorcommunication.CAGraph
-        android:id="@+id/GraphView"
-        android:layout_width="300dp"
-        android:layout_height="160dp"
-        android:layout_below="@id/group_num"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
-        gyjmoble:lineColor="#FFEB3B"
-        gyjmoble:lineThickness="2dp"
-        gyjmoble:pointColor="#FFEB3B"
-        gyjmoble:pointSize="2dp" />
-
     <View
         style="@style/Divider"
         android:layout_width="match_parent"
@@ -166,5 +153,16 @@
         android:background="#23535353"
         android:gravity="center"
         android:textSize="15sp" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/condition_chart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/group_num"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="1dp" />
 
 </RelativeLayout>

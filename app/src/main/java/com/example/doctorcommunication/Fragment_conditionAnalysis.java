@@ -1,16 +1,42 @@
 package com.example.doctorcommunication;
 
 //android 버전 30쓸거면 androidx.Fragment 사용할것
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.ChartTouchListener;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +61,9 @@ public class Fragment_conditionAnalysis extends Fragment {
     TextView severity_more_5;
     //총 기록된 통증 수 텍스트
     TextView accrue_symptom_count;
+
+    //그래프
+    private LineChart lineChart;
 
 
     //증상 빈도 순위
@@ -63,6 +92,11 @@ public class Fragment_conditionAnalysis extends Fragment {
         firstSymptom = view.findViewById(R.id.first_symptom);
         secondSymptom = view.findViewById(R.id.second_symptom);
         thirdSymptom = view.findViewById(R.id.third_symptom);
+        //그래프
+        lineChart = view.findViewById(R.id.condition_chart);
+
+
+
 
 
         //현재 날짜를 기준으로 상단 선택 바 텍스트 기본 지정
@@ -79,6 +113,8 @@ public class Fragment_conditionAnalysis extends Fragment {
         accrue_symptom_count.setText(OrganizedData.accruedData(dataString)+"개");
         //증상 순위
         setRanking(dataString,firstSymptom,secondSymptom,thirdSymptom);
+
+
 
 
 
@@ -280,4 +316,63 @@ public class Fragment_conditionAnalysis extends Fragment {
         }
 
     }
+
+//그래프 관련 메소드
+    //그래프 초기화(기본설정)
+    private void initGraph(){
+        //그래프 데이터 리스트 생성 (x축 한칸당 값, y값)
+        List<Entry> entries = new ArrayList<>();
+        entries.add(new Entry(1, 1));
+        entries.add(new Entry(2, 2));
+        entries.add(new Entry(3, 0));
+        entries.add(new Entry(4, 4));
+
+
+        //두통에 대한 그래프 선 그리기
+        LineDataSet lineDataSet = new LineDataSet(entries, "두통");
+        lineDataSet.setLineWidth(2);
+        lineDataSet.setCircleRadius(3);
+        lineDataSet.setCircleColor(Color.parseColor("#FFA1B4DC"));
+        lineDataSet.setCircleHoleColor(Color.BLUE);
+        lineDataSet.setColor(Color.parseColor("#FFA1B4DC"));
+        lineDataSet.setDrawCircleHole(false);
+        lineDataSet.setDrawCircles(true);
+        lineDataSet.setDrawHorizontalHighlightIndicator(true);
+        lineDataSet.setDrawHighlightIndicators(true);
+        lineDataSet.setDrawValues(false);
+
+        LineData lineData = new LineData(lineDataSet);
+        lineChart.setData(lineData);
+
+        //X값 속성 설정
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); //x축이 아래에 위치하도록 설정
+        xAxis.setTextColor(Color.BLACK);
+        xAxis.enableGridDashedLine(20, 20, 0);
+        xAxis.setDrawLabels(true); //왼쪽 라벨
+        xAxis.setDrawAxisLine(false); //왼쪽 라벨라인
+        xAxis.setDrawGridLines(false); //세로선
+        //Y값 속성 설정
+        YAxis yLAxis = lineChart.getAxisLeft();
+        yLAxis.setTextColor(Color.BLACK);
+        YAxis yRAxis = lineChart.getAxisRight();
+        yRAxis.setDrawLabels(false); //오른쪽 라벨
+        yRAxis.setDrawAxisLine(false); //오른쪽 라벨라인
+        yRAxis.setDrawGridLines(false);
+
+        //부가설명 공백으로 처리
+        Description description = new Description();
+        description.setText("");
+        lineChart.setDescription(description);
+
+        lineChart.setDoubleTapToZoomEnabled(false); //그래프 이동(줌기능)
+        lineChart.setDrawGridBackground(false);
+
+        // lineChart.animateY(2000, Easing.EasingOption.EaseInCubic);
+        lineChart.invalidate();
+
+        return;
+    }
+
+
 }
