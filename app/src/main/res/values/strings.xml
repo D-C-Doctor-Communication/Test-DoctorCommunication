@@ -7,4 +7,13 @@
     <string name="symthom_description_4">악화 상황</string>
     <string name="symthom_description_5">동반 증상</string>
     <string name="symthom_description_6">추가사항</string>
+
+
+    <string-array name="symptom_list">
+        <item>가래</item>
+        <item>복통</item>
+        <item>두통</item>
+        <item>허리통증</item>
+    </string-array>
+
 </resources>

@@ -69,8 +69,10 @@ public class Fragment_conditionAnalysis extends Fragment {
     private LineChart lineChart;
     //그래프 증상 선택 버튼
     private Button select_symptom;
-    //팝업으로 증상 선택 시 증상 목록
-    final String[] symptoms = new String[]{"가래","복통","두통","허리통증"};
+    //팝업으로 증상 선택 처리
+    AlertDialog.Builder builder;
+    //사용자가 선택한 증상 목록
+    List<String> selectedSymptom;
 
     //증상 빈도 순위
     private TextView firstSymptom;
@@ -126,15 +128,20 @@ public class Fragment_conditionAnalysis extends Fragment {
 
         //그래프 증상선택 버튼 이벤트
         select_symptom.setOnClickListener(v -> {
-            new AlertDialog.Builder(getContext()).setTitle("선택").setMultiChoiceItems(
-                    symptoms, null, new DialogInterface.OnMultiChoiceClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                            Toast.makeText(getActivity(), "words : " + symptoms[which], Toast.LENGTH_SHORT).show(); }
-                    }).setNeutralButton("closed", null)
-                    .setPositiveButton("OK",null)
-                    .setNegativeButton("cancel",null)
-                    .show();
+//            //증상목록은 string파일에..
+//            final boolean[] checkedItems = {false, false, false, false};
+//            new AlertDialog.Builder(getContext()).setTitle("증상을 선택해주세요").setMultiChoiceItems(
+//                    symptoms, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+//                            Log.d("myapp", "words : " + symptoms[which]);
+//                        }
+//                    }).setNeutralButton("closed", null)
+//                    .setPositiveButton("OK", null)
+//                    .setNegativeButton("cancel", null)
+//                    .show();
+            showDialog();
+
         });
 
 
@@ -179,7 +186,44 @@ public class Fragment_conditionAnalysis extends Fragment {
         return view;
     }
 
+    public void showDialog(){
+        selectedSymptom = new ArrayList<>();
+        builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("증상을 선택하세요");
 
+        //클릭이벤트
+        builder.setMultiChoiceItems(R.array.symptom_list, null, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                String[] items = getResources().getStringArray(R.array.symptom_list);
+                if(isChecked){
+                    selectedSymptom.add(items[which]);
+                }
+                else if(selectedSymptom.contains(items[which])){
+                    selectedSymptom.remove(items[which]);
+                }
+            }
+        });
+        builder.setPositiveButton("적용하기", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String final_selection = "";
+
+                for(String item : selectedSymptom){
+                    final_selection = final_selection + "\n" + item;
+                }
+                Log.d("myapp",getActivity().getApplicationContext()+"선택된 아이템은 "+final_selection);
+            }
+        });
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 
 
 
