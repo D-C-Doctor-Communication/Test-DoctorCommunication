@@ -4,6 +4,7 @@ package com.example.doctorcommunication;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -20,6 +21,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -67,11 +69,14 @@ public class Fragment_conditionAnalysis extends Fragment {
     private LineChart lineChart;
     //그래프 증상 선택 버튼
     private Button select_symptom;
+    //팝업으로 증상 선택 시 증상 목록
+    final String[] symptoms = new String[]{"가래","복통","두통","허리통증"};
 
     //증상 빈도 순위
     private TextView firstSymptom;
     private TextView secondSymptom;
     private TextView thirdSymptom;
+
 
 
     @SuppressLint("SetTextI18n")
@@ -121,16 +126,15 @@ public class Fragment_conditionAnalysis extends Fragment {
 
         //그래프 증상선택 버튼 이벤트
         select_symptom.setOnClickListener(v -> {
-            final View popupView = getLayoutInflater().inflate(R.layout.popup_selectsymptom, null);
-            final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setView(popupView);
-
-            final AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-
-            //취소버튼
-            Button btnApplySym = popupView.findViewById(R.id.btn_apply_symptom);
-            btnApplySym.setOnClickListener(v1 -> alertDialog.dismiss());
+            new AlertDialog.Builder(getContext()).setTitle("선택").setMultiChoiceItems(
+                    symptoms, null, new DialogInterface.OnMultiChoiceClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                            Toast.makeText(getActivity(), "words : " + symptoms[which], Toast.LENGTH_SHORT).show(); }
+                    }).setNeutralButton("closed", null)
+                    .setPositiveButton("OK",null)
+                    .setNegativeButton("cancel",null)
+                    .show();
         });
 
 
@@ -174,6 +178,7 @@ public class Fragment_conditionAnalysis extends Fragment {
 
         return view;
     }
+
 
 
 
