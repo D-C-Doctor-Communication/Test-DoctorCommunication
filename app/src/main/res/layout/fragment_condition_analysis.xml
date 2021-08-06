@@ -41,7 +41,6 @@
 
     </LinearLayout>
 
-
     <LinearLayout
         android:id="@+id/group_num"
         android:layout_width="match_parent"

@@ -511,10 +511,10 @@ public class Fragment_conditionAnalysis extends Fragment {
             entries2.add(new Entry(i,(float)dataArray2[i-1]));
         }
         for(int i=1;i<=4;i++){
-            Log.d("myapp",entries1.get(i-1).toString());
+            Log.d("myapp","첫번째 데이터 : "+entries1.get(i-1).toString());
         }
         for(int i=1;i<=4;i++){
-            Log.d("myapp",entries2.get(i-1).toString());
+            Log.d("myapp","두번째 데이터 : "+entries2.get(i-1).toString());
         }
         //그래프선 데이터
         LineData lineData = new LineData();
@@ -531,11 +531,10 @@ public class Fragment_conditionAnalysis extends Fragment {
         lineDataSet1.setDrawHorizontalHighlightIndicator(true);
         lineDataSet1.setDrawHighlightIndicators(true);
         lineDataSet1.setDrawValues(false);
-        //첫번째 증상 데이터와 그래프 선 데이터 결합
-        lineData.addDataSet(lineDataSet1);
+
 
         //두번째 증상에 대한 그래프 선 그리기
-        LineDataSet lineDataSet2 = new LineDataSet(entries1, secondSymp);
+        LineDataSet lineDataSet2 = new LineDataSet(entries2, secondSymp);
         lineDataSet2.setLineWidth(2);
         lineDataSet2.setCircleRadius(3);
         lineDataSet2.setCircleColor(Color.parseColor("#FFE9E965"));
@@ -546,6 +545,9 @@ public class Fragment_conditionAnalysis extends Fragment {
         lineDataSet2.setDrawHorizontalHighlightIndicator(true);
         lineDataSet2.setDrawHighlightIndicators(true);
         lineDataSet2.setDrawValues(false);
+
+        //첫번째 증상 데이터와 그래프 선 데이터 결합
+        lineData.addDataSet(lineDataSet1);
         //두번째 증상 데이터와 그래프 선 데이터 결합
         lineData.addDataSet(lineDataSet2);
 
@@ -553,7 +555,6 @@ public class Fragment_conditionAnalysis extends Fragment {
 
         //레전드 설정 (차트 밑에 색과 라벨을 나타내는 설정)
         Legend legend = lineChart.getLegend();
-
         legend.setWordWrapEnabled(true);
         LegendEntry l1 = new LegendEntry(firstSymp,Legend.LegendForm.SQUARE,10f,2f,null,Color.parseColor("#FF247D30"));
         LegendEntry l2 = new LegendEntry(secondSymp,Legend.LegendForm.SQUARE,10f,2f,null,Color.parseColor("#FFE9E965"));
