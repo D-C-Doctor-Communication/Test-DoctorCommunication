@@ -29,6 +29,8 @@ import androidx.fragment.app.Fragment;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -55,7 +57,7 @@ public class Fragment_conditionAnalysis extends Fragment {
 
     //상단 날짜 선택 바
     private Button nextBtn,previousBtn;
-    private TextView monthSelect;
+    TextView monthSelect;
 
     //[병원 예약 횟수, 심각도 5 이상, 총 기록된 통증 수]
     //병원 예약 횟수 텍스트
@@ -103,14 +105,14 @@ public class Fragment_conditionAnalysis extends Fragment {
         thirdSymptom = view.findViewById(R.id.third_symptom);
         //그래프
         lineChart = view.findViewById(R.id.condition_chart);
-        //그래프 증상선택
+        //그래프 증상선택 버튼
         select_symptom = view.findViewById(R.id.select_symptom);
 
 
 
 
         //현재 날짜를 기준으로 상단 선택 바 텍스트 기본 지정
-        SimpleDateFormat simpleFormatting = new SimpleDateFormat ( "yyyy년 MM월");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleFormatting = new SimpleDateFormat ( "yyyy년 MM월");
         Calendar time = Calendar.getInstance();
         String monthSelectText = simpleFormatting.format(time.getTime());
         monthSelect.setText(monthSelectText);
@@ -121,27 +123,20 @@ public class Fragment_conditionAnalysis extends Fragment {
         reservation_count.setText(OrganizedData.appointmentDC(dataString)+"회");
         severity_more_5.setText(OrganizedData.moreThanFive(dataString)+"회");
         accrue_symptom_count.setText(OrganizedData.accruedData(dataString)+"개");
-        //증상 순위
+        //그래프 초기 설정 (기본 두통과 가래로 선택)
+        initGraph();
+        chartEvent(dataString,"두통","가래");
+        //증상 순위 (날짜에 맞춰 텍스트 지정)
         setRanking(dataString,firstSymptom,secondSymptom,thirdSymptom);
+
+
 
 
 
         //그래프 증상선택 버튼 이벤트
         select_symptom.setOnClickListener(v -> {
-//            //증상목록은 string파일에..
-//            final boolean[] checkedItems = {false, false, false, false};
-//            new AlertDialog.Builder(getContext()).setTitle("증상을 선택해주세요").setMultiChoiceItems(
-//                    symptoms, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-//                            Log.d("myapp", "words : " + symptoms[which]);
-//                        }
-//                    }).setNeutralButton("closed", null)
-//                    .setPositiveButton("OK", null)
-//                    .setNegativeButton("cancel", null)
-//                    .show();
-            showDialog();
-
+            //팝업 생성 메소드
+            showDialog(dataString);
         });
 
 
@@ -156,8 +151,8 @@ public class Fragment_conditionAnalysis extends Fragment {
             reservation_count.setText(OrganizedData.appointmentDC(dataStr)+"회");
             severity_more_5.setText(OrganizedData.moreThanFive(dataStr)+"회");
             accrue_symptom_count.setText(OrganizedData.accruedData(dataStr)+"개");
-
-
+            //그래프 증상선택 버튼 이벤트
+            //
             //증상 순위
             setRanking(dataStr,firstSymptom,secondSymptom,thirdSymptom);
 
@@ -174,7 +169,8 @@ public class Fragment_conditionAnalysis extends Fragment {
             reservation_count.setText(OrganizedData.appointmentDC(dataStr)+"회");
             severity_more_5.setText(OrganizedData.moreThanFive(dataStr)+"회");
             accrue_symptom_count.setText(OrganizedData.accruedData(dataStr)+"개");
-
+            //그래프 증상선택 버튼 이벤트
+            //select_symptom.setOnClickListener(showDialog(dataStr));
             //증상 순위
             setRanking(dataStr,firstSymptom,secondSymptom,thirdSymptom);
         });
@@ -186,35 +182,83 @@ public class Fragment_conditionAnalysis extends Fragment {
         return view;
     }
 
-    public void showDialog(){
+
+    //그래프 - 증상선택기능(팝업)
+    public void showDialog(String monthSelectText){
+        //사용자가 선택한 증상 리스트
         selectedSymptom = new ArrayList<>();
+        //팝업빌더
         builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("증상을 선택하세요");
+
+        //증상 목록 배열
+        final String[] items = getResources().getStringArray(R.array.symptom_list);
+        //증상이 체크되었는지 확인할 bool 배열
+        boolean[] checkedItems = new boolean[items.length];
+        for(int i=0;i<items.length;i++){
+            checkedItems[i] = false;
+        }
 
         //클릭이벤트
         builder.setMultiChoiceItems(R.array.symptom_list, null, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                String[] items = getResources().getStringArray(R.array.symptom_list);
-                if(isChecked){
+
+                //선택하면 리스트에 저장
+                if(isChecked) {
                     selectedSymptom.add(items[which]);
+                    //체크한 증상 표시
+                    checkedItems[which] = isChecked;
                 }
-                else if(selectedSymptom.contains(items[which])){
+                //선택취소하면 리스트에서 삭제
+                else {
                     selectedSymptom.remove(items[which]);
+                    //체크한 증상 표시
+                    checkedItems[which] = false;
+                }
+                //선택한 증상의 개수를 기록해서 2개 이상일 경우 체크박스 비활성화
+                int count = 0;
+                for(int i=0;i<checkedItems.length;i++){
+                    if(checkedItems[i]) count++;
+                }
+                if(count>=3){
+                    Toast.makeText(getActivity(),"최대 2개까지 선택이 가능합니다.",Toast.LENGTH_SHORT).show();
+                    Log.d("myapp","3개 이상 체크함");
+                    checkedItems[which] = false;
+                    ((AlertDialog)dialog).getListView().setItemChecked(which,false);
                 }
             }
         });
+        //적용하기버튼 눌렀을 경우 -> 그래프 데이터에 적용, 그래프 생성
         builder.setPositiveButton("적용하기", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String final_selection = "";
 
-                for(String item : selectedSymptom){
-                    final_selection = final_selection + "\n" + item;
+                String final_selection = "";
+                if(which==DialogInterface.BUTTON_POSITIVE) {
+                    final_selection="";
+                    int selectCount = 0;
+                    for (int i = 0; i < checkedItems.length; i++) {
+                        if (checkedItems[i]) {
+                            selectCount++;
+                            if (selectCount <= 2) {
+                                final_selection += items[i] + ",";
+                            }
+                        }
+                    }
+                }else if(which==DialogInterface.BUTTON_NEUTRAL) dialog.dismiss();
+                //그래프 생성
+                String[] selevtedItem = final_selection.split(",");
+                for(int i=0;i<selevtedItem.length;i++){
+                    Log.d("myapp",getActivity().getApplicationContext()+"선택된 아이템 : "+selevtedItem[i]);
                 }
-                Log.d("myapp",getActivity().getApplicationContext()+"선택된 아이템은 "+final_selection);
+                //체크된 아이템이 하나일때 -> 그래프 한개 생성
+                if(selevtedItem.length==1) chartEvent(monthSelectText,selevtedItem[0]);
+                //체크된 아이템이 두개일때 -> 그래프 두개 생성
+                else if(selevtedItem.length==2) chartEvent(monthSelectText,selevtedItem[0],selevtedItem[1]);
             }
         });
+        //취소버튼 눌렀을 경우 -> popup dialog 삭제
         builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -227,21 +271,19 @@ public class Fragment_conditionAnalysis extends Fragment {
 
 
 
-//기능별 공통사용 메소드
+    //기능별 공통사용 메소드
     //선택한 날과 각 데이터의 달을 비교하기위해 선택한 달을 0000.00형으로 바꿈
     public static String changeToString(String selectedMonth){
-        String strDate = selectedMonth.substring(0,4)+"."+selectedMonth.substring(6,8);
-        return strDate;
+        return selectedMonth.substring(0,4)+"."+selectedMonth.substring(6,8);
     }
     //데이터의 기록 날짜가 상단 바에서 선택한 달과 일치하면 true 반환
     public static boolean isInSameMonth(String recordedDate,String strDate){ //0000년 00월
         //0000.00.00(데이터.getDate())과 선택한(0000.00) 달 비교
-        if(recordedDate.substring(0,7).equals(strDate)) return true;
-        return false;
+        return recordedDate.substring(0, 7).equals(strDate);
     }
 
 
-//증상순위
+    //증상순위
     static void setRanking(String strDate,TextView one,TextView two,TextView three){
         HashMap<String,Integer> data = new HashMap<>();//new에서 타입 파라미터 생략가능
         //각 증상을 key값으로, 증상의 개수를 value값으로 가지는 Map 생성
@@ -276,18 +318,16 @@ public class Fragment_conditionAnalysis extends Fragment {
     }
 
 
-//그래프의 x값(각 주별 심각도 평균)
-    static int[] getAverageOfWeek(String strDate){ //상단바에서 선택한 날짜
-        int[] graphData = new int[4];   //그래프의 x좌표
-        for(int i=0;i<graphData.length;i++){
-            graphData[i] = 0;
-        }
+    //그래프의 x값(각 주별 심각도 평균) - 날짜와 증상이 사용자가 선택한 것과 일치하는지 확인
+    static int[] getAverageOfWeek(String strDate,String symptom){ //상단바에서 선택한 날짜, 증상
+        int[] graphData = new int[4];   //그래프의 x좌표 -> 1,2,3,4주차
         int firstWeek = 0,fNum = 0;     //1주차 심각도의 총합과 개수
         int secondWeek = 0,sNum = 0;    //2주차 심각도의 총합과 개수
         int thirdWeek = 0,tNum = 0;     //3주차 심각도의 총합과 개수
         int fourthWeek = 0,foNum = 0;   //4주차 심각도의 총합과 개수
         for(int i=0;i<Person1.symptom.length;i++){
-            switch (isInSameWeek(Person1.symptom[i].getDate(),strDate)){
+            if(!Person1.symptom[i].getPart().equals(symptom)) continue; //사용자가 선택한 증상인지 확인
+            switch (isInSameWeek(Person1.symptom[i].getDate(),strDate)){ //사용자가 선택한 날짜인지 확인 (1주차면 1,2주차면 2..반환)
                 case 1 : //1주차
                     firstWeek += Person1.symptom[i].getPain_level();
                     fNum++;
@@ -346,7 +386,7 @@ public class Fragment_conditionAnalysis extends Fragment {
 
 
 
-//[병원 예약 횟수, 심각도 5 이상, 총 기록된 통증 수]와 관련된 작업 클래스
+    //[병원 예약 횟수, 심각도 5 이상, 총 기록된 통증 수]와 관련된 작업 클래스
     static class OrganizedData{
         //총 기록된 통증 수
         public static int accruedData(String strDate){
@@ -382,37 +422,16 @@ public class Fragment_conditionAnalysis extends Fragment {
 
     }
 
-//그래프 관련 메소드
+    //그래프 관련 메소드
     //그래프 초기화(기본설정)
     private void initGraph(){
-        //그래프 데이터 리스트 생성 (x축 한칸당 값, y값)
-        List<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(1, 1));
-        entries.add(new Entry(2, 2));
-        entries.add(new Entry(3, 0));
-        entries.add(new Entry(4, 4));
 
-
-        //두통에 대한 그래프 선 그리기
-        LineDataSet lineDataSet = new LineDataSet(entries, "두통");
-        lineDataSet.setLineWidth(2);
-        lineDataSet.setCircleRadius(3);
-        lineDataSet.setCircleColor(Color.parseColor("#FFA1B4DC"));
-        lineDataSet.setCircleHoleColor(Color.BLUE);
-        lineDataSet.setColor(Color.parseColor("#FFA1B4DC"));
-        lineDataSet.setDrawCircleHole(false);
-        lineDataSet.setDrawCircles(true);
-        lineDataSet.setDrawHorizontalHighlightIndicator(true);
-        lineDataSet.setDrawHighlightIndicators(true);
-        lineDataSet.setDrawValues(false);
-
-        LineData lineData = new LineData(lineDataSet);
-        lineChart.setData(lineData);
-
+        //초기 기본 설정
         //X값 속성 설정
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); //x축이 아래에 위치하도록 설정
         xAxis.setTextColor(Color.BLACK);
+        xAxis.setLabelCount(6,true);
         xAxis.enableGridDashedLine(20, 20, 0);
         xAxis.setDrawLabels(true); //왼쪽 라벨
         xAxis.setDrawAxisLine(false); //왼쪽 라벨라인
@@ -420,6 +439,8 @@ public class Fragment_conditionAnalysis extends Fragment {
         //Y값 속성 설정
         YAxis yLAxis = lineChart.getAxisLeft();
         yLAxis.setTextColor(Color.BLACK);
+        yLAxis.setAxisMinimum(0);
+        yLAxis.setLabelCount(6);
         YAxis yRAxis = lineChart.getAxisRight();
         yRAxis.setDrawLabels(false); //오른쪽 라벨
         yRAxis.setDrawAxisLine(false); //오른쪽 라벨라인
@@ -435,8 +456,99 @@ public class Fragment_conditionAnalysis extends Fragment {
 
         // lineChart.animateY(2000, Easing.EasingOption.EaseInCubic);
         lineChart.invalidate();
+    }
+    //체크박스에서 선택한 증상 1개를 받아 그래프(1개)를 그림
+    private void chartEvent(String strDate,String firstSymp){ //날짜와 사용자가 선택한 증상 1개를 받아옴
+        int[] dataArray1 = getAverageOfWeek(strDate,firstSymp); //날짜에 해당하는 데이터 배열을 받아옴
 
-        return;
+        //그래프 데이터 리스트 생성 (x축 한칸당 값, y값)
+        List<Entry> entries1 = new ArrayList<>(); //첫번째 증상
+        for(int i=1;i<=4;i++){
+            entries1.add(new Entry(i,(float)dataArray1[i-1]));
+        }
+
+        //첫번째 증상에 대한 그래프 선 그리기
+        LineDataSet lineDataSet1 = new LineDataSet(entries1, firstSymp);
+        lineDataSet1.setLineWidth(2);
+        lineDataSet1.setCircleRadius(3);
+        lineDataSet1.setCircleColor(Color.parseColor("#FF247D30"));
+        lineDataSet1.setCircleHoleColor(Color.BLUE);
+        lineDataSet1.setColor(Color.parseColor("#FF247D30"));
+        lineDataSet1.setDrawCircleHole(false);
+        lineDataSet1.setDrawCircles(true);
+        lineDataSet1.setDrawHorizontalHighlightIndicator(true);
+        lineDataSet1.setDrawHighlightIndicators(true);
+        lineDataSet1.setDrawValues(false);
+
+
+        LineData lineData = new LineData(lineDataSet1);
+
+
+        Legend legend = lineChart.getLegend(); //레전드 설정 (차트 밑에 색과 라벨을 나타내는 설정)
+
+        legend.setWordWrapEnabled(true);
+        LegendEntry l1 = new LegendEntry(firstSymp,Legend.LegendForm.LINE,10f,2f,null,Color.parseColor("#FF247D30"));
+        legend.setCustom(new LegendEntry[]{l1});
+
+        lineChart.animateY(1000,Easing.EaseInCubic);
+        lineChart.invalidate();
+        lineChart.setData(lineData);
+
+    }
+    //체크박스에서 선택한 증상 2개를 받아 그래프(2개)를 그림
+    private void chartEvent(String strDate,String firstSymp,String secondSymp){ //날짜와 사용자가 선택한 증상 2개를 받아옴
+        int[] dataArray1 = getAverageOfWeek(strDate,firstSymp); //날짜에 해당하는 데이터 배열을 받아옴
+        int[] dataArray2 = getAverageOfWeek(strDate,secondSymp);
+
+        //그래프 데이터 리스트 생성 (x축 한칸당 값, y값)
+        List<Entry> entries1 = new ArrayList<>(); //첫번째 증상
+        List<Entry> entries2 = new ArrayList<>(); //두번째 증상
+        for(int i=1;i<=4;i++){
+            entries1.add(new Entry(i,(float)dataArray1[i-1]));
+            entries2.add(new Entry(i,(float)dataArray2[i-1]));
+        }
+
+        //첫번째 증상에 대한 그래프 선 그리기
+        LineDataSet lineDataSet1 = new LineDataSet(entries1, firstSymp);
+        lineDataSet1.setLineWidth(2);
+        lineDataSet1.setCircleRadius(3);
+        lineDataSet1.setCircleColor(Color.parseColor("#FF247D30"));
+        lineDataSet1.setCircleHoleColor(Color.BLUE);
+        lineDataSet1.setColor(Color.parseColor("#FF247D30"));
+        lineDataSet1.setDrawCircleHole(false);
+        lineDataSet1.setDrawCircles(true);
+        lineDataSet1.setDrawHorizontalHighlightIndicator(true);
+        lineDataSet1.setDrawHighlightIndicators(true);
+        lineDataSet1.setDrawValues(false);
+
+        //두번째 증상에 대한 그래프 선 그리기
+        LineDataSet lineDataSet2 = new LineDataSet(entries1, secondSymp);
+        lineDataSet2.setLineWidth(2);
+        lineDataSet2.setCircleRadius(3);
+        lineDataSet2.setCircleColor(Color.parseColor("#FFE9E965"));
+        lineDataSet2.setCircleHoleColor(Color.BLUE);
+        lineDataSet2.setColor(Color.parseColor("#FFE9E965"));
+        lineDataSet2.setDrawCircleHole(false);
+        lineDataSet2.setDrawCircles(true);
+        lineDataSet2.setDrawHorizontalHighlightIndicator(true);
+        lineDataSet2.setDrawHighlightIndicators(true);
+        lineDataSet2.setDrawValues(false);
+
+        LineData lineData = new LineData(lineDataSet1,lineDataSet2);
+
+
+        Legend legend = lineChart.getLegend(); //레전드 설정 (차트 밑에 색과 라벨을 나타내는 설정)
+
+        legend.setWordWrapEnabled(true);
+        LegendEntry l1 = new LegendEntry(firstSymp,Legend.LegendForm.LINE,10f,2f,null,Color.parseColor("#FF247D30"));
+        LegendEntry l2 = new LegendEntry(secondSymp,Legend.LegendForm.LINE,10f,2f,null,Color.parseColor("#FFE9E965"));
+
+        legend.setCustom(new LegendEntry[]{l1,l2});
+
+        lineChart.animateY(1000,Easing.EaseInCubic);
+        lineChart.invalidate();
+        lineChart.setData(lineData);
+
     }
 
 

@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class Data{
@@ -83,4 +84,7 @@ class Person1{
         new appointmentDoctor("2021.09.08"),
         new appointmentDoctor("2021.07.01")
     };
+}
+class SymptomList{
+    static String[] ListOfSymptom = {"가래","복통","두통","허리통증"};
 }
