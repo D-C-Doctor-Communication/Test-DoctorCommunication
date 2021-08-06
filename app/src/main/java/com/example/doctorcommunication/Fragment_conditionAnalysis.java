@@ -428,7 +428,9 @@ public class Fragment_conditionAnalysis extends Fragment {
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); //x축이 아래에 위치하도록 설정
         xAxis.setTextColor(Color.BLACK);
-        xAxis.setLabelCount(6,true);
+        xAxis.setLabelCount(4,true);
+        xAxis.setAxisMaximum(4);
+        xAxis.setAxisMinimum(1);
         xAxis.enableGridDashedLine(20, 20, 0);
         xAxis.setDrawLabels(true); //왼쪽 라벨
         xAxis.setDrawAxisLine(false); //왼쪽 라벨라인
@@ -488,7 +490,7 @@ public class Fragment_conditionAnalysis extends Fragment {
         Legend legend = lineChart.getLegend(); //레전드 설정 (차트 밑에 색과 라벨을 나타내는 설정)
 
         legend.setWordWrapEnabled(true);
-        LegendEntry l1 = new LegendEntry(firstSymp,Legend.LegendForm.LINE,10f,2f,null,Color.parseColor("#FF247D30"));
+        LegendEntry l1 = new LegendEntry(firstSymp,Legend.LegendForm.SQUARE,10f,2f,null,Color.parseColor("#FF247D30"));
         legend.setCustom(new LegendEntry[]{l1});
 
         lineChart.animateY(1000,Easing.EaseInCubic);
@@ -502,12 +504,20 @@ public class Fragment_conditionAnalysis extends Fragment {
         int[] dataArray2 = getAverageOfWeek(strDate,secondSymp);
 
         //그래프 데이터 리스트 생성 (x축 한칸당 값, y값)
-        List<Entry> entries1 = new ArrayList<>(); //첫번째 증상
-        List<Entry> entries2 = new ArrayList<>(); //두번째 증상
+        ArrayList<Entry> entries1 = new ArrayList<>(); //첫번째 증상
+        ArrayList<Entry> entries2 = new ArrayList<>(); //두번째 증상
         for(int i=1;i<=4;i++){
             entries1.add(new Entry(i,(float)dataArray1[i-1]));
             entries2.add(new Entry(i,(float)dataArray2[i-1]));
         }
+        for(int i=1;i<=4;i++){
+            Log.d("myapp",entries1.get(i-1).toString());
+        }
+        for(int i=1;i<=4;i++){
+            Log.d("myapp",entries2.get(i-1).toString());
+        }
+        //그래프선 데이터
+        LineData lineData = new LineData();
 
         //첫번째 증상에 대한 그래프 선 그리기
         LineDataSet lineDataSet1 = new LineDataSet(entries1, firstSymp);
@@ -521,6 +531,8 @@ public class Fragment_conditionAnalysis extends Fragment {
         lineDataSet1.setDrawHorizontalHighlightIndicator(true);
         lineDataSet1.setDrawHighlightIndicators(true);
         lineDataSet1.setDrawValues(false);
+        //첫번째 증상 데이터와 그래프 선 데이터 결합
+        lineData.addDataSet(lineDataSet1);
 
         //두번째 증상에 대한 그래프 선 그리기
         LineDataSet lineDataSet2 = new LineDataSet(entries1, secondSymp);
@@ -534,21 +546,23 @@ public class Fragment_conditionAnalysis extends Fragment {
         lineDataSet2.setDrawHorizontalHighlightIndicator(true);
         lineDataSet2.setDrawHighlightIndicators(true);
         lineDataSet2.setDrawValues(false);
+        //두번째 증상 데이터와 그래프 선 데이터 결합
+        lineData.addDataSet(lineDataSet2);
 
-        LineData lineData = new LineData(lineDataSet1,lineDataSet2);
 
 
-        Legend legend = lineChart.getLegend(); //레전드 설정 (차트 밑에 색과 라벨을 나타내는 설정)
+        //레전드 설정 (차트 밑에 색과 라벨을 나타내는 설정)
+        Legend legend = lineChart.getLegend();
 
         legend.setWordWrapEnabled(true);
-        LegendEntry l1 = new LegendEntry(firstSymp,Legend.LegendForm.LINE,10f,2f,null,Color.parseColor("#FF247D30"));
-        LegendEntry l2 = new LegendEntry(secondSymp,Legend.LegendForm.LINE,10f,2f,null,Color.parseColor("#FFE9E965"));
-
+        LegendEntry l1 = new LegendEntry(firstSymp,Legend.LegendForm.SQUARE,10f,2f,null,Color.parseColor("#FF247D30"));
+        LegendEntry l2 = new LegendEntry(secondSymp,Legend.LegendForm.SQUARE,10f,2f,null,Color.parseColor("#FFE9E965"));
         legend.setCustom(new LegendEntry[]{l1,l2});
-
+        //애니메이션효과
         lineChart.animateY(1000,Easing.EaseInCubic);
-        lineChart.invalidate();
+
         lineChart.setData(lineData);
+        lineChart.invalidate(); //그래프 적용(그리기
 
     }
 
