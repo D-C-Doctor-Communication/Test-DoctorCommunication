@@ -20,7 +20,7 @@
             android:layout_height="30dp"
             android:layout_marginLeft="60dp"
             android:background="@drawable/ic_previous_btn"
-            android:backgroundTint="@color/black"/>
+            android:backgroundTint="@color/black" />
 
         <TextView
             android:id="@+id/month_select"

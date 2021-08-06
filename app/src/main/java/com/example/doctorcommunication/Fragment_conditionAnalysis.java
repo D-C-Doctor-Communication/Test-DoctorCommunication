@@ -1,29 +1,19 @@
 package com.example.doctorcommunication;
 
 //android 버전 30쓸거면 androidx.Fragment 사용할것
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -36,12 +26,6 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.listener.ChartTouchListener;
-import com.github.mikephil.charting.listener.OnChartGestureListener;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -129,13 +113,10 @@ public class Fragment_conditionAnalysis extends Fragment {
         //증상 순위 (날짜에 맞춰 텍스트 지정)
         setRanking(dataString,firstSymptom,secondSymptom,thirdSymptom);
 
-
-
-
-
         //그래프 증상선택 버튼 이벤트
         select_symptom.setOnClickListener(v -> {
             //팝업 생성 메소드
+            Log.d("myapp",dataString+" ");
             showDialog(dataString);
         });
 
@@ -151,8 +132,13 @@ public class Fragment_conditionAnalysis extends Fragment {
             reservation_count.setText(OrganizedData.appointmentDC(dataStr)+"회");
             severity_more_5.setText(OrganizedData.moreThanFive(dataStr)+"회");
             accrue_symptom_count.setText(OrganizedData.accruedData(dataStr)+"개");
-            //그래프 증상선택 버튼 이벤트
-            //
+            initGraph();
+            chartEvent(dataStr,"두통","가래");
+            select_symptom.setOnClickListener(v1 -> {
+                //팝업 생성 메소드
+                Log.d("myapp",dataStr+" ");
+                showDialog(dataStr);
+            });
             //증상 순위
             setRanking(dataStr,firstSymptom,secondSymptom,thirdSymptom);
 
@@ -169,8 +155,14 @@ public class Fragment_conditionAnalysis extends Fragment {
             reservation_count.setText(OrganizedData.appointmentDC(dataStr)+"회");
             severity_more_5.setText(OrganizedData.moreThanFive(dataStr)+"회");
             accrue_symptom_count.setText(OrganizedData.accruedData(dataStr)+"개");
+            initGraph();
+            chartEvent(dataStr,"두통","가래");
             //그래프 증상선택 버튼 이벤트
-            //select_symptom.setOnClickListener(showDialog(dataStr));
+            select_symptom.setOnClickListener(v1 -> {
+                //팝업 생성 메소드
+                Log.d("myapp",dataStr+" ");
+                showDialog(dataStr);
+            });
             //증상 순위
             setRanking(dataStr,firstSymptom,secondSymptom,thirdSymptom);
         });
@@ -183,8 +175,11 @@ public class Fragment_conditionAnalysis extends Fragment {
     }
 
 
+
+
     //그래프 - 증상선택기능(팝업)
     public void showDialog(String monthSelectText){
+        Log.d("myapp",monthSelectText+" ");
         //사용자가 선택한 증상 리스트
         selectedSymptom = new ArrayList<>();
         //팝업빌더
@@ -426,6 +421,8 @@ public class Fragment_conditionAnalysis extends Fragment {
     //그래프 초기화(기본설정)
     private void initGraph(){
 
+        String[] xData = {"1주차","2주차","3주차","4주차"};
+        int[] yData = {0,2,4,6,8,10};
         //초기 기본 설정
         //X값 속성 설정
         XAxis xAxis = lineChart.getXAxis();
@@ -436,15 +433,19 @@ public class Fragment_conditionAnalysis extends Fragment {
         xAxis.setDrawLabels(true); //왼쪽 라벨
         xAxis.setDrawAxisLine(false); //왼쪽 라벨라인
         xAxis.setDrawGridLines(false); //세로선
+
         //Y값 속성 설정
         YAxis yLAxis = lineChart.getAxisLeft();
         yLAxis.setTextColor(Color.BLACK);
+        yLAxis.setAxisMaximum(10);
         yLAxis.setAxisMinimum(0);
         yLAxis.setLabelCount(6);
+        yLAxis.setGranularity(2);
         YAxis yRAxis = lineChart.getAxisRight();
         yRAxis.setDrawLabels(false); //오른쪽 라벨
         yRAxis.setDrawAxisLine(false); //오른쪽 라벨라인
         yRAxis.setDrawGridLines(false);
+
 
         //부가설명 공백으로 처리
         Description description = new Description();
