@@ -180,7 +180,7 @@ public class MeetingDoc extends AppCompatActivity {
         switch (item.getItemId()){
             //이전버튼
             case R.id.backToHome:
-                Intent backToHome = new Intent(getApplicationContext(), HomeActivity.class);
+                Intent backToHome = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(backToHome);
             //마이크버튼(녹음하기)
             case R.id.record:
