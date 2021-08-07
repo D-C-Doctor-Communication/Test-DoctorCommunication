@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class Data{
-
+//data
     private String date; //Date클래스 형식을 String형으로 변환
     private String part; //부위
     private int pain_level; //통증 정도
