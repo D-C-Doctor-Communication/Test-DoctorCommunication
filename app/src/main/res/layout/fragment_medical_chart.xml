@@ -4,53 +4,111 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/select_user"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="#D8D8D8"
-        android:layout_marginTop="?attr/actionBarSize"/>
 
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         android:layout_height="320dp"
-        android:layout_below="@+id/select_user"
         android:layout_alignParentStart="true"
-        app:mcv_selectionColor="#E9F4FC"
+        app:mcv_selectionColor="#1a0078ff"
         app:mcv_showOtherDates="all"
         app:mcv_headerTextAppearance="@style/Monthlycalendar_header"
 />
+
+    <TextView
+        android:id="@+id/selectedDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="21dp"
+        android:layout_marginBottom="276dp"
+        android:text="날짜"
+        android:textColor="@color/black"
+        android:textSize="17sp" />
+
+    <Button
+        android:id="@+id/btn_showSymptomData"
+        android:layout_width="296dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="181dp"
+        android:backgroundTint="#DCDCDC"
+        android:text="증상 기록 보기"
+        android:textColor="@color/black" />
+
+
+    <TextView
+        android:id="@+id/btn_addAppointDoctor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="148dp"
+        android:layout_marginBottom="226dp"
+        android:text="+ 진료 일정 추가하기"
+        android:textColor="@color/bottom_nav_icon_color_Selected"
+        android:textSize="14sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="31dp"
-        android:layout_marginBottom="249dp" />
+        android:layout_centerInParent="true"
+        android:layout_marginStart="140dp"
+        android:layout_marginBottom="246dp"
+        android:text="기록된 일정이 없습니다."
+        android:textSize="14sp" />
 
-    <!--
-            app:mcv_calendarMode="mode"
-            app:mcv_firstDayOfWeek="enum"
 
-            app:mcv_showOtherDates="option"
-            app:mcv_arrowColor="color"
-            app:mcv_selectionColor="color"
-            app:mcv_headerTextAppearance="style"
-            app:mcv_dateTextAppearance="style"
-            app:mcv_weekDayTextAppearance="style"
-            app:mcv_weekDayLabels="array"
-            app:mcv_monthLabels="array"
-            app:mcv_tileSize="dimension"
-            app:mcv_tileWidth="dimension"
-            app:mcv_tileHeight="dimension"
-            app:mcv_firstDayOfWeek="enum"
-            app:mcv_leftArrowMask="drawable"
-            app:mcv_rightArrowMask="drawable"
-            app:mcv_calendarMode="mode"
 
-    -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="21dp"
+        android:layout_marginBottom="122dp"
+        android:text="진료 후기"
+        android:textColor="@color/black"
+        android:textSize="17sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="132dp"
+        android:layout_marginBottom="101dp"
+        android:text="진료 후기를 작성해주세요."
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/btn_writeReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="148dp"
+        android:layout_marginBottom="81dp"
+        android:text="+ 진료 후기 작성하기"
+        android:textColor="@color/bottom_nav_icon_color_Selected"
+        android:textSize="14sp" />
+    <View
+        style="@style/Divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="176dp" />
+
 
 </RelativeLayout>

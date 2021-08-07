@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,10 +15,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -183,7 +180,7 @@ public class MeetingDoc extends AppCompatActivity {
         switch (item.getItemId()){
             //이전버튼
             case R.id.backToHome:
-                Intent backToHome = new Intent(getApplicationContext(),MainActivity.class);
+                Intent backToHome = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(backToHome);
             //마이크버튼(녹음하기)
             case R.id.record:

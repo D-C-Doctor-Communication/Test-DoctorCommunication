@@ -9,6 +9,17 @@
     <string name="symthom_description_6">추가사항</string>
 
 
+    <array name="weekdays_custom">
+        <item>SUN</item>
+        <item>MON</item>
+        <item>TUE</item>
+        <item>WED</item>
+        <item>THU</item>
+        <item>FRI</item>
+        <item>SAT</item>
+    </array>
+
+
     <string-array name="symptom_list">
         <item>가래</item>
         <item>복통</item>
