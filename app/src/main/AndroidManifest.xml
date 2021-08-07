@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.doctorcommunication">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.doctorcommunication"
+    tools:ignore="LockedOrientationActivity">
 
     <application
         android:allowBackup="true"
