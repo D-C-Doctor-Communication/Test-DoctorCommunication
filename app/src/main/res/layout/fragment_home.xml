@@ -221,9 +221,19 @@
                 android:id="@+id/wCalender_sun"
                 style="@style/wCalender"
                 android:layout_marginStart="17dp"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/sun_dot"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:src="@drawable/week_calendar_dot"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:visibility="invisible"/>
 
                 <TextView
                     android:id="@+id/SUN_num"
@@ -241,10 +251,19 @@
                 android:id="@+id/wCalender_mon"
                 style="@style/wCalender"
                 android:layout_marginStart="10dp"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/wCalender_sun"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <ImageView
+                    android:id="@+id/mon_dot"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/week_calendar_dot"
+                    android:visibility="invisible" />
                 <TextView
                     android:id="@+id/MON_num"
                     style="@style/wCalender_num"
@@ -261,10 +280,18 @@
                 android:id="@+id/wCalender_tue"
                 style="@style/wCalender"
                 android:layout_marginStart="10dp"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/wCalender_mon"
                 app:layout_constraintTop_toTopOf="parent">
-
+                <ImageView
+                    android:id="@+id/tue_dot"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:src="@drawable/week_calendar_dot"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:visibility="invisible"/>
                 <TextView
                     android:id="@+id/TUE_num"
                     style="@style/wCalender_num"
@@ -281,10 +308,18 @@
                 android:id="@+id/wCalender_wed"
                 style="@style/wCalender"
                 android:layout_marginStart="10dp"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/wCalender_tue"
                 app:layout_constraintTop_toTopOf="parent">
-
+                <ImageView
+                    android:id="@+id/wed_dot"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:src="@drawable/week_calendar_dot"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:visibility="invisible"/>
                 <TextView
                     android:id="@+id/WED_num"
                     style="@style/wCalender_num"
@@ -301,10 +336,18 @@
                 android:id="@+id/wCalender_thu"
                 style="@style/wCalender"
                 android:layout_marginStart="10dp"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/wCalender_wed"
                 app:layout_constraintTop_toTopOf="parent">
-
+                <ImageView
+                    android:id="@+id/thu_dot"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:src="@drawable/week_calendar_dot"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:visibility="invisible"/>
                 <TextView
                     android:id="@+id/THU_num"
                     style="@style/wCalender_num"
@@ -321,10 +364,18 @@
                 android:id="@+id/wCalender_fri"
                 style="@style/wCalender"
                 android:layout_marginStart="10dp"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/wCalender_thu"
                 app:layout_constraintTop_toTopOf="parent">
-
+                <ImageView
+                    android:id="@+id/fri_dot"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:src="@drawable/week_calendar_dot"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:visibility="invisible"/>
                 <TextView
                     android:id="@+id/FRI_num"
                     style="@style/wCalender_num"
@@ -342,11 +393,19 @@
                 style="@style/wCalender"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="17dp"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/wCalender_fri"
                 app:layout_constraintTop_toTopOf="parent">
-
+                <ImageView
+                    android:id="@+id/sat_dot"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:src="@drawable/week_calendar_dot"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:visibility="invisible"/>
                 <TextView
                     android:id="@+id/SAT_num"
                     style="@style/wCalender_num"

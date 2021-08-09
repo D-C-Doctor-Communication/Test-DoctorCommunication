@@ -24,6 +24,7 @@ public class HomeListViewAdapter extends BaseAdapter {
     public HomeListViewAdapter(){} //HomeListViewAdapter클래스 기본 생성자
 
 
+
     //Adapter에 사용되는 리스트(데이터 배열) 개수 반환
     @Override
     public int getCount() {

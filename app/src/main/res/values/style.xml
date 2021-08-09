@@ -71,7 +71,7 @@
         <item name="android:layout_width">45dp</item>
         <item name="android:layout_height">75dp</item>
         <item name="cardCornerRadius">7dp</item>
-        <item name="cardBackgroundColor">#F8F8F8</item>
+        <item name="cardBackgroundColor">#0a000000</item>
         <item name="android:textColor">@color/black</item>
     </style>
 

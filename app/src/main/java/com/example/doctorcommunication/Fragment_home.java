@@ -3,6 +3,7 @@ package com.example.doctorcommunication;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -101,7 +103,6 @@ public class Fragment_home extends Fragment {
 
         ListView listView = (ListView)view.findViewById(R.id.home_listView);
         //오늘로 기본 리스트 보여짐
-
         WeekCalendar.createDataListToday(ymTextView,wDate,listView);
 
 
@@ -109,46 +110,64 @@ public class Fragment_home extends Fragment {
         wCalender[0].setOnClickListener(v -> { //일요일
             Log.d("myapp","일요일 눌림");
             WeekCalendar.createDataList(ymTextView,wDate,0,listView);
+            WeekCalendar.setCardColor(0,wCalender);
         });
         wCalender[1].setOnClickListener(v -> {
             Log.d("myapp","월요일 눌림");
             WeekCalendar.createDataList(ymTextView,wDate,1,listView);
+            WeekCalendar.setCardColor(1,wCalender);
         });
         wCalender[2].setOnClickListener(v -> {
             Log.d("myapp","화요일 눌림");
             WeekCalendar.createDataList(ymTextView,wDate,2,listView);
+            wCalender[2].setCardBackgroundColor(Color.parseColor("#0078ff"));
+            WeekCalendar.setCardColor(2,wCalender);
         });
         wCalender[3].setOnClickListener(v -> {
             Log.d("myapp","수요일 눌림");
             WeekCalendar.createDataList(ymTextView,wDate,3,listView);
+            wCalender[3].setCardBackgroundColor(Color.parseColor("#0078ff"));
+            WeekCalendar.setCardColor(3,wCalender);
         });
         wCalender[4].setOnClickListener(v -> {
             Log.d("myapp","목요일 눌림");
             WeekCalendar.createDataList(ymTextView,wDate,4,listView);
+            wCalender[4].setCardBackgroundColor(Color.parseColor("#0078ff"));
+            WeekCalendar.setCardColor(4,wCalender);
         });
         wCalender[5].setOnClickListener(v -> {
             Log.d("myapp","금요일 눌림");
             WeekCalendar.createDataList(ymTextView,wDate,5,listView);
+            wCalender[5].setCardBackgroundColor(Color.parseColor("#0078ff"));
+            WeekCalendar.setCardColor(5,wCalender);
         });
         wCalender[6].setOnClickListener(v -> {
             Log.d("myapp","토요일 눌림");
             WeekCalendar.createDataList(ymTextView,wDate,6,listView);
+            wCalender[6].setCardBackgroundColor(Color.parseColor("#0078ff"));
+            WeekCalendar.setCardColor(6,wCalender);
         });
 
 
 
         return view;
     }
+
+
+
     static class WeekCalendar{
         static void createDataListToday(TextView ymTextView, TextView[] wDate, ListView listView){
             Calendar calendar = Calendar.getInstance();
-
             createDataList(ymTextView,wDate,calendar.get(Calendar.DAY_OF_WEEK)-1,listView);
         }
-
-
+        static void setCardColor(int index, CardView[] wCalender){
+            wCalender[index].setCardBackgroundColor(Color.parseColor("#A1C5EE"));
+            for(int i=0;i<7;i++){
+                if(i==index) continue;
+                wCalender[i].setCardBackgroundColor(Color.parseColor("#0a000000"));
+            }
+        }
         static void createDataList(TextView ymTextView, TextView[] wDate, int index, ListView listView){
-
             //각 요일별 isSameDate속성 false로 초기화
             initializeisSameDate();
             //0000.00.00형식의 String 만들기
@@ -191,6 +210,17 @@ public class Fragment_home extends Fragment {
         @SuppressLint("SetTextI18n")
         void setWeekCalenderDate(View view, Date date, TextView ymTextView, TextView[] wDate){ //주간캘린더 날짜변경 메소드
 
+            //각 요일의 점
+            ImageView[] weekCalendarDot = new ImageView[]{
+                    view.findViewById(R.id.sun_dot),
+                    view.findViewById(R.id.mon_dot),
+                    view.findViewById(R.id.tue_dot),
+                    view.findViewById(R.id.wed_dot),
+                    view.findViewById(R.id.thu_dot),
+                    view.findViewById(R.id.fri_dot),
+                    view.findViewById(R.id.sat_dot),
+            };
+
             Log.d("mytag","setWeekCalenderDate 과정 통과");
             //날짜 형식 지정
             SimpleDateFormat todaySdf = new SimpleDateFormat("yyyy.MM.dd", Locale.KOREA); //한국 기준 시간 사용
@@ -211,6 +241,22 @@ public class Fragment_home extends Fragment {
                 wDate[i].setText(todaySdf.format(cal.getTime()).substring(8));
                 cal.add(Calendar.DAY_OF_MONTH, 1);
             }
+
+            //데이터가 있는 날짜에 점찍기
+            boolean isDataExist = false;
+            for(int i=0;i<=6;i++){
+                isDataExist = false;
+                for(int j=0;j<Person1.symptom.length;j++){
+                    String checkDate = todaySdf.format(cal.getTime()).substring(0,4)+"."+todaySdf.format(cal.getTime()).substring(5,7)+"."+wDate[i].getText();
+                    Log.d("myapp",checkDate);
+                    if(setSameDatetoTrue(checkDate)!=0){
+                        isDataExist = true;
+                        break;
+                    }
+                }
+                if(isDataExist) weekCalendarDot[i].setVisibility(View.VISIBLE);
+            }
+            if(Person1.symptom[0].isSameDate) weekCalendarDot[0 ].setVisibility(View.VISIBLE);
 
         }
     }
