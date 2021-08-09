@@ -23,6 +23,7 @@ import org.w3c.dom.Text;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -99,6 +100,10 @@ public class Fragment_home extends Fragment {
 //ListView
 
         ListView listView = (ListView)view.findViewById(R.id.home_listView);
+        //오늘로 기본 리스트 보여짐
+
+        WeekCalendar.createDataListToday(ymTextView,wDate,listView);
+
 
         //각 날짜를 클릭했을 때 날짜와 일치하는 데이터 불러오기
         wCalender[0].setOnClickListener(v -> { //일요일
@@ -135,6 +140,13 @@ public class Fragment_home extends Fragment {
         return view;
     }
     static class WeekCalendar{
+        static void createDataListToday(TextView ymTextView, TextView[] wDate, ListView listView){
+            Calendar calendar = Calendar.getInstance();
+
+            createDataList(ymTextView,wDate,calendar.get(Calendar.DAY_OF_WEEK)-1,listView);
+        }
+
+
         static void createDataList(TextView ymTextView, TextView[] wDate, int index, ListView listView){
 
             //각 요일별 isSameDate속성 false로 초기화
