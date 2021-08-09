@@ -207,7 +207,7 @@ public class MeetingDoc extends AppCompatActivity {
             if (checkIsBetween(Person1.symptom[i].getDate())&&checkSymptom(index,Person1.symptom[i].getPart()))
                 adapter.addItem(Person1.symptom[i].getDate(),
                         Person1.symptom[i].getPart() + Person1.symptom[i].getPain_level()
-                        , Person1.symptom[i].getPart(), Person1.symptom[i].getPain_level(),
+                        , Person1.symptom[i].getPart(), Integer.parseInt(Person1.symptom[i].getPain_level()),
                         Person1.symptom[i].getPain_characteristics(), Person1.symptom[i].getPain_situation(),
                         Person1.symptom[i].getAccompany_pain(), Person1.symptom[i].getAdditional());
         }

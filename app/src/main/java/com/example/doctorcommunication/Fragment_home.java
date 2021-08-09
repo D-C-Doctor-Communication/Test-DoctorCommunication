@@ -152,7 +152,7 @@ public class Fragment_home extends Fragment {
             listView.setAdapter(adapter);
             //선택한 날짜와 같은 데이터일때 어댑터에 아이템 추가
             for(int i = 0; i<Person1.symptom.length; i++){
-                if(Person1.symptom[i].isSameDate) adapter.addItem(Person1.symptom[i].getPart(),R.drawable.img_pain_sym1,Person1.symptom[i].getPain_level(),Person1.symptom[i].getPain_characteristics(),Person1.symptom[i].getPain_situation());
+                if(Person1.symptom[i].isSameDate) adapter.addItem(Person1.symptom[i].getPart(),R.drawable.img_pain_sym1,Integer.parseInt(Person1.symptom[i].getPain_level()),Person1.symptom[i].getPain_characteristics(),Person1.symptom[i].getPain_situation());
             }
             adapter.notifyDataSetChanged();
             Log.d("myapp","Adapter added");

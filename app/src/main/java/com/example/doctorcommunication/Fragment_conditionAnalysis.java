@@ -324,19 +324,19 @@ public class Fragment_conditionAnalysis extends Fragment {
             if(!Person1.symptom[i].getPart().equals(symptom)) continue; //사용자가 선택한 증상인지 확인
             switch (isInSameWeek(Person1.symptom[i].getDate(),strDate)){ //사용자가 선택한 날짜인지 확인 (1주차면 1,2주차면 2..반환)
                 case 1 : //1주차
-                    firstWeek += Person1.symptom[i].getPain_level();
+                    firstWeek += Integer.parseInt(Person1.symptom[i].getPain_level());
                     fNum++;
                     break;
                 case 2 : //2주차
-                    secondWeek += Person1.symptom[i].getPain_level();
+                    secondWeek += Integer.parseInt(Person1.symptom[i].getPain_level());
                     sNum++;
                     break;
                 case 3 : //3주차
-                    thirdWeek += Person1.symptom[i].getPain_level();
+                    thirdWeek += Integer.parseInt(Person1.symptom[i].getPain_level());
                     tNum++;
                     break;
                 case 4 : //4주차
-                    fourthWeek += Person1.symptom[i].getPain_level();
+                    fourthWeek += Integer.parseInt(Person1.symptom[i].getPain_level());
                     foNum++;
                     break;
             }
@@ -399,7 +399,7 @@ public class Fragment_conditionAnalysis extends Fragment {
             for(int i=0;i<Person1.symptom.length;i++){
                 //데이터가 기록된 날짜가 선택된 달과 일치할경우 1씩 증가
                 if(isInSameMonth(Person1.symptom[i].getDate(),strDate)){
-                    if(Person1.symptom[i].getPain_level()>=5) numberOfData++;
+                    if(Integer.parseInt(Person1.symptom[i].getPain_level())>=5) numberOfData++;
                 }
             }
             return numberOfData;
