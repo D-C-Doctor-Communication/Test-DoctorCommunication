@@ -30,6 +30,9 @@ android {
 }
 
 dependencies {
+    //bottom navBar 스타일
+    implementation 'com.android.support:design:30.0.0'
+
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation "com.github.prolificinteractive:material-calendarview:2.0.1"
     implementation "androidx.preference:preference:1.1.1"

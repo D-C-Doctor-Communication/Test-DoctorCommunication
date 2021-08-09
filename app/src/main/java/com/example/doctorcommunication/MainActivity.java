@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         //메인화면 네비게이션 뷰 생성(activity_main에 정의됨)
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
         //기본으로 선택되어있는 프래그먼트 지정
+        FragmentTransaction BasicFragmentTransaction = getSupportFragmentManager().beginTransaction();
+        BasicFragmentTransaction.replace(R.id.fragment_container,new Fragment_home());
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
         bottomNavigationView.setOnItemSelectedListener((NavigationBarView.OnItemSelectedListener)(item -> {
 

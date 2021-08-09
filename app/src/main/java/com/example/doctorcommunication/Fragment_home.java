@@ -37,11 +37,11 @@ public class Fragment_home extends Fragment {
 
 //세팅
         //카드 - 증상등록 버튼
-        Button btn_addSymptom = (Button)view.findViewById(R.id.btn_addSymptom);
+        Button btn_addSymptom = view.findViewById(R.id.btn_addSymptom);
         //카드 - 의사와의 만남 버튼
-        Button btn_meetingDoc = (Button)view.findViewById(R.id.btn_meetingDoc);
+        Button btn_meetingDoc = view.findViewById(R.id.btn_meetingDoc);
         //카드 - 녹음하기 버튼
-        Button btn_recording = (Button)view.findViewById(R.id.btn_recording);
+        Button btn_recording = view.findViewById(R.id.btn_recording);
         //주간캘린더 - 각 요일별 날짜 카드뷰
         CardView[] wCalender = new CardView[7];
         wCalender[0] = view.findViewById(R.id.wCalender_sun); //일요일
