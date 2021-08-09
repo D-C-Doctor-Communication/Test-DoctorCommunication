@@ -28,6 +28,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".Recording" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
+        <activity android:name=".SearchList"></activity>
+        <activity android:name=".SelectPattern"></activity>
+        <activity android:name=".SelectWorse"></activity>
+        <activity android:name=".OtherSymptom"></activity>
+        <activity android:name=".SelectBody_head"></activity>
+        <activity android:name=".SelectBody_stomach"></activity>
+        <activity android:name=".SelectBody_waist"></activity>
+        <activity android:name=".SelectLevel"></activity>
+        <activity android:name=".AddDetails"></activity>
     </application>
 </manifest>

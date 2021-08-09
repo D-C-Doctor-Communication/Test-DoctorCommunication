@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.techtown.stac.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    tools:ignore="MissingClass">
+
+    <TextView
+        android:id="@+id/select_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:fontFamily="@font/nanumsquareregular"
+        android:paddingLeft="10dp"
+        android:gravity="center_vertical"
+        android:layout_weight="5"/>
+
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/checkbox"
+        android:focusable="false"
+        android:clickable="false"
+        android:buttonTint="#1D92E4"
+        />
+
+
+
+</org.techtown.stac.CheckableLinearLayout>
