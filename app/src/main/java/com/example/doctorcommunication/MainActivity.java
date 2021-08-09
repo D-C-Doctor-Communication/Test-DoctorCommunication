@@ -2,6 +2,7 @@ package com.example.doctorcommunication;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
@@ -16,7 +17,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    Fragment homeFragment;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -35,15 +36,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 //home,진료기록,상태분석 fragment
-        FragmentManager manager = getFragmentManager();
 
+        homeFragment = new Fragment_home();
         //android 기본 제공되는 액션바 제거 - 사용자 정의 액션바 사용하기 위함
         getDelegate().getSupportActionBar();
         //메인화면 네비게이션 뷰 생성(activity_main에 정의됨)
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
         //기본으로 선택되어있는 프래그먼트 지정
-        FragmentTransaction BasicFragmentTransaction = getSupportFragmentManager().beginTransaction();
-        BasicFragmentTransaction.replace(R.id.fragment_container,new Fragment_home());
+        setDefaultFragment();
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
         bottomNavigationView.setOnItemSelectedListener((NavigationBarView.OnItemSelectedListener)(item -> {
 
@@ -74,5 +74,10 @@ public class MainActivity extends AppCompatActivity {
         }));
 
 
+    }
+    public void setDefaultFragment() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.fragment_container, homeFragment);
+        transaction.commit();
     }
 }
