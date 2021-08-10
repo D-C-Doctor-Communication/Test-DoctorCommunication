@@ -80,7 +80,7 @@ class Person1{
     static appointmentDoctor[] appointment = {
         new appointmentDoctor("2021.08.08"),
         new appointmentDoctor("2021.08.29"),
-        new appointmentDoctor("2021.09.02"),
+        new appointmentDoctor("2021.08.11"),
         new appointmentDoctor("2021.09.08"),
         new appointmentDoctor("2021.07.01")
     };

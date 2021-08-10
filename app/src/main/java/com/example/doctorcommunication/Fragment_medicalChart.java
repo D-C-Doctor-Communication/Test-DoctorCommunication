@@ -1,6 +1,6 @@
 package com.example.doctorcommunication;
 
-import android.os.AsyncTask;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,21 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -60,8 +57,7 @@ public class Fragment_medicalChart extends Fragment {
         btn_showSymptomData = view.findViewById(R.id.btn_showSymptomData);
 
         //점 표시
-        //new ApiSimulator(result).executeOnExecutor(Executors.newSingleThreadExecutor());
-        //materialCalendarView.addDecorator(SelectedDayDecorator);
+        //materialCalendarView.addDecorator(new MC_DotEventDecorator(Color.BLUE,addDot()));
         materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
@@ -116,43 +112,25 @@ public class Fragment_medicalChart extends Fragment {
         return view;
     }
 
+    //Person1의 진료데이터가 존재하는지 판별하여
+    //해당 날짜에 점을 찍어줌
     /*
-    private class ApiSimulator extends AsyncTask<Void, Void, List<CalendarDay>> {
+    public ArrayList addDot(){
+        ArrayList<CalendarDay> dates = new ArrayList<>(); //점을 찍을 날짜를 저장,반환
 
-        String[] Time_Result;
+        Calendar calendar = Calendar.getInstance();
+        LocalDate localDate = LocalDate.now();
+        for(int i=0;i<Person1.appointment.length;i++){
+            CalendarDay day = CalendarDay.from(localDate);
+            String[] time = Person1.appointment[i].getDate().split(".");
+            int year = Integer.parseInt(time[0]);
+            int month = Integer.parseInt(time[1]);
+            int dayy = Integer.parseInt(time[2]);
 
-        ApiSimulator(String[] Time_Result) {
-            this.Time_Result = Time_Result;
+            dates.add(day);
+            calendar.set(year,month-1,dayy);
         }
-
-        @Override
-        protected List<CalendarDay> doInBackground(@NonNull Void... voids) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            Calendar calendar = Calendar.getInstance();
-            ArrayList<CalendarDay> dates = new ArrayList<>();
-
-            //특정날짜 달력에 점표시해주는곳
-            //월은 0이 1월 년,일은 그대로
-            //string 문자열인 Time_Result 을 받아와서 ,를 기준으로짜르고 string을 int 로 변환
-            for (int i = 0; i < Time_Result.length; i++) {
-                CalendarDay day = CalendarDay.from(calendar);
-                String[] time = Time_Result[i].split(",");
-                int year = Integer.parseInt(time[0]);
-                int month = Integer.parseInt(time[1]);
-                int dayy = Integer.parseInt(time[2]);
-
-                dates.add(day);
-                calendar.set(year, month - 1, dayy);
-            }
-
-
-            return dates;
-        }
-        }*/
-
+        return dates;
+    }
+     */
 }
