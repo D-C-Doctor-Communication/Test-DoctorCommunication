@@ -13,6 +13,7 @@ import java.util.List;
 
 public class SelectBody_waist extends AppCompatActivity {
     String symptom;
+    int part;
     int [] CHECK_WAIST =new int[5];
     String []WAIST={"왼쪽 옆구리","허리 중앙","오른쪽 옆구리","허리 아래","꼬리뼈"};
     List<String> BODY = new ArrayList<String>();
@@ -21,6 +22,7 @@ public class SelectBody_waist extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom");
+        part = intent.getExtras().getInt("part");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_body_waist);
@@ -103,6 +105,7 @@ public class SelectBody_waist extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectBody_waist.this, SelectLevel.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("part",part);
 
                 if(waist01.isSelected()){
                     BODY.add(WAIST[0]);

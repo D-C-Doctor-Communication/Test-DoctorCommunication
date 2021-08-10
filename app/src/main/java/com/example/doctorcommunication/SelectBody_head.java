@@ -13,6 +13,7 @@ import java.util.List;
 
 public class SelectBody_head extends AppCompatActivity {
     String symptom;
+    int part;
     int []CHECK_HEAD=new int[5];
     String []HEAD={"눈주위","이마","관자놀이","머리 전체","뒷머리"};
     List<String> BODY = new ArrayList<String>();
@@ -21,6 +22,7 @@ public class SelectBody_head extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom");
+        part = intent.getExtras().getInt("part");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_body_head);
@@ -103,6 +105,7 @@ public class SelectBody_head extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectBody_head.this, SelectLevel.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("part",part);
 
                 if(head01.isSelected()){
                     BODY.add(HEAD[0]);

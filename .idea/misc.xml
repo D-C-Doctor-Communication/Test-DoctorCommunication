@@ -3,9 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/head_clicked04.xml" value="0.1453125" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/stomach_clicked04.xml" value="0.1453125" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/stomach_clicked05.xml" value="0.1453125" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/font/fontm.xml" value="0.1" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/add_details.xml" value="0.1" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/add_symptom.xml" value="0.1296875" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/dc_listview_item.xml" value="0.1" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/search_list.xml" value="0.1064102564102564" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_body_head.xml" value="0.264" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_body_stomach.xml" value="0.136" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_body_waist.xml" value="0.264" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_item.xml" value="0.1" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_level.xml" value="0.1" />
       </map>
     </option>
   </component>

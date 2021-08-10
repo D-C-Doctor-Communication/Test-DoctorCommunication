@@ -13,6 +13,7 @@ import java.util.List;
 
 public class SelectBody_stomach extends AppCompatActivity {
     String symptom;
+    int part;
     int [] CHECK_STOMACH =new int[9];
     String [] STOMACH ={"오른쪽 위 복부","명치","왼쪽 위 복부","오른쪽 복부","배꼽 부근","왼쪽 복부","오른쪽 아래 복부","왼쪽 아래 복부","아래쪽 복부"};
     List<String> BODY = new ArrayList<String>();
@@ -21,6 +22,7 @@ public class SelectBody_stomach extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom");
+        part = intent.getExtras().getInt("part");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_body_stomach);
@@ -31,7 +33,7 @@ public class SelectBody_stomach extends AppCompatActivity {
         ImageButton stomach02 = (ImageButton)findViewById(R.id.stomach02) ;
         ImageButton stomach03 = (ImageButton)findViewById(R.id.stomach03) ;
         ImageButton stomach04 = (ImageButton)findViewById(R.id.stomach04) ;
-        ImageButton stomach05 = (ImageButton)findViewById(R.id.stomach04) ;
+        ImageButton stomach05 = (ImageButton)findViewById(R.id.stomach05) ;
         ImageButton stomach06 = (ImageButton)findViewById(R.id.stomach06) ;
         ImageButton stomach07 = (ImageButton)findViewById(R.id.stomach07) ;
         ImageButton stomach08 = (ImageButton)findViewById(R.id.stomach08) ;
@@ -159,6 +161,7 @@ public class SelectBody_stomach extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectBody_stomach.this, SelectLevel.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("part",part);
 
                 if(stomach01.isSelected()){
                     BODY.add(STOMACH[0]);
@@ -176,16 +179,16 @@ public class SelectBody_stomach extends AppCompatActivity {
                     BODY.add(STOMACH[4]);
                 }
                 if(stomach06.isSelected()){
-                    BODY.add(STOMACH[1]);
+                    BODY.add(STOMACH[5]);
                 }
                 if(stomach07.isSelected()){
-                    BODY.add(STOMACH[2]);
+                    BODY.add(STOMACH[6]);
                 }
                 if(stomach08.isSelected()){
-                    BODY.add(STOMACH[3]);
+                    BODY.add(STOMACH[7]);
                 }
                 if(stomach09.isSelected()){
-                    BODY.add(STOMACH[4]);
+                    BODY.add(STOMACH[8]);
                 }
                 select_stomach = BODY.toArray(new String[BODY.size()]);
                 for(int i = 0; i< select_stomach.length; i++)
