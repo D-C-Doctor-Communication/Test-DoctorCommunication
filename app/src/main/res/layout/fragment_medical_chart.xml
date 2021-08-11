@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -37,22 +38,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="181dp"
         android:backgroundTint="#DCDCDC"
-        android:text="증상 기록 보기"
+        android:text="진료 일정 추가하기"
         android:textColor="@color/black" />
 
-
-    <TextView
-        android:id="@+id/btn_addAppointDoctor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="148dp"
-        android:layout_marginBottom="226dp"
-        android:text="+ 진료 일정 추가하기"
-        android:textColor="@color/bottom_nav_icon_color_Selected"
-        android:textSize="14sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -78,29 +66,6 @@
         android:textColor="@color/black"
         android:textSize="17sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="132dp"
-        android:layout_marginBottom="101dp"
-        android:text="진료 후기를 작성해주세요."
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/btn_writeReview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="148dp"
-        android:layout_marginBottom="81dp"
-        android:text="+ 진료 후기 작성하기"
-        android:textColor="@color/bottom_nav_icon_color_Selected"
-        android:textSize="14sp" />
     <View
         style="@style/Divider"
         android:layout_width="match_parent"
@@ -109,6 +74,51 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="4dp"
         android:layout_marginBottom="176dp" />
+
+    <EditText
+        android:id="@+id/MC_LineEditText"
+        android:layout_width="370dp"
+        android:layout_height="70dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="609dp"
+        android:background="#7EE6E6E6"
+        android:inputType="textMultiLine"
+        android:lines="3"
+        android:maxLines="5"
+        android:minLines="1"
+        android:scrollbars="vertical"
+        android:text="진료 후기를 작성해주세요"
+        android:textSize="10sp"
+        android:gravity="left"
+        android:textColor="@color/ache_card_textColor"
+        android:visibility="gone"/>
+    <TextView
+        android:id="@+id/MC_LineTextView"
+        android:layout_width="370dp"
+        android:layout_height="70dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="609dp"
+        android:background="#7EE6E6E6"
+        android:lines="3"
+        android:maxLines="5"
+        android:minLines="1"
+        android:scrollbars="vertical"
+        android:text="진료 후기를 작성해주세요"
+        android:textSize="10sp"
+        android:gravity="left"
+        android:textColor="@color/ache_card_textColor"/>
+
+    <ImageButton
+        android:id="@+id/MC_editBtn"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="60dp"
+        tools:srcCompat="@android:drawable/ic_menu_edit" />
 
 
 </RelativeLayout>
