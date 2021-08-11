@@ -12,16 +12,20 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.DoctorCommunication">
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".MeetingDoc" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".AddSymptom" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".SettingActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Recording" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".SearchList"></activity>
@@ -33,5 +37,6 @@
         <activity android:name=".SelectBody_waist"></activity>
         <activity android:name=".SelectLevel"></activity>
         <activity android:name=".AddDetails"></activity>
+
     </application>
 </manifest>
