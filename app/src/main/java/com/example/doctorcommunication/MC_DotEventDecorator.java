@@ -1,5 +1,6 @@
 package com.example.doctorcommunication;
 
+import android.graphics.Color;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -7,18 +8,16 @@ import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
 public class MC_DotEventDecorator implements DayViewDecorator {
-    private final int color;
     private final HashSet<CalendarDay> dates;
 
-    MC_DotEventDecorator(int color, Collection<CalendarDay> dates){
-        this.color = color;
+    MC_DotEventDecorator(ArrayList<CalendarDay> dates){
         this.dates = new HashSet<>(dates);
     }
-
 
     @Override
     public boolean shouldDecorate(CalendarDay day) {
@@ -27,6 +26,6 @@ public class MC_DotEventDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.addSpan(new DotSpan(5,color));
+        view.addSpan(new DotSpan(5, Color.BLUE));
     }
 }

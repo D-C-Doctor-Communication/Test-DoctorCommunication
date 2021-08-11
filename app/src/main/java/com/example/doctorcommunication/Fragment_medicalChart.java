@@ -1,5 +1,6 @@
 package com.example.doctorcommunication;
 
+import android.database.sqlite.SQLiteBindOrColumnIndexOutOfRangeException;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -57,7 +58,9 @@ public class Fragment_medicalChart extends Fragment {
         btn_showSymptomData = view.findViewById(R.id.btn_showSymptomData);
 
         //점 표시
-        //materialCalendarView.addDecorator(new MC_DotEventDecorator(Color.BLUE,addDot()));
+        ArrayList<CalendarDay> dates = addDot();
+        MC_DotEventDecorator dotEventDecorator = new MC_DotEventDecorator(dates);
+        materialCalendarView.addDecorator(dotEventDecorator);
         materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
@@ -114,15 +117,17 @@ public class Fragment_medicalChart extends Fragment {
 
     //Person1의 진료데이터가 존재하는지 판별하여
     //해당 날짜에 점을 찍어줌
-    /*
-    public ArrayList addDot(){
+    public ArrayList<CalendarDay> addDot(){
         ArrayList<CalendarDay> dates = new ArrayList<>(); //점을 찍을 날짜를 저장,반환
 
         Calendar calendar = Calendar.getInstance();
-        LocalDate localDate = LocalDate.now();
         for(int i=0;i<Person1.appointment.length;i++){
-            CalendarDay day = CalendarDay.from(localDate);
-            String[] time = Person1.appointment[i].getDate().split(".");
+            CalendarDay day = CalendarDay.from(calendar);
+            String[] time = Person1.appointment[i].getDate().split("\\.");
+            Log.d("myapp",Person1.appointment[i].getDate());
+            Log.d("myapp",time[0]);
+            Log.d("myapp",time[1]);
+            Log.d("myapp",time[2]);
             int year = Integer.parseInt(time[0]);
             int month = Integer.parseInt(time[1]);
             int dayy = Integer.parseInt(time[2]);
@@ -132,5 +137,4 @@ public class Fragment_medicalChart extends Fragment {
         }
         return dates;
     }
-     */
 }
