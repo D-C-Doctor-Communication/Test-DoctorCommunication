@@ -25,21 +25,10 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="21dp"
-        android:layout_marginBottom="276dp"
+        android:layout_marginBottom="312dp"
         android:text="날짜"
         android:textColor="@color/black"
         android:textSize="17sp" />
-
-    <Button
-        android:id="@+id/btn_showSymptomData"
-        android:layout_width="296dp"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="181dp"
-        android:backgroundTint="#DCDCDC"
-        android:text="진료 일정 추가하기"
-        android:textColor="@color/black" />
 
 
     <TextView
@@ -48,20 +37,29 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginStart="140dp"
-        android:layout_marginBottom="246dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginBottom="288dp"
         android:text="기록된 일정이 없습니다."
         android:textSize="14sp" />
 
-
+    <Button
+        android:id="@+id/btn_addAppointDoctor"
+        android:layout_width="296dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="223dp"
+        android:backgroundTint="#DCDCDC"
+        android:text="진료 일정 추가하기"
+        android:textColor="@color/black" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="21dp"
-        android:layout_marginBottom="122dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="165dp"
         android:text="진료 후기"
         android:textColor="@color/black"
         android:textSize="17sp" />
@@ -71,44 +69,49 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="4dp"
-        android:layout_marginBottom="176dp" />
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="207dp" />
+
+    <TextView
+        android:id="@+id/MC_LineTextView"
+        android:layout_width="370dp"
+        android:layout_height="70dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="586dp"
+        android:background="#7EE6E6E6"
+        android:gravity="left"
+        android:lines="3"
+        android:maxLines="5"
+        android:minLines="1"
+        android:scrollbars="vertical"
+        android:text="진료 후기를 작성해주세요"
+        android:textColor="@color/ache_card_textColor"
+        android:textSize="10sp" />
 
     <EditText
         android:id="@+id/MC_LineEditText"
         android:layout_width="370dp"
         android:layout_height="70dp"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="609dp"
+        android:layout_marginTop="586dp"
         android:background="#7EE6E6E6"
+        android:gravity="left"
         android:inputType="textMultiLine"
         android:lines="3"
         android:maxLines="5"
         android:minLines="1"
         android:scrollbars="vertical"
         android:text="진료 후기를 작성해주세요"
-        android:textSize="10sp"
-        android:gravity="left"
         android:textColor="@color/ache_card_textColor"
-        android:visibility="gone"/>
-    <TextView
-        android:id="@+id/MC_LineTextView"
-        android:layout_width="370dp"
-        android:layout_height="70dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="609dp"
-        android:background="#7EE6E6E6"
-        android:lines="3"
-        android:maxLines="5"
-        android:minLines="1"
-        android:scrollbars="vertical"
-        android:text="진료 후기를 작성해주세요"
         android:textSize="10sp"
-        android:gravity="left"
-        android:textColor="@color/ache_card_textColor"/>
+        android:visibility="gone" />
 
     <ImageButton
         android:id="@+id/MC_editBtn"
@@ -116,8 +119,8 @@
         android:layout_height="22dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginEnd="43dp"
+        android:layout_marginBottom="83dp"
         tools:srcCompat="@android:drawable/ic_menu_edit" />
 
 

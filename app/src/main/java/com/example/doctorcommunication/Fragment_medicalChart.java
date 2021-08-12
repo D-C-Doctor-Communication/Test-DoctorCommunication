@@ -1,6 +1,7 @@
 package com.example.doctorcommunication;
 
 import android.app.Person;
+import android.content.Intent;
 import android.database.sqlite.SQLiteBindOrColumnIndexOutOfRangeException;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -46,8 +47,6 @@ public class Fragment_medicalChart extends Fragment {
     TextView btn_addAppointDoctor;
     //진료 후기 작성하기
     TextView btn_writeReview;
-    //증상 기록 보기
-    Button btn_showSymptomData;
 
     //진료 후기 수정 버튼
     ImageButton MC_editBtn;
@@ -74,8 +73,8 @@ public class Fragment_medicalChart extends Fragment {
         //진료 후기 텍스트 - 입력란
         MC_LineEditText = view.findViewById(R.id.MC_LineEditText);
         MC_LineTextView = view.findViewById(R.id.MC_LineTextView);
-        //증상 기록 보기
-        btn_showSymptomData = view.findViewById(R.id.btn_showSymptomData);
+        //병원 일정 추가하기 버튼
+        btn_addAppointDoctor = view.findViewById(R.id.btn_addAppointDoctor);
 
         //진료 후기 작성할때 키보드가 UI 가리는것 방지
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
@@ -139,6 +138,13 @@ public class Fragment_medicalChart extends Fragment {
             }
         });
 
+
+
+
+        btn_addAppointDoctor.setOnClickListener(v->{
+            Intent intent = new Intent(getActivity(),MC_PopupActivity.class);
+            startActivity(intent);
+        });
 
         return view;
     }

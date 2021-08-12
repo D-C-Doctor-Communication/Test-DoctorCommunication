@@ -96,7 +96,7 @@ public class Fragment_home extends Fragment {
         WeekCalendar weekCalendar = new WeekCalendar();
         Date todayDate = new Date();
         weekCalendar.setWeekCalenderDate(view,todayDate,ymTextView,wDate);
-
+        WeekCalendar.setCardColor(todayDate.getDay(),wCalender);
 
 
 //ListView

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="330dp"
+    android:layout_height="410dp"
+    tools:context=".MC_PopupActivity"
+    android:orientation="vertical"
+    android:background="@drawable/mc_custom_dialog">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:layout_marginRight="10dp">
+        <ImageView
+            android:id="@+id/cancel_button"
+            android:src="@drawable/mc_icon_quit_modalpopup"
+            android:layout_width="20dp"
+            android:layout_height="30dp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TimePicker
+            android:id="@+id/time_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:timePickerMode="spinner">
+
+        </TimePicker>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:padding="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:layout_width="180dp"
+                android:layout_height="35dp"
+                android:hint="일정 이름"
+                android:textSize="13sp"/>
+            <View
+                android:layout_width="5dp"
+                android:layout_height="35dp"/>
+            <Button
+                android:id="@+id/checkup_btn"
+                android:layout_width="45dp"
+                android:layout_height="25dp"
+                android:text="검사"
+                android:background="@drawable/mc_popup_left_btn"/>
+            <Button
+                android:layout_width="45dp"
+                android:layout_height="25dp"
+                android:text="진료"
+                android:background="@drawable/mc_popup_right_btn"/>
+        </LinearLayout>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:hint="장소"
+            android:textSize="13sp"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:paddingRight="30dp">
+        <Button
+            android:id="@+id/ok_btn"
+            android:text="저장"
+            android:textSize="15sp"
+            android:layout_width="87dp"
+            android:layout_height="40dp"/>
+    </LinearLayout>
+
+</LinearLayout>

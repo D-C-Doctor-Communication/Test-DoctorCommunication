@@ -4,43 +4,54 @@
     package="com.example.doctorcommunication"
     tools:ignore="LockedOrientationActivity">
 
-    // 인터넷 권한 허용
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:protectionLevel="signature|setup|privileged"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:protectionLevel="signature|setup|privileged"
-        android:theme="@style/Theme.DoctorCommunication">
+        android:theme="@style/Theme.DoctorCommunication"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".MC_PopupActivity"
+            android:theme="@style/popupTheme"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MeetingDoc" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".AddSymptom" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".SettingActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".MeetingDoc"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".AddSymptom"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".SettingActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
-        <activity android:name=".Recording" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity
+            android:name=".Recording"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".SearchList" />
-        <activity android:name=".SelectPattern"/>
-        <activity android:name=".SelectWorse"/>
-        <activity android:name=".OtherSymptom"/>
-        <activity android:name=".SelectBody_head"/>
-        <activity android:name=".SelectBody_stomach"/>
-        <activity android:name=".SelectBody_waist"/>
-        <activity android:name=".SelectLevel"/>
-        <activity android:name=".AddDetails"/>
-
+        <activity android:name=".SelectPattern" />
+        <activity android:name=".SelectWorse" />
+        <activity android:name=".OtherSymptom" />
+        <activity android:name=".SelectBody_head" />
+        <activity android:name=".SelectBody_stomach" />
+        <activity android:name=".SelectBody_waist" />
+        <activity android:name=".SelectLevel" />
+        <activity android:name=".AddDetails" />
     </application>
+
 </manifest>
