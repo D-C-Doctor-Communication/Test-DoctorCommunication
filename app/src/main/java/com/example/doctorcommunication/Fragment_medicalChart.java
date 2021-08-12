@@ -91,6 +91,7 @@ public class Fragment_medicalChart extends Fragment {
         String todayString = basicYear+"."+basicMonth+"."+basicDay;
         Log.d("myapp",basicYear+"."+basicMonth+"."+basicDay);
         monthCalendar.setDateText(basicYear,basicMonth,basicDay,selectedDate);
+        materialCalendarView.setDateSelected(date,true);
 
         //진료 후기 작성
         //선택한 날짜의 memo부분이 빈문자열일경우 "진료 후기를 작성해주세요"로 초기값 지정
@@ -196,7 +197,7 @@ public class Fragment_medicalChart extends Fragment {
             Calendar calendar = Calendar.getInstance();
             //Data에서 병원예약 날짜가 존재하면 해당 날짜를 위의 arrayList에 저장
             for(int i=0;i<Person1.appointment.length;i++){
-                CalendarDay day = CalendarDay.from(calendar);
+                //CalendarDay day = CalendarDay.from(calendar);
                 //병원예약날짜 받아오기
                 String[] time = Person1.appointment[i].getDate().split("\\.");
                 Log.d("myapp",Person1.appointment[i].getDate());
@@ -204,8 +205,10 @@ public class Fragment_medicalChart extends Fragment {
                 int month = Integer.parseInt(time[1]);
                 int dayy = Integer.parseInt(time[2]);
 
-                dates.add(day);
+
                 calendar.set(year,month-1,dayy);
+                CalendarDay day = CalendarDay.from(calendar);
+                dates.add(day);
             }
             return dates;
         }

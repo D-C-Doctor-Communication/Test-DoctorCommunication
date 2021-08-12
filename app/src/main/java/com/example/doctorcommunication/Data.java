@@ -79,8 +79,8 @@ class Person1{
     };
     static appointmentDoctor[] appointment = {
         new appointmentDoctor("2021.8.8","점심 저녁으로 약을 먹고 물을 충분히 마신다."),
-        new appointmentDoctor("2021.8.29",""),
-        new appointmentDoctor("2021.8.11","따뜻한 물을 마실것."),
+        new appointmentDoctor("2021.8.29","자기전에 간단한 스트레칭을 한다."),
+        new appointmentDoctor("2021.8.12","따뜻한 물을 마실것."),
         new appointmentDoctor("2021.9.8",""),
         new appointmentDoctor("2021.7.1","")
     };
