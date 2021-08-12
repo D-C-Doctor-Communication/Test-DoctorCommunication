@@ -17,15 +17,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import org.threeten.bp.DayOfWeek;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.TextStyle;
+import org.threeten.bp.temporal.ChronoUnit;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class Fragment_medicalChart extends Fragment {
@@ -56,6 +61,8 @@ public class Fragment_medicalChart extends Fragment {
         Log.d("myapp", "진료기록탭 열림");
         View view = inflater.inflate(R.layout.fragment_medical_chart, container, false);
 
+        AndroidThreeTen.init(getActivity());
+
         //캘린더
         materialCalendarView = view.findViewById(R.id.calendarView);
         //선택한 날짜
@@ -72,31 +79,30 @@ public class Fragment_medicalChart extends Fragment {
 
         //진료 후기 작성할때 키보드가 UI 가리는것 방지
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
-
-
         //기본 표시 날짜(오늘)
         SimpleDateFormat todayformat = new SimpleDateFormat("yyyy.MM.dd");
-        CalendarDay today = CalendarDay.today();
-        Calendar todayCal = Calendar.getInstance();
-        String todayDateString = todayformat.format(todayCal.getTime());
-        Log.d("myapp","오늘 날짜 : "+today);
-        int basicYear = today.getYear();
-        int basicMonth = today.getMonth();
-        int basicDay = today.getDay();
+
+
+
+        CalendarDay date = CalendarDay.today();
+        int basicYear = date.getYear();
+        int basicMonth = date.getMonth()+1;
+        int basicDay = date.getDay();
+        String todayString = basicYear+"."+basicMonth+"."+basicDay;
+        Log.d("myapp",basicYear+"."+basicMonth+"."+basicDay);
         monthCalendar.setDateText(basicYear,basicMonth,basicDay,selectedDate);
 
         //진료 후기 작성
         //선택한 날짜의 memo부분이 빈문자열일경우 "진료 후기를 작성해주세요"로 초기값 지정
-        String Memotext = monthCalendar.getSameDateMomo(todayDateString);
-        MC_LineTextView.setText(Memotext);
-        MC_LineEditText.setText(Memotext);
+        String Memotext1 = monthCalendar.getSameDateMomo(todayString);
+        MC_LineTextView.setText(Memotext1);
+        MC_LineEditText.setText(Memotext1);
 
         //수정버튼을 눌렀을때 텍스트뷰가 활성화중이라면 edit으로 변경
         // ,, edit이 활성화중이라면 텍스트뷰로 변경
         //버튼 누르기 전의 텍스트를 임시로 저장하여 setText으로 기본값 지정해야함
         MC_editBtn.setOnClickListener(v -> {
-            changeTextEdit(todayDateString);
+            changeTextEdit(todayString);
         });
 
 
@@ -204,47 +210,20 @@ public class Fragment_medicalChart extends Fragment {
             return dates;
         }
 
-
+        //00.00 (월) 텍스트 표시
         public static void setDateText(int Year, int Month, int Day,TextView selectedDate){
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM.dd ");
-            Date date1 = new Date();
-            String nowString = dateFormat.format(date1);
 
-            date1.setYear(Year - 1900);
-            date1.setMonth(Month-1);
-            date1.setDate(Day);
+            CalendarDay date = CalendarDay.from(Year,Month,Day);
+            Log.d("myapp","날짜 : "+date.getYear()+'.'+date.getMonth()+"."+date.getDay());
 
-            Log.d("myapp", date1.getDay() + " ");
+            org.threeten.bp.LocalDate date1 = LocalDate.of(Year, Month, Day);
+            DayOfWeek dayOfWeek = date1.getDayOfWeek();
+            String dayOfWeekDay = dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREA);
 
-            String dayOfWeekDay = "";
-            switch (date1.getDay()) {
-                case 5:
-                    dayOfWeekDay = "(일)";
-                    break;
-                case 6:
-                    dayOfWeekDay = "(월)";
-                    break;
-                case 0:
-                    dayOfWeekDay = "(화)";
-                    break;
-                case 1:
-                    dayOfWeekDay = "(수)";
-                    break;
-                case 2:
-                    dayOfWeekDay = "(목)";
-                    break;
-                case 3:
-                    dayOfWeekDay = "(금)";
-                    break;
-                case 4:
-                    dayOfWeekDay = "(토)";
-                    break;
-                default:
-                    dayOfWeekDay = "알 수 없음";
-            }
-
-            nowString = dateFormat.format(date1) + dayOfWeekDay;
-            selectedDate.setText(nowString);
+            Log.d("myapp",date.toString());
+            //nowString = dateFormat.format(date) + dayOfWeekDay;
+            selectedDate.setText(date.getMonth()+"."+date.getDay()+"("+dayOfWeekDay+")");
         }
 
     }
