@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1083314111237",
+    "project_id": "doctor-communication-35047",
+    "storage_bucket": "doctor-communication-35047.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083314111237:android:244bb4cf6129bd34546d6c",
+        "android_client_info": {
+          "package_name": "com.example.doctorcommunication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083314111237-j04an85ksmk8d0oint7tpcfug9as8f1m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.doctorcommunication",
+            "certificate_hash": "affeff37ab85e8603470b577668b39cbc3309024"
+          }
+        },
+        {
+          "client_id": "1083314111237-e44srphpa6eu44khjttb1gjko2oj0gmb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDO_1fgyUq0T5DiSZZ-7NHfgAH_96Wykuk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083314111237-e44srphpa6eu44khjttb1gjko2oj0gmb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
