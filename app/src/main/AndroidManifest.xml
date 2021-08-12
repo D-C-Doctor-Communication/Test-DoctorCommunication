@@ -10,32 +10,34 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
+        android:protectionLevel="signature|setup|privileged"
         android:theme="@style/Theme.DoctorCommunication">
         <activity
-            android:name=".MeetingDoc"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".AddSymptom"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--<activity android:name=".FrameLayoutTest" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>-->
-        <activity android:name=".SettingActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MeetingDoc" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".AddSymptom" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".SettingActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
         <activity android:name=".Recording" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".SearchList"></activity>
-        <activity android:name=".SelectPattern"></activity>
-        <activity android:name=".SelectWorse"></activity>
-        <activity android:name=".OtherSymptom"></activity>
-        <activity android:name=".SelectBody_head"></activity>
-        <activity android:name=".SelectBody_stomach"></activity>
-        <activity android:name=".SelectBody_waist"></activity>
-        <activity android:name=".SelectLevel"></activity>
-        <activity android:name=".AddDetails"></activity>
+        <activity android:name=".SearchList" />
+        <activity android:name=".SelectPattern"/>
+        <activity android:name=".SelectWorse"/>
+        <activity android:name=".OtherSymptom"/>
+        <activity android:name=".SelectBody_head"/>
+        <activity android:name=".SelectBody_stomach"/>
+        <activity android:name=".SelectBody_waist"/>
+        <activity android:name=".SelectLevel"/>
+        <activity android:name=".AddDetails"/>
+
     </application>
 </manifest>

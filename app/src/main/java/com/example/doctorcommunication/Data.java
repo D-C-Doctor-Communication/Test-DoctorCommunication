@@ -78,11 +78,11 @@ class Person1{
         new Data("2021.09.12","가래","6","투명하거나 하얀 가래","시간이 갈수록","피로"),
     };
     static appointmentDoctor[] appointment = {
-        new appointmentDoctor("2021.08.08"),
-        new appointmentDoctor("2021.08.29"),
-        new appointmentDoctor("2021.09.02"),
-        new appointmentDoctor("2021.09.08"),
-        new appointmentDoctor("2021.07.01")
+        new appointmentDoctor("2021.8.8","점심 저녁으로 약을 먹고 물을 충분히 마신다."),
+        new appointmentDoctor("2021.8.29","자기전에 간단한 스트레칭을 한다."),
+        new appointmentDoctor("2021.8.12","따뜻한 물을 마실것."),
+        new appointmentDoctor("2021.9.8",""),
+        new appointmentDoctor("2021.7.1","")
     };
 }
 class SymptomList{
