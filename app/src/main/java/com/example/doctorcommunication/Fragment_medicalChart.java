@@ -33,6 +33,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import static android.app.Activity.RESULT_OK;
+
 
 public class Fragment_medicalChart extends Fragment {
 
@@ -53,6 +55,8 @@ public class Fragment_medicalChart extends Fragment {
     //진료 후기 텍스트 - 입력란
     EditText MC_LineEditText;
     TextView MC_LineTextView;
+    //(팝업창 이동) activity 실행 요청 확인을 위한 요청코드
+    static final int REQ_ADD_CONTACT = 1;
 
 
     @Override
@@ -143,11 +147,36 @@ public class Fragment_medicalChart extends Fragment {
 
         btn_addAppointDoctor.setOnClickListener(v->{
             Intent intent = new Intent(getActivity(),MC_PopupActivity.class);
-            startActivity(intent);
+            //startActivity(intent);
+            startActivityForResult(intent,REQ_ADD_CONTACT);
         });
 
         return view;
     }
+
+    //팝업창으로부터 입력받은 정보 저장하는 메소드
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == REQ_ADD_CONTACT) {
+            if (resultCode == RESULT_OK) {
+
+                //일정 이름을 MC_PopupActivity로부터 받아옴
+                String scheduleName = intent.getStringExtra("schedule_name");
+                //장소를 MC_PopupActivity로부터 받아옴
+                String location = intent.getStringExtra("location");
+                //선택된 시간(timePicker) MC_PopupActivity로부터 받아옴
+                String selectedTime = intent.getStringExtra("selected_time");
+                //진료일정인지, 검사일정인지를 MC_PopupActivity로부터 받아옴 (진료일정이라면 "진료"값 저장)
+                String typeOfSchedule = intent.getStringExtra("selected_button");
+                Log.d("myapp","일정 이름 : "+scheduleName);
+                Log.d("myapp","장소 : "+location);
+                Log.d("myapp","선택된 시간 : "+selectedTime);
+                Log.d("myapp","예약 종류 : "+typeOfSchedule);
+
+            }
+        }
+    }
+
 
     //진료 후기 수정아이콘 눌렀을 때 호출
     public void changeTextEdit(String selectedDateString){

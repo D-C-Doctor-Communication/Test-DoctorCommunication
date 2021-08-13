@@ -32,7 +32,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:timePickerMode="spinner">
-
         </TimePicker>
     </LinearLayout>
 
@@ -47,6 +46,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <EditText
+                android:id="@+id/scheduleName"
                 android:layout_width="180dp"
                 android:layout_height="35dp"
                 android:hint="일정 이름"
@@ -61,12 +61,14 @@
                 android:text="검사"
                 android:background="@drawable/mc_popup_left_btn"/>
             <Button
+                android:id="@+id/treatment_btn"
                 android:layout_width="45dp"
                 android:layout_height="25dp"
                 android:text="진료"
                 android:background="@drawable/mc_popup_right_btn"/>
         </LinearLayout>
         <EditText
+            android:id="@+id/location"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:hint="장소"
