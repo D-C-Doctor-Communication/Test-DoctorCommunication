@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -58,12 +59,14 @@ public class Fragment_medicalChart extends Fragment {
     //(팝업창 이동) activity 실행 요청 확인을 위한 요청코드
     static final int REQ_ADD_CONTACT = 1;
 
+    //진료 일정 ListView
+    ListView listView;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d("myapp", "진료기록탭 열림");
         View view = inflater.inflate(R.layout.fragment_medical_chart, container, false);
-
         AndroidThreeTen.init(getActivity());
 
         //캘린더
@@ -79,14 +82,14 @@ public class Fragment_medicalChart extends Fragment {
         MC_LineTextView = view.findViewById(R.id.MC_LineTextView);
         //병원 일정 추가하기 버튼
         btn_addAppointDoctor = view.findViewById(R.id.btn_addAppointDoctor);
+        //진료 일정 ListView
+        listView = (ListView) view.findViewById(R.id.MC_listView);
+
 
         //진료 후기 작성할때 키보드가 UI 가리는것 방지
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         //기본 표시 날짜(오늘)
         SimpleDateFormat todayformat = new SimpleDateFormat("yyyy.MM.dd");
-
-
-
         CalendarDay date = CalendarDay.today();
         int basicYear = date.getYear();
         int basicMonth = date.getMonth()+1;
@@ -173,6 +176,21 @@ public class Fragment_medicalChart extends Fragment {
                 Log.d("myapp","선택된 시간 : "+selectedTime);
                 Log.d("myapp","예약 종류 : "+typeOfSchedule);
 
+                //일정이 생성될때마다 ListViewAdapter에 데이터를 추가함
+                //Adapter 객체 생성
+                MCListViewAdapter listViewAdapter = new MCListViewAdapter();
+                //리스트뷰 참조 및 어댑터 지정
+                listView.setAdapter(listViewAdapter);
+
+                //일정의 종류가 진료인지, 검사인지 확인하여 각 값에 맞는 이미지 코드를 add함
+                if(typeOfSchedule.equals("검사")){
+                    listViewAdapter.addItem(R.drawable.clinic_checkup,scheduleName,location,selectedTime);
+                }
+                else if(typeOfSchedule.equals("진료")){
+                    listViewAdapter.addItem(R.drawable.clinic_clinic,scheduleName,location,selectedTime);
+                }
+
+                listViewAdapter.notifyDataSetChanged();
             }
         }
     }
