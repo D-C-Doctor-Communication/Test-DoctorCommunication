@@ -1,15 +1,11 @@
 package com.example.doctorcommunication;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.WindowDecorActionBar;
 import androidx.fragment.app.Fragment;
 
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +15,10 @@ import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 
+import com.example.doctorcommunication.ConditionAnalysis.Fragment_conditionAnalysis;
+import com.example.doctorcommunication.HomeScreen.Fragment_home;
+import com.example.doctorcommunication.MedicalChart.Fragment_medicalChart;
+import com.example.doctorcommunication.Settings.SettingActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    //기본으로 선택되어있는 프래그먼트 지정
     public void setDefaultFragment() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_container, homeFragment);
