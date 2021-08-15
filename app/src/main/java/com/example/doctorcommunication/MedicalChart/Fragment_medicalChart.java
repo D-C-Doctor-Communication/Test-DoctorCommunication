@@ -61,7 +61,7 @@ public class Fragment_medicalChart extends Fragment {
 
     //진료 일정 ListView
     ListView listView;
-
+    MCListViewAdapter listViewAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,7 +84,10 @@ public class Fragment_medicalChart extends Fragment {
         btn_addAppointDoctor = view.findViewById(R.id.btn_addAppointDoctor);
         //진료 일정 ListView
         listView = (ListView) view.findViewById(R.id.MC_listView);
-
+        //Adapter 객체 생성
+        listViewAdapter = new MCListViewAdapter();
+        //리스트뷰 참조 및 어댑터 지정
+        listView.setAdapter(listViewAdapter);
 
         //진료 후기 작성할때 키보드가 UI 가리는것 방지
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
@@ -97,7 +100,7 @@ public class Fragment_medicalChart extends Fragment {
         String todayString = basicYear+"."+basicMonth+"."+basicDay;
         Log.d("myapp",basicYear+"."+basicMonth+"."+basicDay);
         monthCalendar.setDateText(basicYear,basicMonth,basicDay,selectedDate);
-        materialCalendarView.setDateSelected(date,true);
+        //materialCalendarView.setDateSelected(date,true);
 
         //진료 후기 작성
         //선택한 날짜의 memo부분이 빈문자열일경우 "진료 후기를 작성해주세요"로 초기값 지정
@@ -177,11 +180,6 @@ public class Fragment_medicalChart extends Fragment {
                 Log.d("myapp","예약 종류 : "+typeOfSchedule);
 
                 //일정이 생성될때마다 ListViewAdapter에 데이터를 추가함
-                //Adapter 객체 생성
-                MCListViewAdapter listViewAdapter = new MCListViewAdapter();
-                //리스트뷰 참조 및 어댑터 지정
-                listView.setAdapter(listViewAdapter);
-
                 //일정의 종류가 진료인지, 검사인지 확인하여 각 값에 맞는 이미지 코드를 add함
                 if(typeOfSchedule.equals("검사")){
                     listViewAdapter.addItem(R.drawable.clinic_checkup,scheduleName,location,selectedTime);
@@ -221,9 +219,9 @@ public class Fragment_medicalChart extends Fragment {
         //선택한 날짜에 저장된 메모를 찾아 반환함
         static public String getSameDateMomo(String memo_selecteddate){
             String memoContent = "";
-            for(int i = 0; i< Person1.appointment.length; i++){
-                if(Person1.appointment[i].getDate().equals(memo_selecteddate)){
-                    memoContent = Person1.appointment[i].getMemo();
+            for(int i = 0; i< Person1.memos.length; i++){
+                if(Person1.memos[i].getDate().equals(memo_selecteddate)){
+                    memoContent = Person1.memos[i].getMemo();
                     Log.d("myapp","메모기록이 존재함!");
                     break;
                 }
@@ -233,9 +231,9 @@ public class Fragment_medicalChart extends Fragment {
         }
         //선택한 날짜에 저장된 메모를 찾아 메모 수정함
         public static void changeMemo(String memo_selecteddate, String memo) {
-            for(int i=0;i<Person1.appointment.length;i++){
-                if(Person1.appointment[i].getDate().equals(memo_selecteddate)){
-                    Person1.appointment[i].setMemo(memo);
+            for(int i=0;i<Person1.memos.length;i++){
+                if(Person1.memos[i].getDate().equals(memo_selecteddate)){
+                    Person1.memos[i].setMemo(memo);
                     Log.d("myapp","메모기록이 수정됨!");
                     break;
                 }
@@ -249,11 +247,11 @@ public class Fragment_medicalChart extends Fragment {
 
             Calendar calendar = Calendar.getInstance();
             //Data에서 병원예약 날짜가 존재하면 해당 날짜를 위의 arrayList에 저장
-            for(int i=0;i<Person1.appointment.length;i++){
+            for(int i=0;i<Person1.appointments.length;i++){
                 //CalendarDay day = CalendarDay.from(calendar);
                 //병원예약날짜 받아오기
-                String[] time = Person1.appointment[i].getDate().split("\\.");
-                Log.d("myapp",Person1.appointment[i].getDate());
+                String[] time = Person1.appointments[i].getDate().split("\\.");
+                Log.d("myapp",Person1.appointments[i].getDate());
                 int year = Integer.parseInt(time[0]);
                 int month = Integer.parseInt(time[1]);
                 int dayy = Integer.parseInt(time[2]);

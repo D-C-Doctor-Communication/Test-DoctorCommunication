@@ -52,7 +52,9 @@ public class MCListViewAdapter extends BaseAdapter {
     }
 
 
-
+    public void clearData() {
+        listViewItemList.clear();
+    }
 
     @Override
     public int getCount() {
