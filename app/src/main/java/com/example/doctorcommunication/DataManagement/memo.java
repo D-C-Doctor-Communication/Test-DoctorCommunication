@@ -1,11 +1,11 @@
 package com.example.doctorcommunication.DataManagement;
 
 //병원 예약에 대한 데이터 클래스
-public class appointmentDoctor {
+public class memo {
     private String date;
     private String memo;
 
-    public appointmentDoctor(String date,String memo){
+    public memo(String date,String memo){
         this.date = date;
         this.memo = memo;
     }

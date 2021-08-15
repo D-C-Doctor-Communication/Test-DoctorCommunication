@@ -1,7 +1,7 @@
 package com.example.doctorcommunication.DataManagement;
 
 import com.example.doctorcommunication.DataManagement.Symptom;
-import com.example.doctorcommunication.DataManagement.appointmentDoctor;
+import com.example.doctorcommunication.DataManagement.memo;
 
 //임의의 데이터 저장
 public class Person1{
@@ -20,12 +20,17 @@ public class Person1{
             new Symptom("2021.08.26","가래","4","투명하거나 하얀 가래","시간이 갈수록","두통","차가운 물을 마시면 심해진다."),
             new Symptom("2021.09.12","가래","6","투명하거나 하얀 가래","시간이 갈수록","피로"),
     };
-    //병원진료/검사 예약
-    public static appointmentDoctor[] appointment = {
-            new appointmentDoctor("2021.8.8","점심 저녁으로 약을 먹고 물을 충분히 마신다."),
-            new appointmentDoctor("2021.8.29","자기전에 간단한 스트레칭을 한다."),
-            new appointmentDoctor("2021.8.12","따뜻한 물을 마실것."),
-            new appointmentDoctor("2021.9.8",""),
-            new appointmentDoctor("2021.7.1","")
+    //메모
+    public static memo[] memos = {
+            new memo("2021.8.8","점심 저녁으로 약을 먹고 물을 충분히 마신다."),
+            new memo("2021.8.29","자기전에 간단한 스트레칭을 한다."),
+            new memo("2021.8.12","따뜻한 물을 마실것."),
+            new memo("2021.9.8",""),
+            new memo("2021.7.1","")
+    };
+    //병원진료|검사 예약
+    //날짜 이름 시간 장소 종류
+    public static Appointment[] appointments = {
+            new Appointment("2021.08.06","건강검진","16:00","서울대학병원","검사")
     };
 }

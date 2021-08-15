@@ -411,9 +411,9 @@ public class Fragment_conditionAnalysis extends Fragment {
         public static int appointmentDC(String strDate){
             int numberOfData = 0;
             for(int i=0;i<
-                    Person1.appointment.length;i++){
+                    Person1.memos.length;i++){
                 //데이터날짜가 선택된 달과 일치할경우 1씩 증가
-                if(isInSameMonth(Person1.appointment[i].getDate(),strDate)) numberOfData++;
+                if(isInSameMonth(Person1.memos[i].getDate(),strDate)) numberOfData++;
             }
             return numberOfData;
         }
