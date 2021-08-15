@@ -5,12 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="Login"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tv_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="이메일"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="130dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp" />
     <EditText
@@ -43,13 +58,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_below="@+id/et_password">
+
         <Button
             android:id="@+id/login_btn"
-            android:text="로그인"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="123dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
             android:layout_weight="1"
-            android:layout_marginLeft="50dp"/>
+            android:text="로그인" />
         <com.google.android.gms.common.SignInButton
             android:id="@+id/btn_googleSignIn"
             android:layout_width="wrap_content"
@@ -60,17 +76,18 @@
         </com.google.android.gms.common.SignInButton>
     </LinearLayout>
     <LinearLayout
+        android:layout_marginTop="5dp"
         android:orientation="horizontal"
         android:layout_below="@+id/L"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:textSize="10dp"
+            android:textSize="13dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="아직 계정이 없으신가요?"
             android:layout_marginLeft="50dp" />
-        <Button android:textSize="10dp"
+        <Button android:textSize="13dp"
             android:textColor="#ffff0000"
             android:background="#00ff0000"
             android:id="@+id/register_t2"
