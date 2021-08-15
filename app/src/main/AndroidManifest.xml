@@ -52,6 +52,8 @@
         <activity android:name=".SelectBody_waist" />
         <activity android:name=".SelectLevel" />
         <activity android:name=".AddDetails" />
+        <activity android:name=".SignActivity"/>
+        <activity android:name=".RegisterActivity"/>
     </application>
 
 </manifest>
