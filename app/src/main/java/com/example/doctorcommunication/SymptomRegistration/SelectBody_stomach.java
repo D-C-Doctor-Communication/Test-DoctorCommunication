@@ -17,9 +17,9 @@ public class SelectBody_stomach extends AppCompatActivity {
     String symptom;
     int part;
     int [] CHECK_STOMACH =new int[9];
-    String [] STOMACH ={"오른쪽 위 복부","명치","왼쪽 위 복부","오른쪽 복부","배꼽 부근","왼쪽 복부","오른쪽 아래 복부","왼쪽 아래 복부","아래쪽 복부"};
+    String [] STOMACH ={"오른쪽 위 복부","명치","왼쪽 위 복부","오른쪽 복부","배꼽 부근","왼쪽 복부","오른쪽 아래 복부","왼쪽 아래 복부","아래쪽 복부"}; //복부 세부 부위
     List<String> BODY = new ArrayList<String>();
-    String [] select_stomach;
+    String [] select_stomach; //선택한 복부 부위
 
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
@@ -41,6 +41,7 @@ public class SelectBody_stomach extends AppCompatActivity {
         ImageButton stomach08 = (ImageButton)findViewById(R.id.stomach08) ;
         ImageButton stomach09 = (ImageButton)findViewById(R.id.stomach09);
 
+        //복부 세부 부위 select 유무 확인
         stomach01.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,6 +159,8 @@ public class SelectBody_stomach extends AppCompatActivity {
                 Log.e("ji", "click5");
             }
         });
+
+        //다음 페이지 버튼
          nextpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,6 +168,7 @@ public class SelectBody_stomach extends AppCompatActivity {
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("part",part);
 
+                //복부 세부 부위가 선택되어 있으면 BODY에 넣기
                 if(stomach01.isSelected()){
                     BODY.add(STOMACH[0]);
                 }
@@ -192,6 +196,8 @@ public class SelectBody_stomach extends AppCompatActivity {
                 if(stomach09.isSelected()){
                     BODY.add(STOMACH[8]);
                 }
+
+                //선택한 복부 세부부위 string 변환해서 select_stomach 넣기
                 select_stomach = BODY.toArray(new String[BODY.size()]);
                 for(int i = 0; i< select_stomach.length; i++)
                     Log.e("jj", select_stomach[i]);
@@ -199,7 +205,7 @@ public class SelectBody_stomach extends AppCompatActivity {
                 finish();
             }
         });
-
+         //뒤로가기 버튼
         backpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

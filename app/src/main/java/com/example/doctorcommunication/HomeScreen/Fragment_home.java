@@ -21,6 +21,7 @@ import com.example.doctorcommunication.DataManagement.Person1;
 import com.example.doctorcommunication.DoctorMeeting.MeetingDoc;
 import com.example.doctorcommunication.HomeScreen.HomeListViewAdapter;
 import com.example.doctorcommunication.R;
+import com.example.doctorcommunication.SymptomRegistration.Search;
 import com.example.doctorcommunication.SymptomRegistration.SearchList;
 
 import java.text.SimpleDateFormat;
@@ -56,7 +57,7 @@ public class Fragment_home extends Fragment {
 
 //카드1 - 증상등록으로 이동
         btn_addSymptom.setOnClickListener(v -> { //람다형식 사용 ~ new Button.OnClickListener()와 같은 기능
-            Intent addSymptom = new Intent(getContext(), SearchList.class);
+            Intent addSymptom = new Intent(getContext(), Search.class);
             startActivity(addSymptom);
         });
 

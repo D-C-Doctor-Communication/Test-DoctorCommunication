@@ -40,28 +40,17 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="45dp"
+        android:padding="10dp"
+        android:layout_marginLeft="10dp"
         android:src="@drawable/back"
-        app:layout_constraintHeight_percent="0.07"
-        app:layout_constraintEnd_toStartOf="@+id/search_text"
-        app:layout_constraintStart_toStartOf="@+id/Leftguideline"
-        app:layout_constraintTop_toTopOf="@+id/Upguideline" />
+        app:layout_constraintEnd_toStartOf="@id/search_text"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line"
+        app:layout_constraintTop_toTopOf="@+id/Upguideline"
+        app:layout_constraintWidth_percent="0.125" />
 
-    <Button
-        android:id="@+id/search_btn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="40dp"
-        android:background="#00ff0000"
-        android:onClick="Click_search_btn"
-        android:text="검색"
-        android:textColor="#0C6FFF"
-        android:fontFamily="@font/nanumsquareregular"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintHeight_percent="0.07"
-        app:layout_constraintWidth_percent="0.2"
-        app:layout_constraintEnd_toStartOf="@+id/Rightguideline"
-        app:layout_constraintStart_toEndOf="@+id/search_text"
-        app:layout_constraintTop_toTopOf="@+id/Upguideline" />
 
     <EditText
         android:id="@+id/search_text"
@@ -70,15 +59,16 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/serach_edge"
         android:fontFamily="@font/nanumsquareregular"
-        android:drawableLeft="@drawable/left_question_size"
         android:paddingLeft="10dp"
         android:drawablePadding="8dp"
         android:hint="입력"
-
         app:layout_constraintHeight_percent="0.07"
-        app:layout_constraintEnd_toStartOf="@id/search_btn"
-        app:layout_constraintStart_toStartOf="@+id/back_btn"
-        app:layout_constraintTop_toTopOf="@+id/Upguideline" />
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintEnd_toStartOf="@id/Rightguideline"
+        app:layout_constraintStart_toEndOf="@+id/back_btn"
+        app:layout_constraintTop_toTopOf="@+id/Upguideline"
+        app:layout_constraintTop_toBottomOf="@id/line"
+        />
 
 
 

@@ -32,7 +32,7 @@ public class SelectWorse extends AppCompatActivity {
     EditText add_worse;
     Button worse_btn;
 
-    String symptom;
+    String symptom;//선택한 증상
     String[] select_worse; //선택한 악화상황
     List<String> worse = new ArrayList<String>();
     int cnt=0;
@@ -57,11 +57,13 @@ public class SelectWorse extends AppCompatActivity {
         add_worse = findViewById(R.id.add_osymptom);
         worse_btn =findViewById(R.id.osymptom_btn);
 
+        //다음페이지 버튼
        nextpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SelectWorse.this, OtherSymptom.class);
 
+                //선택된 리스트 확인하기
                 SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
                 int count = adapter.getCount();
                 for(int i=0; i<=count-1; i++){
@@ -71,6 +73,8 @@ public class SelectWorse extends AppCompatActivity {
                 }
                 select_worse= new String[cnt];
                 cnt=0;
+
+                //선택된 리스트 select_worse 에 넣기
                 for(int i=0; i<=count-1; i++){
                     if(checkedItems.get(i)){
                         select_worse[cnt++]=worse.get(i);
@@ -81,16 +85,19 @@ public class SelectWorse extends AppCompatActivity {
                 finish();
             }
         });
+
+       //뒤로가기 버튼
         backpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SelectWorse.this, SelectPattern.class);
-                //Toast.makeText(getApplicationContext(),"다음페이지입니다.",Toast.LENGTH_LONG).show();
                 intent.putExtra("symptom",symptom);
                 startActivity(intent);
                 finish();
             }
         });
+
+        //악화상황 추가 버튼
         worse_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,10 +107,7 @@ public class SelectWorse extends AppCompatActivity {
             }
         });
 
-        //TextView textView = (TextView)findViewById(R.id.testtext);
-        // 선택한 증상
-
-        //textView.setText(text);
+        //symptom.json 파일에서 선택한 증상의 악화상황 읽기
         AssetManager assetManager = getAssets();
         try {
             InputStream is =assetManager.open("symptom.json");
@@ -126,6 +130,8 @@ public class SelectWorse extends AppCompatActivity {
                 JSONObject jo=jsonArray.getJSONObject(i);
                 String name= jo.getString("symptom");
                 JSONArray jsonArray2 = jo.getJSONArray("worse");
+
+                //선택한 증상이라면 악화상황 가져오기
                 if(name.equals(symptom)){
                     for(int j=0; j<jsonArray2.length(); j++){
                         JSONObject jo2=jsonArray2.getJSONObject(j);
@@ -135,7 +141,6 @@ public class SelectWorse extends AppCompatActivity {
                     }
 
                 }
-                //textView.setText(p);
 
                 adapter.notifyDataSetChanged();
             }

@@ -20,13 +20,13 @@ public class SelectLevel extends AppCompatActivity {
     TextView level_text2;
     int num=0; //선택한 통증 레벨(숫자)
     String []level_text={"통증이 없음","괜찮은 통증","조금 아픈 통증","웬만한 통증","괴로운 통증",
-            "매우 괴로운 통증","극심한 통증","매우 극심한 통증","끔찍한 통증","참을 수 없는 통증","상상할 수 없는 통증"};
+            "매우 괴로운 통증","극심한 통증","매우 극심한 통증","끔찍한 통증","참을 수 없는 통증","상상할 수 없는 통증"}; // 통증 레벨 설명
     StringBuilder change_level;
     String select_level;//선택한 통증 레벨(설명)
 
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
-        symptom = intent.getExtras().getString("symptom");
+        symptom = intent.getExtras().getString("symptom"); //선택한 증상 받아오기
         part =intent.getExtras().getInt("part");
         Log.e("backpart", String.valueOf(part));
         super.onCreate(savedInstanceState);
@@ -116,6 +116,7 @@ public class SelectLevel extends AppCompatActivity {
         level_text1.setText(select_level);
         level_text2.setText(new StringBuilder().append(num));
 
+        //thumb 바 옆 레벨(숫자) 나타내기
         int padding= level.getPaddingTop() + level.getPaddingBottom()+100;
         int sPos = level.getBottom() + level.getPaddingBottom();
         int yPos = (level.getWidth()-padding) * (10-level.getProgress()) / level.getMax() + sPos - (level_text2.getWidth()/2);

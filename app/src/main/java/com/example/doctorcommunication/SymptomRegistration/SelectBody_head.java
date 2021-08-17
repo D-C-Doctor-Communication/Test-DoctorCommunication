@@ -17,9 +17,9 @@ public class SelectBody_head extends AppCompatActivity {
     String symptom;
     int part;
     int []CHECK_HEAD=new int[5];
-    String []HEAD={"눈주위","이마","관자놀이","머리 전체","뒷머리"};
+    String []HEAD={"눈주위","이마","관자놀이","머리 전체","뒷머리"}; //머리 세부 부위
     List<String> BODY = new ArrayList<>();
-    String []select_head;
+    String []select_head; //선택한 머리 부위
 
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
@@ -37,6 +37,7 @@ public class SelectBody_head extends AppCompatActivity {
         ImageButton head04 = findViewById(R.id.head04) ;
         ImageButton head05 = findViewById(R.id.head05) ;
 
+        //머리 세부 부위 select 유무 확인
         head01.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +103,8 @@ public class SelectBody_head extends AppCompatActivity {
                 Log.e("ji", "click5");
             }
         });
+
+        //다음 페이지 버튼
          nextpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +112,7 @@ public class SelectBody_head extends AppCompatActivity {
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("part",part);
 
+                //머리 세부 부위가 선택되어 있으면 BODY에 넣기
                 if(head01.isSelected()){
                     BODY.add(HEAD[0]);
                 }
@@ -124,6 +128,8 @@ public class SelectBody_head extends AppCompatActivity {
                 if(head05.isSelected()){
                     BODY.add(HEAD[4]);
                 }
+
+                //선택한 머리 세부부위 string 변환해서 select_head에 넣기
                 select_head = BODY.toArray(new String[BODY.size()]);
                 for(int i=0; i<select_head.length; i++)
                     Log.e("jj", select_head[i]);
@@ -131,7 +137,7 @@ public class SelectBody_head extends AppCompatActivity {
                 finish();
             }
         });
-
+        //뒤로가기 버튼
         backpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

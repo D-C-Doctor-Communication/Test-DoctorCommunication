@@ -40,6 +40,7 @@
             android:name=".Recording.Recording"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".SymptomRegistration.SearchList" />
+        <activity android:name=".SymptomRegistration.Search" />
         <activity android:name=".SymptomRegistration.SelectPattern" />
         <activity android:name=".SymptomRegistration.SelectWorse" />
         <activity android:name=".SymptomRegistration.OtherSymptom" />

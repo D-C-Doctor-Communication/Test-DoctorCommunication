@@ -17,9 +17,9 @@ public class SelectBody_waist extends AppCompatActivity {
     String symptom;
     int part;
     int [] CHECK_WAIST =new int[5];
-    String []WAIST={"왼쪽 옆구리","허리 중앙","오른쪽 옆구리","허리 아래","꼬리뼈"};
+    String []WAIST={"왼쪽 옆구리","허리 중앙","오른쪽 옆구리","허리 아래","꼬리뼈"}; //허리 세부 부위
     List<String> BODY = new ArrayList<String>();
-    String [] select_waist;
+    String [] select_waist; //선택한 허리 부위
 
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
@@ -37,6 +37,7 @@ public class SelectBody_waist extends AppCompatActivity {
         ImageButton waist04 = (ImageButton)findViewById(R.id.waist04) ;
         ImageButton waist05 = (ImageButton)findViewById(R.id.waist05) ;
 
+        //허리 세부 부위 select 유무 확인
         waist01.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +103,8 @@ public class SelectBody_waist extends AppCompatActivity {
                 Log.e("ji", "click5");
             }
         });
+
+        //다음 페이지 버튼
          nextpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +112,7 @@ public class SelectBody_waist extends AppCompatActivity {
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("part",part);
 
+                //허리 세부 부위가 선택되어 있으면 BODY에 넣기
                 if(waist01.isSelected()){
                     BODY.add(WAIST[0]);
                 }
@@ -124,6 +128,8 @@ public class SelectBody_waist extends AppCompatActivity {
                 if(waist05.isSelected()){
                     BODY.add(WAIST[4]);
                 }
+
+                //선택한 허리 세부부위 string 변환해서 select_waist 넣기
                 select_waist = BODY.toArray(new String[BODY.size()]);
                 for(int i = 0; i< select_waist.length; i++)
                     Log.e("jj", select_waist[i]);
@@ -132,6 +138,7 @@ public class SelectBody_waist extends AppCompatActivity {
             }
         });
 
+        //뒤로가기 버튼
         backpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

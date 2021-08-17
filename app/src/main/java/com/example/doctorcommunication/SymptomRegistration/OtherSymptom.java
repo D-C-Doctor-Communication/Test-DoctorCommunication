@@ -32,8 +32,8 @@ public class OtherSymptom extends AppCompatActivity {
     EditText add_pattern;
     Button osymptom_btn;
 
-    String symptom;
-    String[] select_osymptom; // 선택한 동반 양상
+    String symptom;//선택한 증상
+    String[] select_osymptom; // 선택한 동반 증상
     List<String> osymptom = new ArrayList<String>();
     int cnt=0;
     String p;
@@ -57,9 +57,11 @@ public class OtherSymptom extends AppCompatActivity {
         add_pattern = findViewById(R.id.add_osymptom);
         osymptom_btn =findViewById(R.id.osymptom_btn);
 
+        //다음 페이지 버튼
         nextpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //선택된 리스트 확인
                 SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
                 int count = adapter.getCount();
                 for(int i=0; i<=count-1; i++){
@@ -69,6 +71,7 @@ public class OtherSymptom extends AppCompatActivity {
                 }
                 select_osymptom= new String[cnt];
                 cnt=0;
+                //선택되어 있다면 select_osymptom 배열에 넣기
                 for(int i=0; i<=count-1; i++){
                     if(checkedItems.get(i)){
                         select_osymptom[cnt++]=osymptom.get(i);
@@ -84,17 +87,19 @@ public class OtherSymptom extends AppCompatActivity {
                 finish();
             }
         });
+
+        //뒤로가기 버튼
         backpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(OtherSymptom.this, SelectWorse.class);
-
                 intent.putExtra("symptom",symptom);
                 startActivity(intent);
                 finish();
             }
         });
 
+        //동반 증상 추가 버튼
         osymptom_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +109,7 @@ public class OtherSymptom extends AppCompatActivity {
             }
         });
 
+        //증상정리된 symptom.json 파일에서 선택한 증상의 동반 증상 가져오기
         AssetManager assetManager = getAssets();
         try {
             InputStream is =assetManager.open("symptom.json");

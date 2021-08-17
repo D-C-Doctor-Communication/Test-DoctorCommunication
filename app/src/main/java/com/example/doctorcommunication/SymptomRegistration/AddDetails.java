@@ -13,10 +13,10 @@ import com.example.doctorcommunication.R;
 
 public class AddDetails extends AppCompatActivity{
     EditText add_details;
-    String details; //추가증상
-    String select_symptom;
+    String details; //선택한 추가증상
+    String select_symptom;//전페이지에서 받아온 동반 증상
     TextView osymptom;
-    String symptom;
+    String symptom;//선택한 증상
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,7 @@ public class AddDetails extends AppCompatActivity{
                 select_symptom+="/";
         }
 
+        //받아온 동반 증상을 textview에 띄우기
         osymptom.setText(select_symptom);
         addpage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +52,7 @@ public class AddDetails extends AppCompatActivity{
             }
         });
 
+        //뒤로가기 버튼
         backpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

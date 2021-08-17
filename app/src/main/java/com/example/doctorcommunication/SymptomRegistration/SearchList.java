@@ -118,6 +118,8 @@ public class SearchList extends AppCompatActivity {
         String search_content = search_text.getText().toString();
 
     }
+
+    //증상 검색(현재 edittext에 입력된 부분이 포함되어 있으면 리스트뷰로 나타내기)
     public void search(String content){
         list.clear();
 
@@ -161,6 +163,7 @@ public class SearchList extends AppCompatActivity {
             for(int i=0; i<jsonArray.length();i++){
                 jo=jsonArray.getJSONObject(i);
 
+                //json 파일에 등록된 증상, 부위 받아오기
                 String name= jo.getString("symptom");
                 int part = jo.getInt("part");
 

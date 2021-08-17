@@ -57,9 +57,11 @@ public class SelectPattern extends AppCompatActivity {
         add_pattern = findViewById(R.id.add_osymptom);
         pattern_btn =findViewById(R.id.osymptom_btn);
 
+        //다음 페이지 버튼
         nextpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //선택된 리스트뷰 확인
                 SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
                 int count = adapter.getCount();
 
@@ -73,6 +75,8 @@ public class SelectPattern extends AppCompatActivity {
                 Log.e("HI", String.valueOf(cnt));
                 cnt=0;
                 Log.e("HI", String.valueOf(cnt));
+
+                //선택된 양상 select_pattern 에 넣기
                 for(int i=0; i<=count-1; i++){
                     if(checkedItems.get(i)){
                         select_pattern[cnt]=pattern.get(i);
@@ -88,6 +92,7 @@ public class SelectPattern extends AppCompatActivity {
             }
         });
 
+        //뒤로가기 버튼
         backpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +103,7 @@ public class SelectPattern extends AppCompatActivity {
             }
         });
 
+        //양상 추가 버튼
         pattern_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +113,7 @@ public class SelectPattern extends AppCompatActivity {
             }
         });
 
+        //sympton.json 파일에서 선택한 증상 양상을 받아오기
         AssetManager assetManager = getAssets();
         try {
             InputStream is =assetManager.open("symptom.json");
@@ -129,7 +136,8 @@ public class SelectPattern extends AppCompatActivity {
                 JSONObject jo=jsonArray.getJSONObject(i);
                 String name= jo.getString("symptom");
                 JSONArray jsonArray2 = jo.getJSONArray("pattern");
-                //pattern = new String[jsonArray2.length()];
+
+                //선택한 증상의 양상 json 파일에서 찾기
                 if(name.equals(symptom)){
                     for(int j=0; j<jsonArray2.length(); j++){
                         JSONObject jo2=jsonArray2.getJSONObject(j);
@@ -139,7 +147,6 @@ public class SelectPattern extends AppCompatActivity {
                     }
 
                 }
-                //textView.setText(p);
 
                 adapter.notifyDataSetChanged();
             }
