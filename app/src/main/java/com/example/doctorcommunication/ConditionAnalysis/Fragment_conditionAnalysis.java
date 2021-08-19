@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -467,6 +468,11 @@ public class Fragment_conditionAnalysis extends Fragment {
     private void chartEvent(String strDate,String firstSymp){ //날짜와 사용자가 선택한 증상 1개를 받아옴
         int[] dataArray1 = getAverageOfWeek(strDate,firstSymp); //날짜에 해당하는 데이터 배열을 받아옴
 
+        //값이 모두 0일 경우 dim처리
+//        if(dataArray1[0]==0&&dataArray1[1]==0&&dataArray1[2]==0&&dataArray1[3]==0){
+//            getActivity().getWindow().setBackgroundDrawable(new ColorDrawable(0x7f000000));
+//        }
+
         //그래프 데이터 리스트 생성 (x축 한칸당 값, y값)
         List<Entry> entries1 = new ArrayList<>(); //첫번째 증상
         for(int i=1;i<=4;i++){
@@ -505,6 +511,11 @@ public class Fragment_conditionAnalysis extends Fragment {
     private void chartEvent(String strDate,String firstSymp,String secondSymp){ //날짜와 사용자가 선택한 증상 2개를 받아옴
         int[] dataArray1 = getAverageOfWeek(strDate,firstSymp); //날짜에 해당하는 데이터 배열을 받아옴
         int[] dataArray2 = getAverageOfWeek(strDate,secondSymp);
+
+        //값이 모두 0일 경우 dim처리
+//        if(dataArray1[0]==0&&dataArray1[1]==0&&dataArray1[2]==0&&dataArray1[3]==0){
+//            getActivity().getWindow().setBackgroundDrawable(new ColorDrawable(0x7f000000));
+//        }
 
         //그래프 데이터 리스트 생성 (x축 한칸당 값, y값)
         ArrayList<Entry> entries1 = new ArrayList<>(); //첫번째 증상

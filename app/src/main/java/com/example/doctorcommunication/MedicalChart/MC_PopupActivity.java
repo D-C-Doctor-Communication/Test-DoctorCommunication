@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +32,7 @@ public class MC_PopupActivity extends AppCompatActivity {
     EditText location;
     //검사|진료 선택 버튼
     Button checkup_btn,treatment_btn;
+    boolean isCheckupPressed,isTreatmentPressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,18 +96,28 @@ public class MC_PopupActivity extends AppCompatActivity {
 
 // '검사 | 진료 ' 버튼의 눌림여부를 boolean 값으로 전달 (각 버튼 선택되면 색상 바뀜 기능 추가)
             checkWhichBtnClicked(checkup_btn, treatment_btn);
-            AtomicReference<String> selectedButton = new AtomicReference<>("검사"); //기본값 "검사"
+
             //검사 버튼
             checkup_btn.setOnClickListener( v1 -> {
                 checkWhichBtnClicked(checkup_btn, treatment_btn);
-                selectedButton.set("검사");
+                isCheckupPressed = true;
+                isTreatmentPressed = false;
             });
             //진료 버튼
             treatment_btn.setOnClickListener( v1 -> {
                 checkWhichBtnClicked(treatment_btn, checkup_btn);
-                selectedButton.set("진료");
+                isTreatmentPressed = true;
+                isCheckupPressed = false;
             });
-            intent.putExtra("selected_button", selectedButton.get());
+            String buttonString = "";
+            if(isTreatmentPressed){
+                intent.putExtra("selected_button", "진료");
+            }
+            else if(isCheckupPressed){
+                intent.putExtra("selected_button", "검사");
+            }
+
+            intent.putExtra("selected_button", "검사");
 
 // '장소' 입력 값을 String 값으로 그대로 전달
             location = findViewById(R.id.location) ;
@@ -124,6 +136,7 @@ public class MC_PopupActivity extends AppCompatActivity {
 
     }
     private void checkWhichBtnClicked(Button selectedBtn,Button nonSelectedBtn){
+        Log.d("myapp",selectedBtn.toString()+"버튼이 클릭됨");
         //선택된 버튼은 파란색으로, 나머지는 하얀색으로 지정
         selectedBtn.setBackgroundColor(Color.parseColor("#0078ff"));
         nonSelectedBtn.setBackgroundColor(Color.WHITE);
