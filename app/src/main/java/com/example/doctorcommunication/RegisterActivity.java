@@ -1,4 +1,4 @@
-package com.example.doctorcommunication.SymptomRegistration;
+package com.example.doctorcommunication;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,8 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.doctorcommunication.MainActivity;
-import com.example.doctorcommunication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

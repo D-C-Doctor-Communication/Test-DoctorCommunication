@@ -50,7 +50,7 @@
         <activity android:name=".SymptomRegistration.SelectLevel" />
         <activity android:name=".SymptomRegistration.AddDetails" />
         <activity android:name=".SignActivity"/>
-        <activity android:name=".SymptomRegistration.RegisterActivity"/>
+        <activity android:name=".RegisterActivity"/>
     </application>
 
 </manifest>
