@@ -14,8 +14,8 @@ public class Appointment {
     //일정 종류 (진료|검사)
     private String sort;
 
-    Appointment(){}
-    Appointment(String date, String name, String time, String location, String sort){
+    public Appointment(){}
+    public Appointment(String date, String name, String time, String location, String sort){
         this.date = date;
         this.name = name;
         this.time = time;

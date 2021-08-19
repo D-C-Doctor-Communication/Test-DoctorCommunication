@@ -31,6 +31,8 @@ public class Person1{
     //병원진료|검사 예약
     //날짜 이름 시간 장소 종류
     public static Appointment[] appointments = {
-            new Appointment("2021.08.06","건강검진","16:00","서울대학병원","검사")
+            new Appointment("2021.8.6","건강검진","16:00","서울대학병원","검사"),
+            new Appointment("2021.8.19","물리치료","18:00","정형외과","진료"),
+            new Appointment("2021.8.19","물리9","19:00","정형외과","검사")
     };
 }

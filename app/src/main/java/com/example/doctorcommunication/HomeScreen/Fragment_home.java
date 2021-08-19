@@ -101,11 +101,9 @@ public class Fragment_home extends Fragment {
 
 
 //ListView
-
         ListView listView = (ListView)view.findViewById(R.id.home_listView);
         //오늘로 기본 리스트 보여짐
         WeekCalendar.createDataListToday(ymTextView,wDate,listView);
-
 
         //각 날짜를 클릭했을 때 날짜와 일치하는 데이터 불러오기
         wCalender[0].setOnClickListener(v -> { //일요일
