@@ -95,7 +95,7 @@ public class Fragment_medicalChart extends Fragment {
         //진료 일정 ListView
         listView = (ListView) view.findViewById(R.id.MC_listView);
         //리스트뷰 자동 높이조절 메소드
-        //setListViewHeight(listView);
+        setListViewHeight(listView);
         //진료 후기 작성할때 키보드가 UI 가리는것 방지
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
