@@ -1,18 +1,24 @@
 package com.example.doctorcommunication.SymptomRegistration;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.doctorcommunication.HomeScreen.Fragment_home;
+import com.example.doctorcommunication.MainActivity;
 import com.example.doctorcommunication.R;
 
 import org.json.JSONArray;
@@ -80,8 +86,22 @@ public class OtherSymptom extends AppCompatActivity {
 
                 Intent intent = new Intent(OtherSymptom.this, AddDetails.class);
                 intent.putExtra("symptom",symptom);
-                for(int i=0; i<=cnt-1; i++)
-                    intent.putExtra("osymptom",select_osymptom);
+                if(select_osymptom[0].equals("해당없음")) {
+                    Log.e("동반증상", "해당없음 눌림" );
+                    new AlertDialog.Builder(OtherSymptom.this) // TestActivity 부분에는 현재 Activity의 이름 입력.
+                            .setMessage("증상이 입력되었습니다.")     // 제목 부분 (직접 작성)
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {      // 버튼1 (직접 작성)
+                                public void onClick(DialogInterface dialog, int which){
+                                    Toast.makeText(getApplicationContext(), "확인 누름", Toast.LENGTH_SHORT).show(); // 실행할 코드
+                                }
+                            })
+                            .show();
+                    intent = new Intent(OtherSymptom.this, MainActivity.class);
+                }
+                for(int i=0; i<=cnt-1; i++) {
+                    intent.putExtra("osymptom", select_osymptom);
+
+                }
 
                 startActivity(intent);
                 finish();
