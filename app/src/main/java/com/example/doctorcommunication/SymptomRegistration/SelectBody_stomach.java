@@ -1,11 +1,14 @@
 package com.example.doctorcommunication.SymptomRegistration;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doctorcommunication.R;
@@ -199,6 +202,18 @@ public class SelectBody_stomach extends AppCompatActivity {
 
                 //선택한 복부 세부부위 string 변환해서 select_stomach 넣기
                 select_stomach = BODY.toArray(new String[BODY.size()]);
+                //선택 X 팝업 처리
+                if(select_stomach.length==0){
+                    new AlertDialog.Builder(SelectBody_stomach.this)
+                            .setMessage("부위를 선택해주세요")
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which){
+
+                                }
+                            })
+                            .show();
+                    return;
+                }
                 for(int i = 0; i< select_stomach.length; i++)
                     Log.e("jj", select_stomach[i]);
                 startActivity(intent);

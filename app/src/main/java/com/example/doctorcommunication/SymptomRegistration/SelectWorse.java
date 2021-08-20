@@ -1,6 +1,7 @@
 package com.example.doctorcommunication.SymptomRegistration;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doctorcommunication.R;
@@ -79,6 +81,19 @@ public class SelectWorse extends AppCompatActivity {
                     if(checkedItems.get(i)){
                         select_worse[cnt++]=worse.get(i);
                     }
+                }
+                //선택 X 팝업 처리
+                if(select_worse.length==0){
+                    new AlertDialog.Builder(SelectWorse.this)
+                            .setMessage("악화상황을 선택해주세요")
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .show();
+                    return;
                 }
                 intent.putExtra("symptom",symptom);
                 startActivity(intent);

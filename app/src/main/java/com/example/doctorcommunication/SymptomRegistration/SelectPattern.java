@@ -1,6 +1,7 @@
 package com.example.doctorcommunication.SymptomRegistration;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
@@ -11,7 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doctorcommunication.R;
@@ -86,6 +89,19 @@ public class SelectPattern extends AppCompatActivity {
                 }
                 Intent intent = new Intent(SelectPattern.this, SelectWorse.class);
                 intent.putExtra("symptom",symptom);
+                //선택 X 팝업 처리
+                if(select_pattern.length==0){
+                    new AlertDialog.Builder(SelectPattern.this)
+                            .setMessage("양상을 선택해주세요")
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .show();
+                    return;
+                }
                 startActivity(intent);
                 finish();
 

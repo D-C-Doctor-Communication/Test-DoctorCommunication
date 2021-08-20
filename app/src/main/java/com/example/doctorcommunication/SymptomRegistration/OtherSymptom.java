@@ -86,18 +86,33 @@ public class OtherSymptom extends AppCompatActivity {
 
                 Intent intent = new Intent(OtherSymptom.this, AddDetails.class);
                 intent.putExtra("symptom",symptom);
+                //선택 X 팝업 처리
+                if(select_osymptom.length==0){
+                    new AlertDialog.Builder(OtherSymptom.this)
+                            .setMessage("동반증상을 선택해주세요")
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .show();
+                    return;
+                }
+                //해당없음 팝업 처리(뒤 페이지인 추가증상 등록으로 넘어가지 않음)
                 if(select_osymptom[0].equals("해당없음")) {
-                    Log.e("동반증상", "해당없음 눌림" );
-                    new AlertDialog.Builder(OtherSymptom.this) // TestActivity 부분에는 현재 Activity의 이름 입력.
-                            .setMessage("증상이 입력되었습니다.")     // 제목 부분 (직접 작성)
-                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {      // 버튼1 (직접 작성)
+
+                    new AlertDialog.Builder(OtherSymptom.this) 
+                            .setMessage("증상이 입력되었습니다.")     
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {     
                                 public void onClick(DialogInterface dialog, int which){
-                                    Toast.makeText(getApplicationContext(), "확인 누름", Toast.LENGTH_SHORT).show(); // 실행할 코드
+
                                 }
                             })
                             .show();
                     intent = new Intent(OtherSymptom.this, MainActivity.class);
                 }
+
                 for(int i=0; i<=cnt-1; i++) {
                     intent.putExtra("osymptom", select_osymptom);
 
