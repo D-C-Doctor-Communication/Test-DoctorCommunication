@@ -1,6 +1,7 @@
 package com.example.doctorcommunication.SymptomRegistration;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -43,6 +44,7 @@ public class OtherSymptom extends AppCompatActivity {
     List<String> osymptom = new ArrayList<String>();
     int cnt=0;
     String p;
+    AlertDialog Dialog;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -102,14 +104,13 @@ public class OtherSymptom extends AppCompatActivity {
                 //해당없음 팝업 처리(뒤 페이지인 추가증상 등록으로 넘어가지 않음)
                 if(select_osymptom[0].equals("해당없음")) {
 
-                    new AlertDialog.Builder(OtherSymptom.this) 
-                            .setMessage("증상이 입력되었습니다.")     
-                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {     
-                                public void onClick(DialogInterface dialog, int which){
+                    AlertDialog.Builder Dialog_bd = new AlertDialog.Builder(OtherSymptom.this);
+                    Dialog_bd.setMessage("증상이 입력되었습니다.");
 
-                                }
-                            })
-                            .show();
+                    Dialog = Dialog_bd.create();
+                    Dialog.show();
+
+
                     intent = new Intent(OtherSymptom.this, MainActivity.class);
                 }
 
@@ -188,5 +189,11 @@ public class OtherSymptom extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Dialog.dismiss();
     }
 }

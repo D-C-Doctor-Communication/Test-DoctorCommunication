@@ -1,8 +1,10 @@
 package com.example.doctorcommunication.SymptomRegistration;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,9 +23,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,13 +47,20 @@ public class SearchList extends AppCompatActivity {
     int[] part_num;
     JSONObject jo;
 
+    String registration;
+    private Context mContext;
+    private TextView txt_preferences;
+    File file = new File("symptom.txt");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_list);
+        mContext=this;
         search_text = (EditText)findViewById(R.id.search_text);
         listView = (ListView)findViewById(R.id.search_list);
+        txt_preferences = (TextView)findViewById(R.id.txt_preferences);
         Log.e("hihi", "onCreate: ");
         list = new ArrayList<String>();
         settingList();
@@ -87,8 +103,12 @@ public class SearchList extends AppCompatActivity {
                 case 1 : {  //머리
                     Log.e("her!", "1번");
                     intent = new Intent(SearchList.this, SelectBody_head.class);
-                    intent.putExtra("symptom", symptom_Nm[position]);
+                    intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
+
+
+                    writeFile(file,symptom_Nm[position]);
+
                     startActivity(intent);
                     break;
                 }
@@ -117,6 +137,31 @@ public class SearchList extends AppCompatActivity {
     public void Click_search_btn(View v) {
         String search_content = search_text.getText().toString();
 
+    }
+
+    //검색한 증상 파일에 저장(쓰기)
+    private void writeFile(File file,String txt){
+        FileWriter fw = null;
+        BufferedWriter bufwr = null;
+
+        try {
+            fw = new FileWriter(file);
+            bufwr = new BufferedWriter(fw);
+
+            bufwr.write(txt);
+            bufwr.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            if(bufwr != null)
+                bufwr.close();
+            if(fw != null)
+                fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //증상 검색(현재 edittext에 입력된 부분이 포함되어 있으면 리스트뷰로 나타내기)
