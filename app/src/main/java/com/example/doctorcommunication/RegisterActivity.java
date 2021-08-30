@@ -13,12 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
@@ -27,6 +32,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText mEmailText, mPasswordText, mPasswordcheckText, mName;
     Button mregisterBtn;
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference mDatabase;
+
 
 
     @Override
@@ -44,11 +51,16 @@ public class RegisterActivity extends AppCompatActivity {
         firebaseAuth =  FirebaseAuth.getInstance();
         // firebaseDatabase = FirebaseDatabase.getInstance().getReference();
 
+        mName = (EditText)findViewById(R.id.nameEt);
         mEmailText = (EditText)findViewById(R.id.emailEt);
         mPasswordText = (EditText)findViewById(R.id.passwordEdt);
         mPasswordcheckText = (EditText)findViewById(R.id.passwordcheckEdt);
         mregisterBtn = (Button)findViewById(R.id.register2_btn);
-        mName = (EditText)findViewById(R.id.nameEt);
+
+        // 데이터 읽고 쓰기 // firebase 정의
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        readUser();
 
         // 파이어베이스 user로 접근
         // 가입버튼 ->  firebase에 데이터 저장
@@ -83,8 +95,10 @@ public class RegisterActivity extends AppCompatActivity {
                                 HashMap<Object,String> hashMap = new HashMap<>();
 
                                 hashMap.put("uid",uid);
-                                hashMap.put("email",email);
                                 hashMap.put("name",name);
+                                hashMap.put("email",email);
+
+                                writeNewUser("1", name, email);
 
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                                 DatabaseReference reference = database.getReference("Users");
@@ -114,6 +128,42 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    private void writeNewUser(String userId, String name, String email){
+        User user = new User(name, email);
+        mDatabase.child("user").child(userId).setValue(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        System.out.println("회원정보 저장 완료");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        System.out.println("회원정보 저장 실패");
+                    }
+                });
+    }
+
+    private void readUser(){
+        mDatabase.child("users").child("1").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue(User.class) != null){
+                    User post = snapshot.getValue(User.class);
+                    Log.w("FireBaseData", "getData"+post.toString());
+                }
+                else{
+                    Toast.makeText(RegisterActivity.this, "데이터가 없습니다.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("FireBaseData", "loadPost:onCancelled", error.toException());
+            }
+        });
+    }
     /*public boolean onSupportNavigateUp(){
         onBackPressed();; // 뒤로가기 버튼이 눌렸을시
         return super.onSupportNavigateUp(); // 뒤로가기 버튼
