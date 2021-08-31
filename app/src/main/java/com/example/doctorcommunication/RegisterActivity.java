@@ -88,13 +88,13 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 FirebaseUser user = firebaseAuth.getCurrentUser();
                                 String email = user.getEmail();
-                                String uid = user.getUid();
+                                //String uid = user.getUid();
                                 String name = mName.getText().toString().trim();
 
                                 // 해쉬맵 테이블을 파이어베이스 데이터베이스에 저장
                                 HashMap<Object,String> hashMap = new HashMap<>();
 
-                                hashMap.put("uid",uid);
+                               // hashMap.put("uid",uid);
                                 hashMap.put("name",name);
                                 hashMap.put("email",email);
 
@@ -102,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                                 DatabaseReference reference = database.getReference("Users");
-                                reference.child(uid).setValue(hashMap);
+                                //reference.child(uid).setValue(hashMap);
 
                                 // 가입이 이루어져을시 가입 화면을 빠져나감
                                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
