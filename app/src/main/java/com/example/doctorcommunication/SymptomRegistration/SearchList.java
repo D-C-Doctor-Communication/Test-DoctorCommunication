@@ -50,17 +50,16 @@ public class SearchList extends AppCompatActivity {
     String registration;
     private Context mContext;
     private TextView txt_preferences;
-    File file = new File("symptom.txt");
-
+    File file;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_list);
+        file = new File("symptom.txt");
         mContext=this;
         search_text = (EditText)findViewById(R.id.search_text);
         listView = (ListView)findViewById(R.id.search_list);
-        txt_preferences = (TextView)findViewById(R.id.txt_preferences);
         Log.e("hihi", "onCreate: ");
         list = new ArrayList<String>();
         settingList();

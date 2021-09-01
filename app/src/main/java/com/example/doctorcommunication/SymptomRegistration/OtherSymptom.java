@@ -39,7 +39,7 @@ public class OtherSymptom extends AppCompatActivity {
     EditText add_pattern;
     Button osymptom_btn;
 
-    String symptom;//선택한 증상
+    String symptom;
     String[] select_osymptom; // 선택한 동반 증상
     List<String> osymptom = new ArrayList<String>();
     int cnt=0;
