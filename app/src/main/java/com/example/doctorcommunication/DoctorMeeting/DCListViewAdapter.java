@@ -84,6 +84,7 @@ public class DCListViewAdapter extends BaseAdapter {
         return position;
     }
 
+    //입력 순서
     //dc_list_title_date
     //dc_list_title_partAndLevel
     //dc_list_content_part

@@ -15,6 +15,10 @@
         android:theme="@style/Theme.DoctorCommunication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MedicalChart.DataInfo_PopupActivity"
+            android:theme="@style/popupTheme"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".MedicalChart.MC_PopupActivity"
             android:theme="@style/popupTheme"
             android:screenOrientation="portrait" />

@@ -69,6 +69,8 @@ public class Fragment_medicalChart extends Fragment {
     MCListViewAdapter listViewAdapter;
     //각 날짜를 클릭했을 때 사용할 어댑터
     MCListViewAdapter adapter = new MCListViewAdapter();
+    //기록 데이터 확인 버튼
+    Button show_data;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -91,6 +93,8 @@ public class Fragment_medicalChart extends Fragment {
         btn_addAppointDoctor = view.findViewById(R.id.btn_addAppointDoctor);
         //진료 일정이 없습니다 TextView
         noneDataText = view.findViewById(R.id.noneDataText);
+        //기록 데이터 확인 버튼
+        show_data = view.findViewById(R.id.show_data);
 
         //진료 일정 ListView
         listView = (ListView) view.findViewById(R.id.MC_listView);
@@ -154,6 +158,13 @@ public class Fragment_medicalChart extends Fragment {
                 changeTextEdit(selectedDateString);
             });
         });
+
+        //데이터 확인 팝업 띄움
+        show_data.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(),DataInfo_PopupActivity.class);
+            startActivity(intent);
+        });
+
 
         //진료 일정 추가
         btn_addAppointDoctor.setOnClickListener(v->{

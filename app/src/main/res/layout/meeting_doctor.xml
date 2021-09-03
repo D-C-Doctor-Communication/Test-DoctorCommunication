@@ -20,55 +20,11 @@
         app:menu="@menu/meeting_doc_toolbar_menu"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <RelativeLayout
-        android:id="@+id/select_user"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:background="#0a000000" >
-
-        <RelativeLayout
-            android:layout_width="360dp"
-            android:layout_height="40dp"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="33dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-
-            <TextView
-                android:layout_width="75dp"
-                android:layout_height="18dp"
-                android:layout_centerVertical="true"
-                android:textColor="#000000"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:text="패밀리 정보" />
-
-            <LinearLayout
-                android:layout_width="93dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginEnd="13dp"
-                android:layout_marginBottom="0dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="106dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/meet_family" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/date_picker_layout"
         android:layout_width="match_parent"
         android:layout_height="112dp"
-        android:layout_below="@+id/select_user"
         android:layout_alignParentStart="true"
         android:layout_marginTop="0dp">
 
