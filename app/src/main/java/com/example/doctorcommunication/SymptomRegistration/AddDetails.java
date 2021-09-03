@@ -2,6 +2,8 @@ package com.example.doctorcommunication.SymptomRegistration;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -9,7 +11,13 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.doctorcommunication.MainActivity;
 import com.example.doctorcommunication.R;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class AddDetails extends AppCompatActivity{
     EditText add_details;
@@ -18,12 +26,10 @@ public class AddDetails extends AppCompatActivity{
     TextView osymptom;
     String symptom;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_details);
-
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom");
         String[] select_other = intent.getStringArrayExtra("osymptom");
@@ -50,6 +56,15 @@ public class AddDetails extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 select_details =add_details.getText().toString();
+            }
+        });
+
+        addpage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddDetails.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 

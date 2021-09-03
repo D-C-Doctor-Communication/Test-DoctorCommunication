@@ -68,6 +68,7 @@ public class SelectBody_head extends AppCompatActivity {
                 Log.e("ji", "click2");
             }
         });
+
         head03.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
