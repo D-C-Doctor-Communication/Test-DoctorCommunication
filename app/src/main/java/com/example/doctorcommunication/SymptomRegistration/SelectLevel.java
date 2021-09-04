@@ -89,6 +89,14 @@ public class SelectLevel extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     }
+                    case 2: {  //얼굴
+                        Log.e("intentL", "2번");
+                        intent = new Intent(SelectLevel.this, SelectBody_face.class);
+                        intent.putExtra("symptom", symptom);
+                        intent.putExtra("part", part);
+                        startActivity(intent);
+                        break;
+                    }
                     case 3: {  //팔
                         Log.e("intentL", "3번");
                         intent = new Intent(SelectLevel.this, SelectBody_arm.class);

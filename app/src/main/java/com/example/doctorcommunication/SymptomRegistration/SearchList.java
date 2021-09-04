@@ -106,6 +106,14 @@ public class SearchList extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 }
+                case 2 : {  //얼굴
+                    Log.e("her!", "2번");
+                    intent = new Intent(SearchList.this, SelectBody_face.class);
+                    intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
+                    intent.putExtra("part", part_num[position]);
+                    startActivity(intent);
+                    break;
+                }
                 case 3 : {  //팔
                     Log.e("her!", "3번");
                     intent = new Intent(SearchList.this, SelectBody_arm.class);

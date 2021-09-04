@@ -29,7 +29,7 @@ public class SelectBody_foot extends AppCompatActivity {
         part = intent.getExtras().getInt("part");
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.select_body_arm);
+        setContentView(R.layout.select_body_foot);
 
         ImageButton nextpage = findViewById(R.id.nextpage) ;
         ImageButton backpage = findViewById(R.id.backpage) ;
