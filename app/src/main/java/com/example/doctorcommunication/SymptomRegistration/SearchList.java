@@ -213,7 +213,7 @@ public class SearchList extends AppCompatActivity {
             list.addAll(nameArr);
         }else{
             for(int i=0; i<nameArr.size(); i++){
-                if(nameArr.get(i).toLowerCase().contains(content)||part_Nm[i].equals(content))
+                if(nameArr.get(i).toLowerCase().contains(content)||part_Nm[i].contains(content))
                 {
                     list.add(nameArr.get(i));
                 }
