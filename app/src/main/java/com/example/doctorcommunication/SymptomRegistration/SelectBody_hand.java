@@ -30,7 +30,6 @@ public class SelectBody_hand extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_body_hand);
-
         ImageButton nextpage = findViewById(R.id.nextpage) ;
         ImageButton backpage = findViewById(R.id.backpage) ;
         ImageButton hand01 = findViewById(R.id.hand01) ;
@@ -43,9 +42,6 @@ public class SelectBody_hand extends AppCompatActivity {
         ImageButton hand08 = findViewById(R.id.hand08) ;
         ImageButton hand09 = findViewById(R.id.hand09) ;
         ImageButton hand10 = findViewById(R.id.hand10) ;
-
-
-
 
         //손 세부 부위 select 유무 확인
         hand01.setOnClickListener(new View.OnClickListener() {
@@ -235,6 +231,7 @@ public class SelectBody_hand extends AppCompatActivity {
                             .show();
                     return;
                 }
+                intent.putExtra("bparts",select_hand);
                 for(int i = 0; i< select_hand.length; i++)
                     Log.e("jj", select_hand[i]);
                 startActivity(intent);

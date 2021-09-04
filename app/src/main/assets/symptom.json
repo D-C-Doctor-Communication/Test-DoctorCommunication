@@ -98,5 +98,16 @@
     "similar": ["요통"],
     "other_symptom": [{"symptom": "다리 통증"},{"symptom": "해당없음"}],
     "details": null
+  },
+  {
+    "symptom": "발열",
+    "part":11,
+    "spart" : "전신",
+    "level": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "pattern": [{"p": "지속되는 열"},{"p": "간헐적 발열&주기성 발열"},{"p": "오르내리는 열"}],
+    "worse": [{"w": "아침(오전) 시간"},{"w": "저녁(오후)시간"},{"w": "피곤 할 때"},{"w": "딱히 없음"}],
+    "similar": ["열"],
+    "other_symptom": [{"symptom": "구토"},{"symptom": "피로"},{"symptom": "두통"},{"symptom": "해당없음"}],
+    "details": null
   }
 ]

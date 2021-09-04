@@ -47,7 +47,7 @@ public class SearchList extends AppCompatActivity {
     String[] part_Nm;
     int[] part_num;
     JSONObject jo;
-
+    String [] whole_body={"전신"};
     String registration;
     private Context mContext;
     private TextView txt_preferences;
@@ -122,6 +122,14 @@ public class SearchList extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 }
+                case 5 : {  //등
+                    Log.e("her!", "5번");
+                    intent = new Intent(SearchList.this, SelectBody_back.class);
+                    intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
+                    intent.putExtra("part", part_num[position]);
+                    startActivity(intent);
+                    break;
+                }
                 case 6 : {  //허리
                     Log.e("her!", "6번");
                     intent = new Intent(SearchList.this, SelectBody_waist.class);
@@ -138,8 +146,7 @@ public class SearchList extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 }
-
-                case 8 : {  //복부
+                case 8 : {//복부
                     Log.e("her!", "8번");
                     intent = new Intent(SearchList.this, SelectBody_stomach.class);
                     intent.putExtra("symptom", symptom_Nm[position]);
@@ -155,9 +162,25 @@ public class SearchList extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 }
+                case 11 : {  //전신
+                    Log.e("her!", "11번");
+                    intent = new Intent(SearchList.this, SelectLevel.class);
+                    intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
+                    intent.putExtra("part", whole_body);
+                    startActivity(intent);
+                    break;
+                }
                 case 12 : {  //손
                     Log.e("her!", "12번");
                     intent = new Intent(SearchList.this, SelectBody_hand.class);
+                    intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
+                    intent.putExtra("part", part_num[position]);
+                    startActivity(intent);
+                    break;
+                }
+                case 13 : {  //발
+                    Log.e("her!", "13번");
+                    intent = new Intent(SearchList.this, SelectBody_foot.class);
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
                     startActivity(intent);

@@ -235,6 +235,7 @@ public class SelectBody_arm extends AppCompatActivity {
                             .show();
                     return;
                 }
+                intent.putExtra("bparts",select_arm);
                 for(int i = 0; i< select_arm.length; i++)
                     Log.e("jj", select_arm[i]);
                 startActivity(intent);

@@ -198,6 +198,7 @@ public class SelectBody_leg extends AppCompatActivity {
                             .show();
                     return;
                 }
+                intent.putExtra("bparts",select_leg);
                 for(int i = 0; i< select_leg.length; i++)
                     Log.e("jj", select_leg[i]);
                 startActivity(intent);

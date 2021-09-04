@@ -133,6 +133,7 @@ public class SelectBody_buttock extends AppCompatActivity {
                             .show();
                     return;
                 }
+                intent.putExtra("bparts",select_buttock);
                 for(int i = 0; i< select_buttock.length; i++)
                     Log.e("jj", select_buttock[i]);
                 startActivity(intent);

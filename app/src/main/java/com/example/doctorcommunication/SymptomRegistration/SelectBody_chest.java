@@ -151,6 +151,7 @@ public class SelectBody_chest extends AppCompatActivity {
                             .show();
                     return;
                 }
+                intent.putExtra("bparts",select_chest);
                 for(int i = 0; i< select_chest.length; i++)
                     Log.e("jj", select_chest[i]);
                 startActivity(intent);
