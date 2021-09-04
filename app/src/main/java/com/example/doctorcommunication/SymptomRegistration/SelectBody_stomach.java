@@ -214,6 +214,7 @@ public class SelectBody_stomach extends AppCompatActivity {
                             .show();
                     return;
                 }
+                intent.putExtra("bparts",select_stomach);
                 for(int i = 0; i< select_stomach.length; i++)
                     Log.e("jj", select_stomach[i]);
                 startActivity(intent);

@@ -38,6 +38,7 @@ public class SelectPattern extends AppCompatActivity {
 
     String symptom;
     String[] select_pattern; //선택한 양상
+    String[] selected_body;
     List<String> pattern = new ArrayList<String>();
     int cnt=0;
     String p;
@@ -47,7 +48,7 @@ public class SelectPattern extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom");
-
+        selected_body = intent.getStringArrayExtra("bparts");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_pattern);
 
@@ -114,6 +115,7 @@ public class SelectPattern extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectPattern.this, SelectLevel.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("bparts",selected_body);
                 startActivity(intent);
                 finish();
             }

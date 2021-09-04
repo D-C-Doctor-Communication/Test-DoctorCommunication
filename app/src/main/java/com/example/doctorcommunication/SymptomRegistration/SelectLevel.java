@@ -23,6 +23,7 @@ public class SelectLevel extends AppCompatActivity {
             "매우 괴로운 통증","극심한 통증","매우 극심한 통증","끔찍한 통증","참을 수 없는 통증","상상할 수 없는 통증"}; // 통증 레벨 설명
     StringBuilder change_level;
     String select_level;//선택한 통증 레벨(설명)
+    String selected_body[]; //전 페이지 선택한 부위
 
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
@@ -31,6 +32,8 @@ public class SelectLevel extends AppCompatActivity {
         Log.e("backpart", String.valueOf(part));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_level);
+
+        selected_body = intent.getStringArrayExtra("bparts");
 
         level_text1 = (TextView) findViewById(R.id.level_text1);
         level_text2 = (TextView) findViewById(R.id.level_text2);
@@ -64,6 +67,7 @@ public class SelectLevel extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectLevel.this, SelectPattern.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("bparts",selected_body);
                 startActivity(intent);
                 finish();
             }
@@ -85,9 +89,41 @@ public class SelectLevel extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     }
+                    case 3: {  //팔
+                        Log.e("intentL", "3번");
+                        intent = new Intent(SelectLevel.this, SelectBody_arm.class);
+                        intent.putExtra("symptom", symptom);
+                        intent.putExtra("part", part);
+                        startActivity(intent);
+                        break;
+                    }
+                    case 4: {  //다리
+                        Log.e("intentL", "4번");
+                        intent = new Intent(SelectLevel.this, SelectBody_leg.class);
+                        intent.putExtra("symptom", symptom);
+                        intent.putExtra("part", part);
+                        startActivity(intent);
+                        break;
+                    }
+                    case 5: {  //등
+                        Log.e("intentL", "5번");
+                        intent = new Intent(SelectLevel.this, SelectBody_back.class);
+                        intent.putExtra("symptom", symptom);
+                        intent.putExtra("part", part);
+                        startActivity(intent);
+                        break;
+                    }
                     case 6: {  //허리
                         Log.e("intentL", "6번");
                         intent = new Intent(SelectLevel.this, SelectBody_waist.class);
+                        intent.putExtra("symptom", symptom);
+                        intent.putExtra("part", part);
+                        startActivity(intent);
+                        break;
+                    }
+                    case 7: {  //가슴
+                        Log.e("intentL", "7번");
+                        intent = new Intent(SelectLevel.this, SelectBody_chest.class);
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
                         startActivity(intent);
@@ -99,6 +135,37 @@ public class SelectLevel extends AppCompatActivity {
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
 
+                        startActivity(intent);
+                        break;
+                    }
+                    case 9: {  //엉덩이
+                        Log.e("intentL", "9번");
+                        intent = new Intent(SelectLevel.this, SelectBody_buttock.class);
+                        intent.putExtra("symptom", symptom);
+                        intent.putExtra("part", part);
+                        startActivity(intent);
+                        break;
+                    }
+                    case 11: {  //전신
+                        Log.e("intentL", "11번");
+                        intent = new Intent(SelectLevel.this, SearchList.class);
+                        intent.putExtra("symptom",symptom);
+                        startActivity(intent);
+                        break;
+                    }
+                    case 12: {  //손
+                        Log.e("intentL", "12번");
+                        intent = new Intent(SelectLevel.this, SelectBody_hand.class);
+                        intent.putExtra("symptom", symptom);
+                        intent.putExtra("part", part);
+                        startActivity(intent);
+                        break;
+                    }
+                    case 13: {  //발
+                        Log.e("intentL", "13번");
+                        intent = new Intent(SelectLevel.this, SelectBody_foot.class);
+                        intent.putExtra("symptom", symptom);
+                        intent.putExtra("part", part);
                         startActivity(intent);
                         break;
                     }
@@ -115,15 +182,6 @@ public class SelectLevel extends AppCompatActivity {
         select_level=change_level.toString();
         level_text1.setText(select_level);
         level_text2.setText(new StringBuilder().append(num));
-
-        //thumb 바 옆 레벨(숫자) 나타내기
-        int padding= level.getPaddingTop() + level.getPaddingBottom()+100;
-        int sPos = level.getBottom() + level.getPaddingBottom();
-        int yPos = (level.getWidth()-padding) * (10-level.getProgress()) / level.getMax() + sPos - (level_text2.getWidth()/2);
-
-        level_text2.setY(yPos-830);
-
-
     }
 
 }

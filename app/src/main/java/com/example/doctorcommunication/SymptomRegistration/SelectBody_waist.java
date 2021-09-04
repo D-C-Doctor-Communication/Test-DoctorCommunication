@@ -147,6 +147,7 @@ public class SelectBody_waist extends AppCompatActivity {
                             .show();
                     return;
                 }
+                intent.putExtra("bparts",select_waist);
                 for(int i = 0; i< select_waist.length; i++)
                     Log.e("jj", select_waist[i]);
                 startActivity(intent);
