@@ -65,10 +65,10 @@ public class SelectBody_arm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_ARM[1]==0){
-                    arm01.setSelected(true);
+                    arm02.setSelected(true);
                     CHECK_ARM[1]=1;
                 }else {
-                    arm01.setSelected(false);
+                    arm02.setSelected(false);
                     CHECK_ARM[1]=0;
                 }
                 Log.e("ji", "click2");
@@ -78,10 +78,10 @@ public class SelectBody_arm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_ARM[2]==0){
-                    arm01.setSelected(true);
+                    arm03.setSelected(true);
                     CHECK_ARM[2]=1;
                 }else {
-                    arm01.setSelected(false);
+                    arm03.setSelected(false);
                     CHECK_ARM[2]=0;
                 }
                 Log.e("ji", "click3");
@@ -91,10 +91,10 @@ public class SelectBody_arm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_ARM[3]==0){
-                    arm01.setSelected(true);
+                    arm04.setSelected(true);
                     CHECK_ARM[3]=1;
                 }else {
-                    arm01.setSelected(false);
+                    arm04.setSelected(false);
                     CHECK_ARM[3]=0;
                 }
                 Log.e("ji", "click4");
@@ -104,10 +104,10 @@ public class SelectBody_arm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_ARM[4]==0){
-                    arm01.setSelected(true);
+                    arm05.setSelected(true);
                     CHECK_ARM[4]=1;
                 }else {
-                    arm01.setSelected(false);
+                    arm05.setSelected(false);
                     CHECK_ARM[4]=0;
                 }
                 Log.e("ji", "click5");
@@ -117,10 +117,10 @@ public class SelectBody_arm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_ARM[5]==0){
-                    arm01.setSelected(true);
+                    arm06.setSelected(true);
                     CHECK_ARM[5]=1;
                 }else {
-                    arm01.setSelected(false);
+                    arm06.setSelected(false);
                     CHECK_ARM[5]=0;
                 }
                 Log.e("ji", "click6");
@@ -130,10 +130,10 @@ public class SelectBody_arm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_ARM[6]==0){
-                    arm01.setSelected(true);
+                    arm07.setSelected(true);
                     CHECK_ARM[6]=1;
                 }else {
-                    arm01.setSelected(false);
+                    arm07.setSelected(false);
                     CHECK_ARM[6]=0;
                 }
                 Log.e("ji", "click7");
@@ -143,10 +143,10 @@ public class SelectBody_arm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_ARM[7]==0){
-                    arm01.setSelected(true);
+                    arm08.setSelected(true);
                     CHECK_ARM[7]=1;
                 }else {
-                    arm01.setSelected(false);
+                    arm08.setSelected(false);
                     CHECK_ARM[7]=0;
                 }
                 Log.e("ji", "click8");
@@ -156,10 +156,10 @@ public class SelectBody_arm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_ARM[8]==0){
-                    arm01.setSelected(true);
+                    arm09.setSelected(true);
                     CHECK_ARM[8]=1;
                 }else {
-                    arm01.setSelected(false);
+                    arm09.setSelected(false);
                     CHECK_ARM[8]=0;
                 }
                 Log.e("ji", "click9");
@@ -169,10 +169,10 @@ public class SelectBody_arm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_ARM[9]==0){
-                    arm01.setSelected(true);
+                    arm10.setSelected(true);
                     CHECK_ARM[9]=1;
                 }else {
-                    arm01.setSelected(false);
+                    arm10.setSelected(false);
                     CHECK_ARM[9]=0;
                 }
                 Log.e("ji", "click10");

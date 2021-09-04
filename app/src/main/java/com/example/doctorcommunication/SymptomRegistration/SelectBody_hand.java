@@ -65,10 +65,10 @@ public class SelectBody_hand extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_HAND[1]==0){
-                    hand01.setSelected(true);
+                    hand02.setSelected(true);
                     CHECK_HAND[1]=1;
                 }else {
-                    hand01.setSelected(false);
+                    hand02.setSelected(false);
                     CHECK_HAND[1]=0;
                 }
                 Log.e("ji", "click2");
@@ -78,10 +78,10 @@ public class SelectBody_hand extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_HAND[2]==0){
-                    hand01.setSelected(true);
+                    hand03.setSelected(true);
                     CHECK_HAND[2]=1;
                 }else {
-                    hand01.setSelected(false);
+                    hand03.setSelected(false);
                     CHECK_HAND[2]=0;
                 }
                 Log.e("ji", "click3");
@@ -91,10 +91,10 @@ public class SelectBody_hand extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_HAND[3]==0){
-                    hand01.setSelected(true);
+                    hand04.setSelected(true);
                     CHECK_HAND[3]=1;
                 }else {
-                    hand01.setSelected(false);
+                    hand04.setSelected(false);
                     CHECK_HAND[3]=0;
                 }
                 Log.e("ji", "click4");
@@ -104,10 +104,10 @@ public class SelectBody_hand extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_HAND[4]==0){
-                    hand01.setSelected(true);
+                    hand05.setSelected(true);
                     CHECK_HAND[4]=1;
                 }else {
-                    hand01.setSelected(false);
+                    hand05.setSelected(false);
                     CHECK_HAND[4]=0;
                 }
                 Log.e("ji", "click5");
@@ -117,10 +117,10 @@ public class SelectBody_hand extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_HAND[5]==0){
-                    hand01.setSelected(true);
+                    hand06.setSelected(true);
                     CHECK_HAND[5]=1;
                 }else {
-                    hand01.setSelected(false);
+                    hand06.setSelected(false);
                     CHECK_HAND[5]=0;
                 }
                 Log.e("ji", "click6");
@@ -130,10 +130,10 @@ public class SelectBody_hand extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_HAND[6]==0){
-                    hand01.setSelected(true);
+                    hand07.setSelected(true);
                     CHECK_HAND[6]=1;
                 }else {
-                    hand01.setSelected(false);
+                    hand07.setSelected(false);
                     CHECK_HAND[6]=0;
                 }
                 Log.e("ji", "click7");
@@ -143,10 +143,10 @@ public class SelectBody_hand extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_HAND[7]==0){
-                    hand01.setSelected(true);
+                    hand08.setSelected(true);
                     CHECK_HAND[7]=1;
                 }else {
-                    hand01.setSelected(false);
+                    hand08.setSelected(false);
                     CHECK_HAND[7]=0;
                 }
                 Log.e("ji", "click8");
@@ -156,10 +156,10 @@ public class SelectBody_hand extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_HAND[8]==0){
-                    hand01.setSelected(true);
+                    hand09.setSelected(true);
                     CHECK_HAND[8]=1;
                 }else {
-                    hand01.setSelected(false);
+                    hand09.setSelected(false);
                     CHECK_HAND[8]=0;
                 }
                 Log.e("ji", "click9");
@@ -169,10 +169,10 @@ public class SelectBody_hand extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_HAND[9]==0){
-                    hand01.setSelected(true);
+                    hand10.setSelected(true);
                     CHECK_HAND[9]=1;
                 }else {
-                    hand01.setSelected(false);
+                    hand10.setSelected(false);
                     CHECK_HAND[9]=0;
                 }
                 Log.e("ji", "click10");

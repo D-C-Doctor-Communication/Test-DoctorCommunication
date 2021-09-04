@@ -58,10 +58,10 @@ public class SelectBody_buttock extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_BUTTOCK[1]==0){
-                    buttock01.setSelected(true);
+                    buttock02.setSelected(true);
                     CHECK_BUTTOCK[1]=1;
                 }else {
-                    buttock01.setSelected(false);
+                    buttock02.setSelected(false);
                     CHECK_BUTTOCK[1]=0;
                 }
                 Log.e("ji", "click2");
@@ -71,10 +71,10 @@ public class SelectBody_buttock extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_BUTTOCK[2]==0){
-                    buttock01.setSelected(true);
+                    buttock03.setSelected(true);
                     CHECK_BUTTOCK[2]=1;
                 }else {
-                    buttock01.setSelected(false);
+                    buttock03.setSelected(false);
                     CHECK_BUTTOCK[2]=0;
                 }
                 Log.e("ji", "click3");
@@ -84,10 +84,10 @@ public class SelectBody_buttock extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_BUTTOCK[3]==0){
-                    buttock01.setSelected(true);
+                    buttock04.setSelected(true);
                     CHECK_BUTTOCK[3]=1;
                 }else {
-                    buttock01.setSelected(false);
+                    buttock04.setSelected(false);
                     CHECK_BUTTOCK[3]=0;
                 }
                 Log.e("ji", "click4");

@@ -115,15 +115,6 @@ public class SelectLevel extends AppCompatActivity {
         select_level=change_level.toString();
         level_text1.setText(select_level);
         level_text2.setText(new StringBuilder().append(num));
-
-        //thumb 바 옆 레벨(숫자) 나타내기
-        int padding= level.getPaddingTop() + level.getPaddingBottom()+100;
-        int sPos = level.getBottom() + level.getPaddingBottom();
-        int yPos = (level.getWidth()-padding) * (10-level.getProgress()) / level.getMax() + sPos - (level_text2.getWidth()/2);
-
-        level_text2.setY(yPos-830);
-
-
     }
 
 }

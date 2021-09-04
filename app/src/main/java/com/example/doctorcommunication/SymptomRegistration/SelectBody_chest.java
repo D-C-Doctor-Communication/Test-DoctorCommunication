@@ -61,10 +61,10 @@ public class SelectBody_chest extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_CHEST[1]==0){
-                    chest01.setSelected(true);
+                    chest02.setSelected(true);
                     CHECK_CHEST[1]=1;
                 }else {
-                    chest01.setSelected(false);
+                    chest02.setSelected(false);
                     CHECK_CHEST[1]=0;
                 }
                 Log.e("ji", "click2");
@@ -74,10 +74,10 @@ public class SelectBody_chest extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_CHEST[2]==0){
-                    chest01.setSelected(true);
+                    chest03.setSelected(true);
                     CHECK_CHEST[2]=1;
                 }else {
-                    chest01.setSelected(false);
+                    chest03.setSelected(false);
                     CHECK_CHEST[2]=0;
                 }
                 Log.e("ji", "click3");
@@ -87,10 +87,10 @@ public class SelectBody_chest extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_CHEST[3]==0){
-                    chest01.setSelected(true);
+                    chest04.setSelected(true);
                     CHECK_CHEST[3]=1;
                 }else {
-                    chest01.setSelected(false);
+                    chest04.setSelected(false);
                     CHECK_CHEST[3]=0;
                 }
                 Log.e("ji", "click4");
@@ -100,10 +100,10 @@ public class SelectBody_chest extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_CHEST[4]==0){
-                    chest01.setSelected(true);
+                    chest05.setSelected(true);
                     CHECK_CHEST[4]=1;
                 }else {
-                    chest01.setSelected(false);
+                    chest05.setSelected(false);
                     CHECK_CHEST[4]=0;
                 }
                 Log.e("ji", "click5");

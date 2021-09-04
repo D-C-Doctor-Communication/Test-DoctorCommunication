@@ -61,10 +61,10 @@ public class SelectBody_leg extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_LEG[1]==0){
-                    leg01.setSelected(true);
+                    leg02.setSelected(true);
                     CHECK_LEG[1]=1;
                 }else {
-                    leg01.setSelected(false);
+                    leg02.setSelected(false);
                     CHECK_LEG[1]=0;
                 }
                 Log.e("ji", "click2");
@@ -74,10 +74,10 @@ public class SelectBody_leg extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_LEG[2]==0){
-                    leg01.setSelected(true);
+                    leg03.setSelected(true);
                     CHECK_LEG[2]=1;
                 }else {
-                    leg01.setSelected(false);
+                    leg03.setSelected(false);
                     CHECK_LEG[2]=0;
                 }
                 Log.e("ji", "click3");
@@ -87,10 +87,10 @@ public class SelectBody_leg extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_LEG[3]==0){
-                    leg01.setSelected(true);
+                    leg04.setSelected(true);
                     CHECK_LEG[3]=1;
                 }else {
-                    leg01.setSelected(false);
+                    leg04.setSelected(false);
                     CHECK_LEG[3]=0;
                 }
                 Log.e("ji", "click4");
@@ -100,10 +100,10 @@ public class SelectBody_leg extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_LEG[4]==0){
-                    leg01.setSelected(true);
+                    leg05.setSelected(true);
                     CHECK_LEG[4]=1;
                 }else {
-                    leg01.setSelected(false);
+                    leg05.setSelected(false);
                     CHECK_LEG[4]=0;
                 }
                 Log.e("ji", "click5");
@@ -113,10 +113,10 @@ public class SelectBody_leg extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_LEG[5]==0){
-                    leg01.setSelected(true);
+                    leg06.setSelected(true);
                     CHECK_LEG[5]=1;
                 }else {
-                    leg01.setSelected(false);
+                    leg06.setSelected(false);
                     CHECK_LEG[5]=0;
                 }
                 Log.e("ji", "click6");
@@ -126,10 +126,10 @@ public class SelectBody_leg extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_LEG[6]==0){
-                    leg01.setSelected(true);
+                    leg07.setSelected(true);
                     CHECK_LEG[6]=1;
                 }else {
-                    leg01.setSelected(false);
+                    leg07.setSelected(false);
                     CHECK_LEG[6]=0;
                 }
                 Log.e("ji", "click7");
@@ -139,10 +139,10 @@ public class SelectBody_leg extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CHECK_LEG[7]==0){
-                    leg01.setSelected(true);
+                    leg08.setSelected(true);
                     CHECK_LEG[7]=1;
                 }else {
-                    leg01.setSelected(false);
+                    leg08.setSelected(false);
                     CHECK_LEG[7]=0;
                 }
                 Log.e("ji", "click8");
