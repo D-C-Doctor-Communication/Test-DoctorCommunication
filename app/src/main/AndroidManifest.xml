@@ -51,6 +51,7 @@
         <activity android:name=".SymptomRegistration.SelectBody_head" />
         <activity android:name=".SymptomRegistration.SelectBody_stomach" />
         <activity android:name=".SymptomRegistration.SelectBody_waist" />
+        <activity android:name=".SymptomRegistration.SelectBody_arm" />
         <activity android:name=".SymptomRegistration.SelectLevel" />
         <activity android:name=".SymptomRegistration.AddDetails" />
         <activity android:name=".SignActivity"/>
