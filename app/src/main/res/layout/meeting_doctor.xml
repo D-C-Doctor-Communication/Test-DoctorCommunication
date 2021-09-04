@@ -233,11 +233,12 @@
         </RelativeLayout>-->
 
 
-    <ListView
+    <ExpandableListView
         android:id="@+id/DC_listView"
         android:layout_width="match_parent"
         android:layout_height="443dp"
         android:layout_below="@+id/horizontalScrollView"
+        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
         android:layout_marginTop="10dp"
         android:scrollbars="none" />
 

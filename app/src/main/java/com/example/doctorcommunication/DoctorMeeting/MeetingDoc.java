@@ -39,10 +39,9 @@ public class MeetingDoc extends AppCompatActivity {
     private TextView endDateText;
     //날짜선택 버튼 위 증상 텍스트
     private TextView symptom_title;
-
     //버튼 - 심각도 그래프로 이동하는 버튼
     private Button gotoGraph;
-    //증상선택 버튼
+    //버튼 - 증상선택 버튼
     private final Button[] symptomBtn = new Button[3]; //증상 개수(임시 3)
     //button 키값
     private final int[] buttonKey = {R.id.btn_1_symptom, R.id.btn_2_symptom, R.id.btn_3_symptom};
@@ -61,6 +60,7 @@ public class MeetingDoc extends AppCompatActivity {
         //툴바 구성 - 이전버튼, 녹음버튼있
         Toolbar toolbar = findViewById(R.id.toolbar_meeting_doctor); //마이크, 이전버튼 들어있는 toolbar 생성
         setSupportActionBar(toolbar);
+        //datePicker에 들어갈 시작/끝날짜 calendar 객체
         startDate = Calendar.getInstance();
         endDate = Calendar.getInstance();
 
@@ -84,8 +84,8 @@ public class MeetingDoc extends AppCompatActivity {
         //날짜선택 버튼 위 증상 텍스트
         symptom_title = findViewById(R.id.symptom_title);
         //기간 선택을 위한 DatePicker를 호출하는 버튼(TextView)
-        startDateText = (TextView) findViewById(R.id.startDate);
-        endDateText = (TextView) findViewById(R.id.endDate);
+        startDateText = findViewById(R.id.startDate);
+        endDateText = findViewById(R.id.endDate);
 
 
         //증상 선택 버튼
@@ -95,10 +95,11 @@ public class MeetingDoc extends AppCompatActivity {
 
 
 // -> 증상 선택 기능
+        //버튼은 수정할것임(사용할 수 있는 데이터에 맞추도록)
         //각 증상에 대한 리스트
         ListView dcListView = findViewById(R.id.DC_listView);
 
-
+        //임시 onClickListener
         symptomBtn[0].setOnClickListener(v -> {
             Log.d("myapp", buttonValue[0] + " 버튼 눌림");
             symptom_title.setText(buttonValue[0]);
@@ -155,6 +156,51 @@ public class MeetingDoc extends AppCompatActivity {
         });
     }
 
+//db연동필요 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //기록 리스트 생성하는 메소드
+    public void createDCList(int index, ListView listView) {
+        //listView 참조 및 Adapter 연결
+        DCListViewAdapter adapter = new DCListViewAdapter();
+        listView.setAdapter(adapter);
+        //조건에 맞으면 리스트 생성
+        //Person1객체에서 각 증상정보를 가져와 list adapter에 추가함
+        for (int i = 0; i < Person1.symptom.length; i++) {
+            if (checkIsBetween(Person1.symptom[i].getDate()) && Person1.symptom[i].getPart().equals(buttonValue[index]))
+                adapter.addItem(Person1.symptom[i].getDate(),
+                        Person1.symptom[i].getPart() + Person1.symptom[i].getPain_level()
+                        , Person1.symptom[i].getPart(), Integer.parseInt(Person1.symptom[i].getPain_level()),
+                        Person1.symptom[i].getPain_characteristics(), Person1.symptom[i].getPain_situation(),
+                        Person1.symptom[i].getAccompany_pain(), Person1.symptom[i].getAdditional());
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    //날짜 초기값 지정
+    public void setDateText(Calendar cal){
+        int mYear = cal.get(Calendar.YEAR);
+        int mMonth = cal.get(Calendar.MONTH);
+        int mDay = cal.get(Calendar.DAY_OF_MONTH);
+        startDateText.setText(mYear + "." + (mMonth + 1) + "." + mDay);
+        endDateText.setText(mYear + "." + (mMonth + 1) + "." + mDay);
+        cal.set(mYear,mMonth+1,mDay);
+    }
+
+    //날짜 조건 확인 (시작날짜와 끝날짜 사이)
+    public boolean checkIsBetween(String date){
+        try {
+            //string형 날짜를 calendar형으로 변환
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd", Locale.KOREA);
+            Date date_wantCheck = dateFormat.parse(date);
+            Calendar checkDate = Calendar.getInstance();
+            checkDate.setTime(date_wantCheck);
+            //날짜가 범위 사이에 있는지 확인
+            return checkDate.compareTo(startDate) >= 0 && checkDate.compareTo(endDate) <= 0;
+        }
+        catch (ParseException e){
+            Log.d("myapp", "예외 발생"+date);
+        }
+        return false;
+    }
 
 // -> toolbar 기능
     @Override
@@ -179,69 +225,5 @@ public class MeetingDoc extends AppCompatActivity {
                 startActivity(record);
         }
         return true;
-    }
-
-    //클릭한 버튼의 증상명과 데이터의 증상이 일치한지 확인
-    public boolean checkSymptom(int index, String part) {
-        //버튼별 증상 배열
-        String[] btnString = new String[]{"두통", "복통", "요통"};
-        if (part.equals(btnString[index])) return true;
-        return false;
-    }
-
-//db연동필요 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //기록 리스트 생성하는 메소드
-    public void createDCList(int index, ListView listView) {
-        //listView 참조 및 Adapter 연결
-        DCListViewAdapter adapter = new DCListViewAdapter();
-        //Adapter 지정
-        listView.setAdapter(adapter);
-        //데이터의 날짜가 datePicker의 두 날짜 사이에있으면 true 반환
-        for (int i = 0; i < Person1.symptom.length; i++) {
-            if (checkIsBetween(Person1.symptom[i].getDate()) && checkSymptom(index, Person1.symptom[i].getPart()))
-                adapter.addItem(Person1.symptom[i].getDate(),
-                        Person1.symptom[i].getPart() + Person1.symptom[i].getPain_level()
-                        , Person1.symptom[i].getPart(), Integer.parseInt(Person1.symptom[i].getPain_level()),
-                        Person1.symptom[i].getPain_characteristics(), Person1.symptom[i].getPain_situation(),
-                        Person1.symptom[i].getAccompany_pain(), Person1.symptom[i].getAdditional());
-        }
-
-        adapter.notifyDataSetChanged();
-    }
-
-    //날짜 초기값 지정
-    public void setDateText(Calendar cal){
-        //Calendar cal = Calendar.getInstance();
-        int mYear = cal.get(Calendar.YEAR);
-        int mMonth = cal.get(Calendar.MONTH);
-        int mDay = cal.get(Calendar.DAY_OF_MONTH);
-        startDateText.setText(mYear + "." + (mMonth + 1) + "." + mDay);
-        endDateText.setText(mYear + "." + (mMonth + 1) + "." + mDay);
-        cal.set(mYear,mMonth+1,mDay);
-    }
-
-
-    public boolean checkIsBetween(String date){
-        try {
-            //string형 날짜를 calendar형으로 변환
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd", Locale.KOREA);
-            Date date_wantCheck = dateFormat.parse(date);
-            Calendar checkDate = Calendar.getInstance();
-            checkDate.setTime(date_wantCheck);
-
-            //날짜가 범위 사이에 있는지 확인
-            if (checkDate.compareTo(startDate) >= 0) {
-                if (checkDate.compareTo(endDate) <= 0) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        catch (ParseException e){
-            Log.d("myapp", "예외 발생"+date);
-        }
-        return false;
-        //Log.d("myapp",startDate.get(Calendar.YEAR)+","+startDate.get(Calendar.MONTH)+","+startDate.get(Calendar.DAY_OF_MONTH));
-        //Log.d("myapp",endDate.get(Calendar.YEAR)+","+endDate.get(Calendar.MONTH)+","+endDate.get(Calendar.DAY_OF_MONTH));
     }
 }
