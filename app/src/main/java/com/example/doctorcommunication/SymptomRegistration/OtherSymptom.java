@@ -1,25 +1,21 @@
 package com.example.doctorcommunication.SymptomRegistration;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.doctorcommunication.HomeScreen.Fragment_home;
 import com.example.doctorcommunication.MainActivity;
 import com.example.doctorcommunication.R;
 
@@ -40,12 +36,11 @@ public class OtherSymptom extends AppCompatActivity {
     EditText add_pattern;
     Button osymptom_btn;
 
-    String symptom;
+    String selected_symptom;
     String[] select_osymptom; // 선택한 동반 증상
     String[] selected_body;
     String[] selected_pattern;
     String[] selected_worse;
-    String selected_level;
     String selected_levelNm;
     int part;
     List<String> osymptom = new ArrayList<String>();
@@ -57,7 +52,7 @@ public class OtherSymptom extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
-        symptom = intent.getExtras().getString("symptom");
+        selected_symptom = intent.getExtras().getString("symptom");
         selected_body = intent.getStringArrayExtra("bparts");
         part =intent.getExtras().getInt("part");
         selected_levelNm = intent.getExtras().getString("levelNm");
@@ -134,7 +129,7 @@ public class OtherSymptom extends AppCompatActivity {
                 }
 
 
-                intent.putExtra("symptom",symptom);
+                intent.putExtra("symptom", selected_symptom);
                 intent.putExtra("part",part);
                 intent.putExtra("bparts",selected_body);
                 intent.putExtra("levelNm",selected_levelNm);
@@ -153,7 +148,7 @@ public class OtherSymptom extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(OtherSymptom.this, SelectWorse.class);
-                intent.putExtra("symptom",symptom);
+                intent.putExtra("symptom", selected_symptom);
                 intent.putExtra("bparts",selected_body);
                 intent.putExtra("part",part);
                 intent.putExtra("levelNm",selected_levelNm);
@@ -198,7 +193,7 @@ public class OtherSymptom extends AppCompatActivity {
                 String name= jo.getString("symptom");
                 JSONArray jsonArray2 = jo.getJSONArray("other_symptom");
 
-                if(name.equals(symptom)){
+                if(name.equals(selected_symptom)){
                     for(int j=0; j<jsonArray2.length(); j++){
                         JSONObject jo2=jsonArray2.getJSONObject(j);
                         p = jo2.getString("symptom");
