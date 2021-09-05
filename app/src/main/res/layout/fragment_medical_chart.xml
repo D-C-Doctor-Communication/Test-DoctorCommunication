@@ -30,6 +30,13 @@
         android:textColor="@color/black"
         android:textSize="17sp" />
 
+    <Button
+        android:id="@+id/show_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_below="@+id/selectedDate"
+        android:text="데이터확인" />
 
     <ScrollView
         android:layout_width="wrap_content"

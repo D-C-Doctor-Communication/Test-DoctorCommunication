@@ -76,6 +76,7 @@ public class SelectBody_head extends AppCompatActivity {
                 Log.e("ji", "click2");
             }
         });
+
         head03.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,6 +159,7 @@ public class SelectBody_head extends AppCompatActivity {
                             .show();
                     return;
                 }
+                intent.putExtra("bparts",select_head);
                 for(int i=0; i<select_head.length; i++)
                     Log.e("jj", select_head[i]);
                 startActivity(intent);

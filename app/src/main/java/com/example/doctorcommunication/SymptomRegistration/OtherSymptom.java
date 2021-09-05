@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -110,8 +111,14 @@ public class OtherSymptom extends AppCompatActivity {
                     Dialog = Dialog_bd.create();
                     Dialog.show();
 
-
                     intent = new Intent(OtherSymptom.this, MainActivity.class);
+                    Handler mHandler = new Handler();
+                    mHandler.postDelayed(new Runnable() {
+                        public void run() {
+                            Dialog.dismiss();
+                        }
+                    }, 1000);
+
                 }
 
                 for(int i=0; i<=cnt-1; i++) {
@@ -120,6 +127,7 @@ public class OtherSymptom extends AppCompatActivity {
                 }
 
                 startActivity(intent);
+
                 finish();
             }
         });
@@ -194,6 +202,6 @@ public class OtherSymptom extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Dialog.dismiss();
+
     }
 }

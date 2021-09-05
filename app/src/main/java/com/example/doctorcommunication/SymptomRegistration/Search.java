@@ -2,6 +2,7 @@ package com.example.doctorcommunication.SymptomRegistration;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ public class Search extends AppCompatActivity {
         Search_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("시작", "서치 페이지" );
                 Intent intent = new Intent(Search.this, SearchList.class);
                 startActivity(intent);
                 finish();

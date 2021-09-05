@@ -44,19 +44,18 @@ public class SearchList extends AppCompatActivity {
     private EditText search_text; //증상 검색창
 
     String[] symptom_Nm;
+    String[] part_Nm;
     int[] part_num;
     JSONObject jo;
-
+    String [] whole_body={"전신"};
     String registration;
     private Context mContext;
     private TextView txt_preferences;
-    File file;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_list);
-        file = new File("symptom.txt");
         mContext=this;
         search_text = (EditText)findViewById(R.id.search_text);
         listView = (ListView)findViewById(R.id.search_list);
@@ -104,10 +103,38 @@ public class SearchList extends AppCompatActivity {
                     intent = new Intent(SearchList.this, SelectBody_head.class);
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
-
-
-                    writeFile(file,symptom_Nm[position]);
-
+                    startActivity(intent);
+                    break;
+                }
+                case 2 : {  //얼굴
+                    Log.e("her!", "2번");
+                    intent = new Intent(SearchList.this, SelectBody_face.class);
+                    intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
+                    intent.putExtra("part", part_num[position]);
+                    startActivity(intent);
+                    break;
+                }
+                case 3 : {  //팔
+                    Log.e("her!", "3번");
+                    intent = new Intent(SearchList.this, SelectBody_arm.class);
+                    intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
+                    intent.putExtra("part", part_num[position]);
+                    startActivity(intent);
+                    break;
+                }
+                case 4 : {  //다리
+                    Log.e("her!", "4번");
+                    intent = new Intent(SearchList.this, SelectBody_leg.class);
+                    intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
+                    intent.putExtra("part", part_num[position]);
+                    startActivity(intent);
+                    break;
+                }
+                case 5 : {  //등
+                    Log.e("her!", "5번");
+                    intent = new Intent(SearchList.this, SelectBody_back.class);
+                    intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
+                    intent.putExtra("part", part_num[position]);
                     startActivity(intent);
                     break;
                 }
@@ -119,10 +146,50 @@ public class SearchList extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 }
-                case 8 : {  //복부
+                case 7 : {  //가슴
+                    Log.e("her!", "7번");
+                    intent = new Intent(SearchList.this, SelectBody_chest.class);
+                    intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
+                    intent.putExtra("part", part_num[position]);
+                    startActivity(intent);
+                    break;
+                }
+                case 8 : {//복부
                     Log.e("her!", "8번");
                     intent = new Intent(SearchList.this, SelectBody_stomach.class);
                     intent.putExtra("symptom", symptom_Nm[position]);
+                    intent.putExtra("part", part_num[position]);
+                    startActivity(intent);
+                    break;
+                }
+                case 9 : {  //엉덩이
+                    Log.e("her!", "9번");
+                    intent = new Intent(SearchList.this, SelectBody_buttock.class);
+                    intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
+                    intent.putExtra("part", part_num[position]);
+                    startActivity(intent);
+                    break;
+                }
+                case 11 : {  //전신
+                    Log.e("her!", "11번");
+                    intent = new Intent(SearchList.this, SelectLevel.class);
+                    intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
+                    intent.putExtra("part", whole_body);
+                    startActivity(intent);
+                    break;
+                }
+                case 12 : {  //손
+                    Log.e("her!", "12번");
+                    intent = new Intent(SearchList.this, SelectBody_hand.class);
+                    intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
+                    intent.putExtra("part", part_num[position]);
+                    startActivity(intent);
+                    break;
+                }
+                case 13 : {  //발
+                    Log.e("her!", "13번");
+                    intent = new Intent(SearchList.this, SelectBody_foot.class);
+                    intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
                     startActivity(intent);
                     break;
@@ -138,31 +205,6 @@ public class SearchList extends AppCompatActivity {
 
     }
 
-    //검색한 증상 파일에 저장(쓰기)
-    private void writeFile(File file,String txt){
-        FileWriter fw = null;
-        BufferedWriter bufwr = null;
-
-        try {
-            fw = new FileWriter(file);
-            bufwr = new BufferedWriter(fw);
-
-            bufwr.write(txt);
-            bufwr.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            if(bufwr != null)
-                bufwr.close();
-            if(fw != null)
-                fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     //증상 검색(현재 edittext에 입력된 부분이 포함되어 있으면 리스트뷰로 나타내기)
     public void search(String content){
         list.clear();
@@ -171,7 +213,7 @@ public class SearchList extends AppCompatActivity {
             list.addAll(nameArr);
         }else{
             for(int i=0; i<nameArr.size(); i++){
-                if(nameArr.get(i).toLowerCase().contains(content))
+                if(nameArr.get(i).toLowerCase().contains(content)||part_Nm[i].contains(content))
                 {
                     list.add(nameArr.get(i));
                 }
@@ -201,6 +243,7 @@ public class SearchList extends AppCompatActivity {
 
             JSONArray jsonArray= new JSONArray(jsonData);
             symptom_Nm = new String[jsonArray.length()];
+            part_Nm= new String[jsonArray.length()];
             part_num= new int[jsonArray.length()];
 
             //listview 개수만큼
@@ -209,9 +252,11 @@ public class SearchList extends AppCompatActivity {
 
                 //json 파일에 등록된 증상, 부위 받아오기
                 String name= jo.getString("symptom");
+                String spart= jo.getString("spart");
                 int part = jo.getInt("part");
 
                 symptom_Nm[i]=name;
+                part_Nm[i]=spart;
                 part_num[i]=part;
 
                 list.add(name);
