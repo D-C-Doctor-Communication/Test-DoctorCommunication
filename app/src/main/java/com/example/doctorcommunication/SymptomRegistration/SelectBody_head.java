@@ -144,16 +144,6 @@ public class SelectBody_head extends AppCompatActivity {
 
                 //선택한 머리 세부부위 string 변환해서 select_head에 넣기
                 select_head = BODY.toArray(new String[BODY.size()]);
-                // 데이터 쌓기
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference().child("users");
-
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                String uid = user.getUid();
-
-                HashMap<String,String> hashMap = new HashMap<>();
-                hashMap.put("symptom",symptom);
-                hashMap.put("part",select_head[0]);
 
                 //선택 X 팝업 처리
                 if(select_head.length==0){
