@@ -13,8 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doctorcommunication.MainActivity;
 import com.example.doctorcommunication.R;
+import com.example.doctorcommunication.User;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SelectBody_head extends AppCompatActivity {
@@ -24,6 +28,8 @@ public class SelectBody_head extends AppCompatActivity {
     String []HEAD={"눈주위","이마","관자놀이","머리 전체","뒷머리"}; //머리 세부 부위
     List<String> BODY = new ArrayList<>();
     String []select_head; //선택한 머리 부위
+
+    private DatabaseReference mDatabase;
 
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
@@ -40,6 +46,8 @@ public class SelectBody_head extends AppCompatActivity {
         ImageButton head03 = findViewById(R.id.head03) ;
         ImageButton head04 = findViewById(R.id.head04) ;
         ImageButton head05 = findViewById(R.id.head05) ;
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         //머리 세부 부위 select 유무 확인
         head01.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +143,8 @@ public class SelectBody_head extends AppCompatActivity {
 
                 //선택한 머리 세부부위 string 변환해서 select_head에 넣기
                 select_head = BODY.toArray(new String[BODY.size()]);
+                // 데이터 쌓기
+                
 
                 //선택 X 팝업 처리
                 if(select_head.length==0){
@@ -166,4 +176,5 @@ public class SelectBody_head extends AppCompatActivity {
         });
 
     }
+
 }

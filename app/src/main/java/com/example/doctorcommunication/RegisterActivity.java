@@ -3,6 +3,7 @@ package com.example.doctorcommunication;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.doctorcommunication.DataManagement.Symptom;
+import com.example.doctorcommunication.DataManagement.Symptom2;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,14 +28,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
     EditText mEmailText, mPasswordText, mPasswordcheckText, mName;
     Button mregisterBtn;
     private FirebaseAuth firebaseAuth;
-    private DatabaseReference mDatabase;
+    //private DatabaseReference mDatabase;
 
 
 
@@ -58,9 +64,9 @@ public class RegisterActivity extends AppCompatActivity {
         mregisterBtn = (Button)findViewById(R.id.register2_btn);
 
         // 데이터 읽고 쓰기 // firebase 정의
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+       // mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        readUser();
+        //readUser();
 
         // 파이어베이스 user로 접근
         // 가입버튼 ->  firebase에 데이터 저장
@@ -88,31 +94,70 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 FirebaseUser user = firebaseAuth.getCurrentUser();
                                 String email = user.getEmail();
-                                //String uid = user.getUid();
+                                String uid = user.getUid();
                                 String name = mName.getText().toString().trim();
 
                                 // 해쉬맵 테이블을 파이어베이스 데이터베이스에 저장
-                                HashMap<Object,String> hashMap = new HashMap<>();
+                                HashMap<String,String> hashMap = new HashMap<>();
+                                hashMap.put("symptom","e");
+                                hashMap.put("part","e");
+                                hashMap.put("painLevel","e");
+                                hashMap.put("pain_characteristics","e");
+                                hashMap.put("pain_situation","e");
+                                hashMap.put("accompany_pain","e");
+                                hashMap.put("additional","e");
 
-                               // hashMap.put("uid",uid);
-                                hashMap.put("name",name);
-                                hashMap.put("email",email);
-
-                                writeNewUser("1", name, email);
+                                //HashMap<String> hashMap = new HashMap<>();
 
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                DatabaseReference reference = database.getReference("Users");
-                                //reference.child(uid).setValue(hashMap);
+                                DatabaseReference myRef = database.getReference().child("users");
 
+                                myRef.child(uid).child("email").setValue(email);
+                                myRef.child(uid).child("name").setValue(name);
+                                String date="";
+                                for(int i=1; i<=30; i++) {
+                                    int length = (int) (Math.log10(i) + 1);
+                                    if (length == 1) {
+                                        date = "2021090" + i;
+                                    } else {
+                                        date = "202109" + i;
+                                    }
+                                    for(int j=0;j<5;j++){
+                                        String jj = j+"";
+                                        myRef.child(uid).child("date").child(date).child(jj).setValue(hashMap);
+                                    }
+                                }
+
+
+//                                myRef.child(uid).child("date").child("20210901").child("0").addValueEventListener(new ValueEventListener() {
+//                                    @Override
+//                                    public void onDataChange(DataSnapshot snapshot) {
+//                                        Symptom2 symptom = snapshot.getValue(Symptom2.class);
+//                                        Log.d(TAG, "part: " + symptom.getSymptom());
+//                                    }
+//
+//                                    @Override
+//                                    public void onCancelled(DatabaseError error) {
+//
+//                                    }
+//                                });
+
+                                //List nameList = new ArrayList<String>(Arrays.asList(arr));
+                                //~
+                                /*reference.child(uid).setValue(hashMap);*/
+
+                                //writeNewUser(uid);
+
+                                //mDatabase.child("Users").child(userId).child("date").setValue(nameList);
                                 // 가입이 이루어져을시 가입 화면을 빠져나감
+                                Toast.makeText(RegisterActivity.this, "회원가입에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
-                                Toast.makeText(RegisterActivity.this, "회원가입에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
 
                             } else {
                                 mDialog.dismiss();
-                                Toast.makeText(RegisterActivity.this, "이미 존재하는 아이디입니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "이미 존재하는 이메일입니다.", Toast.LENGTH_SHORT).show();
                                 return;  // 해당 메소드 진행을 멈추고 빠져나감.
 
                             }
@@ -128,13 +173,31 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void writeNewUser(String userId, String name, String email){
-        User user = new User(name, email);
-        mDatabase.child("user").child(userId).setValue(user)
+    /*private void writeNewUser(String userId){
+        mDatabase.child("Users").child(userId).setValue("date")
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         System.out.println("회원정보 저장 완료");
+                        String date="";
+                        //HashMap<String> hashMap = new HashMap<>();
+                        String[] arr = null;
+
+                        for(int i=1; i<=30; i++){
+                            int length = (int)(Math.log10(i)+1);
+                            if(length == 1){
+                                date = "2021.09.0"+i;
+                            }
+                            else{
+                                date = "2021.09."+i;
+                            }
+                            arr[i-1] = date;
+                            //mDatabase.child("date").setValue(date);
+
+                        }
+                        List nameList = new ArrayList<String>(Arrays.asList(arr));
+
+                        mDatabase.child("Users").child(userId).child("date").setValue(nameList);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -143,9 +206,10 @@ public class RegisterActivity extends AppCompatActivity {
                         System.out.println("회원정보 저장 실패");
                     }
                 });
-    }
 
-    private void readUser(){
+    }*/
+
+    /*private void readUser(){
         mDatabase.child("users").child("1").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -163,7 +227,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.w("FireBaseData", "loadPost:onCancelled", error.toException());
             }
         });
-    }
+    }*/
     /*public boolean onSupportNavigateUp(){
         onBackPressed();; // 뒤로가기 버튼이 눌렸을시
         return super.onSupportNavigateUp(); // 뒤로가기 버튼

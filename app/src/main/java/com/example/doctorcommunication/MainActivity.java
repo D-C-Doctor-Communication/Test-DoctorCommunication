@@ -16,22 +16,33 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 
 import com.example.doctorcommunication.ConditionAnalysis.Fragment_conditionAnalysis;
+import com.example.doctorcommunication.DataManagement.Symptom2;
 import com.example.doctorcommunication.HomeScreen.Fragment_home;
 import com.example.doctorcommunication.MedicalChart.Fragment_medicalChart;
 import com.example.doctorcommunication.Settings.SettingActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
     Fragment homeFragment;
+    private FirebaseAuth firebaseAuth;
 
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //splash 종료(기본테마 적용)
         setTheme(R.style.Theme_DoctorCommunication);
-
+        firebaseAuth =  FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -96,7 +107,25 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         }));
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference().child("users");
 
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        String uid = user.getUid();
+
+        myRef.child(uid).child("date").child("20210901").child("0").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Symptom2 symptom = snapshot.getValue(Symptom2.class);
+                String dd = snapshot.child("symptom").getValue(String.class);
+                Log.d("dd", "part: " + symptom.getSymptom()+dd);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
 
     }
     //기본으로 선택되어있는 프래그먼트 지정

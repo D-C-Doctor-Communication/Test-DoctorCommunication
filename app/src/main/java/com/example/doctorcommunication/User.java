@@ -12,7 +12,7 @@ public class User {
         this.username = username;
         this.email = email;
     }
-   /* public String getUserName() {
+    public String getUserName() {
         return username;
     }
     public void setUserName(String userName) {
@@ -27,11 +27,12 @@ public class User {
         this.email = email;
     }
 
+
     @Override
     public String toString() {
         return "User{" +
                 "userName='" + username + '\'' +
                 ", email='" + email + '\'' +
                 '}';
-    }*/
+    }
 }
