@@ -42,6 +42,12 @@ public class OtherSymptom extends AppCompatActivity {
 
     String symptom;
     String[] select_osymptom; // 선택한 동반 증상
+    String[] selected_body;
+    String[] selected_pattern;
+    String[] selected_worse;
+    String selected_level;
+    String selected_levelNm;
+    int part;
     List<String> osymptom = new ArrayList<String>();
     int cnt=0;
     String p;
@@ -52,6 +58,11 @@ public class OtherSymptom extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom");
+        selected_body = intent.getStringArrayExtra("bparts");
+        part =intent.getExtras().getInt("part");
+        selected_levelNm = intent.getExtras().getString("levelNm");
+        selected_pattern = intent.getStringArrayExtra("pattern");
+        selected_worse = intent.getStringArrayExtra("worse");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.other_symptom);
@@ -88,7 +99,7 @@ public class OtherSymptom extends AppCompatActivity {
                 }
 
                 Intent intent = new Intent(OtherSymptom.this, AddDetails.class);
-                intent.putExtra("symptom",symptom);
+
                 //선택 X 팝업 처리
                 if(select_osymptom.length==0){
                     new AlertDialog.Builder(OtherSymptom.this)
@@ -102,6 +113,7 @@ public class OtherSymptom extends AppCompatActivity {
                             .show();
                     return;
                 }
+
                 //해당없음 팝업 처리(뒤 페이지인 추가증상 등록으로 넘어가지 않음)
                 if(select_osymptom[0].equals("해당없음")) {
 
@@ -121,10 +133,14 @@ public class OtherSymptom extends AppCompatActivity {
 
                 }
 
-                for(int i=0; i<=cnt-1; i++) {
-                    intent.putExtra("osymptom", select_osymptom);
 
-                }
+                intent.putExtra("symptom",symptom);
+                intent.putExtra("part",part);
+                intent.putExtra("bparts",selected_body);
+                intent.putExtra("levelNm",selected_levelNm);
+                intent.putExtra("pattern", selected_pattern);
+                intent.putExtra("worse",selected_worse);
+                intent.putExtra("osymptom", select_osymptom);
 
                 startActivity(intent);
 
@@ -138,6 +154,11 @@ public class OtherSymptom extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(OtherSymptom.this, SelectWorse.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("bparts",selected_body);
+                intent.putExtra("part",part);
+                intent.putExtra("levelNm",selected_levelNm);
+                intent.putExtra("pattern",selected_pattern);
+
                 startActivity(intent);
                 finish();
             }

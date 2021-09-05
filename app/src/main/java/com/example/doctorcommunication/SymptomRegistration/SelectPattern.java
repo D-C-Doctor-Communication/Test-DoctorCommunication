@@ -39,9 +39,12 @@ public class SelectPattern extends AppCompatActivity {
     String symptom;
     String[] select_pattern; //선택한 양상
     String[] selected_body;
+    String selected_level;
     List<String> pattern = new ArrayList<String>();
     int cnt=0;
     String p;
+    int part;
+    String selected_levelNm;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -49,6 +52,9 @@ public class SelectPattern extends AppCompatActivity {
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom");
         selected_body = intent.getStringArrayExtra("bparts");
+        part =intent.getExtras().getInt("part");
+        selected_levelNm= String.valueOf(intent.getExtras().getInt("levelNm"));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_pattern);
 
@@ -90,6 +96,11 @@ public class SelectPattern extends AppCompatActivity {
                 }
                 Intent intent = new Intent(SelectPattern.this, SelectWorse.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("part",part);
+                intent.putExtra("bparts",selected_body);
+                intent.putExtra("levelNm",selected_levelNm);
+                intent.putExtra("pattern",select_pattern);
+
                 //선택 X 팝업 처리
                 if(select_pattern.length==0){
                     new AlertDialog.Builder(SelectPattern.this)
@@ -115,6 +126,7 @@ public class SelectPattern extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectPattern.this, SelectLevel.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("part",part);
                 intent.putExtra("bparts",selected_body);
                 startActivity(intent);
                 finish();

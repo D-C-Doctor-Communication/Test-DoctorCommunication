@@ -29,11 +29,13 @@ public class SelectLevel extends AppCompatActivity {
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom"); //선택한 증상 받아오기
         part =intent.getExtras().getInt("part");
+        selected_body = intent.getStringArrayExtra("bparts");
+
         Log.e("backpart", String.valueOf(part));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_level);
 
-        selected_body = intent.getStringArrayExtra("bparts");
+
 
         level_text1 = (TextView) findViewById(R.id.level_text1);
         level_text2 = (TextView) findViewById(R.id.level_text2);
@@ -67,7 +69,9 @@ public class SelectLevel extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectLevel.this, SelectPattern.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("part",part);
                 intent.putExtra("bparts",selected_body);
+                intent.putExtra("levelNm",num);
                 startActivity(intent);
                 finish();
             }
@@ -86,6 +90,7 @@ public class SelectLevel extends AppCompatActivity {
                         intent = new Intent(SelectLevel.this, SelectBody_head.class);
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
+
                         startActivity(intent);
                         break;
                     }
@@ -157,7 +162,6 @@ public class SelectLevel extends AppCompatActivity {
                     case 11: {  //전신
                         Log.e("intentL", "11번");
                         intent = new Intent(SelectLevel.this, SearchList.class);
-                        intent.putExtra("symptom",symptom);
                         startActivity(intent);
                         break;
                     }

@@ -36,6 +36,11 @@ public class SelectWorse extends AppCompatActivity {
 
     String symptom;//선택한 증상
     String[] select_worse; //선택한 악화상황
+    String[] selected_body;
+    String[] selected_pattern;
+    String selected_level;
+    String selected_levelNm;
+    int part;
     List<String> worse = new ArrayList<String>();
     int cnt=0;
     String p;
@@ -45,6 +50,10 @@ public class SelectWorse extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom");
+        selected_body = intent.getStringArrayExtra("bparts");
+        part =intent.getExtras().getInt("part");
+        selected_levelNm =intent.getExtras().getString("levelNm");
+        selected_pattern = intent.getStringArrayExtra("pattern");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_worse);
@@ -96,6 +105,12 @@ public class SelectWorse extends AppCompatActivity {
                     return;
                 }
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("part",part);
+                intent.putExtra("bparts",selected_body);
+                intent.putExtra("levelNm",selected_levelNm);
+                intent.putExtra("pattern", selected_pattern);
+                intent.putExtra("worse",select_worse);
+
                 startActivity(intent);
                 finish();
             }
@@ -107,6 +122,10 @@ public class SelectWorse extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectWorse.this, SelectPattern.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("bparts",selected_body);
+                intent.putExtra("part",part);
+                intent.putExtra("levelNm",selected_levelNm);
+
                 startActivity(intent);
                 finish();
             }
