@@ -22,12 +22,13 @@ public class SelectBody_hand extends AppCompatActivity {
     String [] HAND ={"왼손 손바닥","왼손 손목","왼손 손등","왼손 손목","왼손 손가락","오른손 손바닥","오른손 손목","오른손 손등","오른손 손목","오른손 손가락"}; //손 세부 부위
     List<String> BODY = new ArrayList<>();
     String [] select_hand; //선택한 머리 부위
-
+    int repeat;
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom");
         part = intent.getExtras().getInt("part");
-
+        repeat = intent.getExtras().getInt("repeat");
+        Log.d("repeat", repeat+"");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_body_hand);
         ImageButton nextpage = findViewById(R.id.nextpage) ;
@@ -182,6 +183,7 @@ public class SelectBody_hand extends AppCompatActivity {
                 Intent intent = new Intent(SelectBody_hand.this, SelectLevel.class);
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("part",part);
+                intent.putExtra("repeat",repeat);
 
                 //손 세부 부위가 선택되어 있으면 BODY에 넣기
                 if(hand01.isSelected()){
@@ -244,6 +246,7 @@ public class SelectBody_hand extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectBody_hand.this, SearchList.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("repeat",repeat);
                 startActivity(intent);
                 finish();
             }

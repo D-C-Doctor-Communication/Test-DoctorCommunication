@@ -47,7 +47,6 @@ public class Symptom2 implements Serializable {
         this.additional = additional;
     }
 
-
     public String getPart(){ return part; }
     public String getSymptom(){ return symptom; }
     public String getPainLevel(){ return painLevel; }

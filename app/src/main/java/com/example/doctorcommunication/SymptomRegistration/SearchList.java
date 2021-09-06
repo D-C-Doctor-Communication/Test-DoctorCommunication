@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -23,15 +22,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +44,9 @@ public class SearchList extends AppCompatActivity {
     String registration;
     private Context mContext;
     private TextView txt_preferences;
+    int repeat;
+    String[] str = new String[5];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -60,9 +56,17 @@ public class SearchList extends AppCompatActivity {
         search_text = (EditText)findViewById(R.id.search_text);
         listView = (ListView)findViewById(R.id.search_list);
         Log.e("hihi", "onCreate: ");
+
+        Intent intent = getIntent();
+        repeat = intent.getExtras().getInt("repeat");
+        Log.d("repeat", repeat+"");
         list = new ArrayList<String>();
         settingList();
-
+        str[0] = null;
+        str[1] = null;
+        str[2] = null;
+        str[3] = null;
+        str[4] = null;
         nameArr = new ArrayList<>();
         nameArr.addAll(list);
 
@@ -103,6 +107,7 @@ public class SearchList extends AppCompatActivity {
                     intent = new Intent(SearchList.this, SelectBody_head.class);
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
+                    intent.putExtra("repeat",repeat);
                     startActivity(intent);
                     break;
                 }
@@ -111,6 +116,7 @@ public class SearchList extends AppCompatActivity {
                     intent = new Intent(SearchList.this, SelectBody_face.class);
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
+                    intent.putExtra("repeat",repeat);
                     startActivity(intent);
                     break;
                 }
@@ -119,6 +125,7 @@ public class SearchList extends AppCompatActivity {
                     intent = new Intent(SearchList.this, SelectBody_arm.class);
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
+                    intent.putExtra("repeat",repeat);
                     startActivity(intent);
                     break;
                 }
@@ -127,6 +134,8 @@ public class SearchList extends AppCompatActivity {
                     intent = new Intent(SearchList.this, SelectBody_leg.class);
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
+                    intent.putExtra("repeat",repeat);
+
                     startActivity(intent);
                     break;
                 }
@@ -135,6 +144,7 @@ public class SearchList extends AppCompatActivity {
                     intent = new Intent(SearchList.this, SelectBody_back.class);
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
+                    intent.putExtra("repeat",repeat);
                     startActivity(intent);
                     break;
                 }
@@ -143,6 +153,8 @@ public class SearchList extends AppCompatActivity {
                     intent = new Intent(SearchList.this, SelectBody_waist.class);
                     intent.putExtra("symptom", symptom_Nm[position]);
                     intent.putExtra("part", part_num[position]);
+                    intent.putExtra("repeat",repeat);
+
                     startActivity(intent);
                     break;
                 }
@@ -151,6 +163,7 @@ public class SearchList extends AppCompatActivity {
                     intent = new Intent(SearchList.this, SelectBody_chest.class);
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
+                    intent.putExtra("repeat",repeat);
                     startActivity(intent);
                     break;
                 }
@@ -159,6 +172,7 @@ public class SearchList extends AppCompatActivity {
                     intent = new Intent(SearchList.this, SelectBody_stomach.class);
                     intent.putExtra("symptom", symptom_Nm[position]);
                     intent.putExtra("part", part_num[position]);
+                    intent.putExtra("repeat",repeat);
                     startActivity(intent);
                     break;
                 }
@@ -167,6 +181,7 @@ public class SearchList extends AppCompatActivity {
                     intent = new Intent(SearchList.this, SelectBody_buttock.class);
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
+                    intent.putExtra("repeat",repeat);
                     startActivity(intent);
                     break;
                 }
@@ -175,6 +190,7 @@ public class SearchList extends AppCompatActivity {
                     intent = new Intent(SearchList.this, SelectLevel.class);
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", whole_body);
+                    intent.putExtra("repeat",repeat);
                     startActivity(intent);
                     break;
                 }
@@ -183,6 +199,7 @@ public class SearchList extends AppCompatActivity {
                     intent = new Intent(SearchList.this, SelectBody_hand.class);
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
+                    intent.putExtra("repeat",repeat);
                     startActivity(intent);
                     break;
                 }
@@ -191,6 +208,7 @@ public class SearchList extends AppCompatActivity {
                     intent = new Intent(SearchList.this, SelectBody_foot.class);
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
+                    intent.putExtra("repeat",repeat);
                     startActivity(intent);
                     break;
                 }
@@ -204,7 +222,11 @@ public class SearchList extends AppCompatActivity {
         String search_content = search_text.getText().toString();
 
     }
-
+    public String[] getIndex(int index, String dd){
+        str[index] = dd;
+        Log.d("sick", "symptomd: " + String.valueOf(str[index]));
+        return str;
+    }
     //증상 검색(현재 edittext에 입력된 부분이 포함되어 있으면 리스트뷰로 나타내기)
     public void search(String content){
         list.clear();

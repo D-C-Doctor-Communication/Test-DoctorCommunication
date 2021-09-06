@@ -31,7 +31,7 @@ import java.util.Locale;
 
 
 public class Fragment_home extends Fragment {
-
+    int count = -1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         Log.d("myapp","home탭 열림");
@@ -58,6 +58,7 @@ public class Fragment_home extends Fragment {
 //카드1 - 증상등록으로 이동
         btn_addSymptom.setOnClickListener(v -> { //람다형식 사용 ~ new Button.OnClickListener()와 같은 기능
             Intent addSymptom = new Intent(getContext(), SearchList.class);
+            addSymptom.putExtra("count",count);
             startActivity(addSymptom);
         });
 
@@ -181,6 +182,7 @@ public class Fragment_home extends Fragment {
             //Adapter 지정
             listView.setAdapter(adapter);
             //선택한 날짜와 같은 데이터일때 어댑터에 아이템 추가
+
             for(int i = 0; i< Person1.symptom.length; i++){
                 if(Person1.symptom[i].isSameDate) adapter.addItem(Person1.symptom[i].getPart(),R.drawable.img_pain_sym1,Integer.parseInt(Person1.symptom[i].getPain_level()),Person1.symptom[i].getPain_characteristics(),Person1.symptom[i].getPain_situation());
             }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Button;
@@ -13,11 +14,20 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.doctorcommunication.DataManagement.Symptom2;
 import com.example.doctorcommunication.MainActivity;
 import com.example.doctorcommunication.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,14 +37,28 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class OtherSymptom extends AppCompatActivity {
     private ListView listView;
     private ListViewAdapter adapter;
     EditText add_pattern;
     Button osymptom_btn;
+
+    FirebaseAuth firebaseAuth;
+    //final int[] repeat = {-1};
+    // 날짜 받기
+    long now = System.currentTimeMillis();
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+    Date date = new Date();
+    String date_txt = sdf.format(date);
+    //Date currentTime = Calendar.getInstance().getTime();
+    //String date_txt = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(currentTime);
 
     String selected_symptom;
     String[] select_osymptom; // 선택한 동반 증상
@@ -59,6 +83,7 @@ public class OtherSymptom extends AppCompatActivity {
         selected_pattern = intent.getStringArrayExtra("pattern");
         selected_worse = intent.getStringArrayExtra("worse");
 
+        firebaseAuth =  FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.other_symptom);
 
@@ -78,8 +103,8 @@ public class OtherSymptom extends AppCompatActivity {
             public void onClick(View v) {
                 //선택된 리스트 확인
                 SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
-                int count = adapter.getCount();
-                for(int i=0; i<=count-1; i++){
+                int count1 = adapter.getCount();
+                for(int i=0; i<=count1-1; i++){
                     if(checkedItems.get(i)){
                         cnt++;
                     }
@@ -87,7 +112,7 @@ public class OtherSymptom extends AppCompatActivity {
                 select_osymptom= new String[cnt];
                 cnt=0;
                 //선택되어 있다면 select_osymptom 배열에 넣기
-                for(int i=0; i<=count-1; i++){
+                for(int i=0; i<=count1-1; i++){
                     if(checkedItems.get(i)){
                         select_osymptom[cnt++]=osymptom.get(i);
                     }
@@ -109,9 +134,104 @@ public class OtherSymptom extends AppCompatActivity {
                     return;
                 }
 
+               // FirebaseDatabase database = FirebaseDatabase.getInstance();
+               // DatabaseReference myRef = database.getReference("users");
+                DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference myRef = database.child("users");
+
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                String uid = user.getUid();
+
+
                 //해당없음 팝업 처리(뒤 페이지인 추가증상 등록으로 넘어가지 않음)
                 if(select_osymptom[0].equals("해당없음")) {
+                    Log.d("hedag", selected_symptom);
+                    Log.d("hedag", selected_body[0]);
+                    Log.d("hedag", selected_levelNm);
+                    Log.d("hedag", selected_pattern[0]);
+                    Log.d("hedag", selected_worse[0]);
 
+
+                    int repeat2 = 0;
+                    /*
+                    myRef.child(uid).child("date").child(date_txt).child("0").addValueEventListener(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            Symptom2 symptom = snapshot.getValue(Symptom2.class);
+                            SearchList sl = new SearchList();
+                            sl.getIndex(0, symptom.getSymptom());
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+
+                        }
+                    });
+                    myRef.child(uid).child("date").child(date_txt).child("1").addValueEventListener(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            Symptom2 symptom = snapshot.getValue(Symptom2.class);
+                            SearchList sl = new SearchList();
+                            sl.getIndex(1, symptom.getSymptom());
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+
+                        }
+                    });
+                    myRef.child(uid).child("date").child(date_txt).child("2").addValueEventListener(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            Symptom2 symptom = snapshot.getValue(Symptom2.class);
+                            SearchList sl = new SearchList();
+                            sl.getIndex(2, symptom.getSymptom());
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+
+                        }
+                    });
+                    myRef.child(uid).child("date").child(date_txt).child("3").addValueEventListener(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            Symptom2 symptom = snapshot.getValue(Symptom2.class);
+                            SearchList sl = new SearchList();
+                            sl.getIndex(3, symptom.getSymptom());
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+
+                        }
+                    });
+                    myRef.child(uid).child("date").child(date_txt).child("4").addValueEventListener(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            Symptom2 symptom = snapshot.getValue(Symptom2.class);
+                            SearchList sl = new SearchList();
+                            sl.getIndex(4, symptom.getSymptom());
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+
+                        }
+                    });
+
+                    SearchList sl = new SearchList();
+                    for(int i=0; i<5; i++){
+                        if(!String.valueOf(sl.str[i]).equals("e")){
+                            repeat2++;
+                        }
+                    }
+                    myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat2)).child("symptom").setValue(selected_symptom);
+                    myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat2)).child("part").setValue(selected_body[0]);
+                    myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat2)).child("painLevel").setValue(selected_levelNm);
+                    myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat2)).child("pain_characteristics").setValue(selected_pattern[0]);
+                    myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat2)).child("pain_situation").setValue(selected_worse[0]);
+*/
                     AlertDialog.Builder Dialog_bd = new AlertDialog.Builder(OtherSymptom.this);
                     Dialog_bd.setMessage("증상이 입력되었습니다.");
 
@@ -122,7 +242,11 @@ public class OtherSymptom extends AppCompatActivity {
                     Handler mHandler = new Handler();
                     mHandler.postDelayed(new Runnable() {
                         public void run() {
-                            Dialog.dismiss();
+                            if(Dialog != null){
+                                if(Dialog.isShowing()){
+                                    Dialog.dismiss();
+                                }
+                            }
                         }
                     }, 1000);
 
@@ -217,6 +341,11 @@ public class OtherSymptom extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        if(Dialog != null){
+            if(Dialog.isShowing()){
+                Dialog.dismiss();
+            }
+        }
         super.onDestroy();
 
     }

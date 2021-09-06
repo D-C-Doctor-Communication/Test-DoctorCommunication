@@ -45,7 +45,7 @@ public class SelectPattern extends AppCompatActivity {
     String p;
     int part;
     String selected_levelNm;
-
+    int repeat;
     @SuppressLint("WrongViewCast")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,8 @@ public class SelectPattern extends AppCompatActivity {
         selected_body = intent.getStringArrayExtra("bparts");
         part =intent.getExtras().getInt("part");
         selected_levelNm= String.valueOf(intent.getExtras().getInt("levelNm"));
-
+        repeat = intent.getExtras().getInt("repeat");
+        Log.d("count", repeat+"");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_pattern);
 
@@ -100,6 +101,7 @@ public class SelectPattern extends AppCompatActivity {
                 intent.putExtra("bparts",selected_body);
                 intent.putExtra("levelNm",selected_levelNm);
                 intent.putExtra("pattern",select_pattern);
+                intent.putExtra("repeat",repeat);
 
                 //선택 X 팝업 처리
                 if(select_pattern.length==0){
@@ -128,6 +130,8 @@ public class SelectPattern extends AppCompatActivity {
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("part",part);
                 intent.putExtra("bparts",selected_body);
+                intent.putExtra("repeat",repeat);
+
                 startActivity(intent);
                 finish();
             }
