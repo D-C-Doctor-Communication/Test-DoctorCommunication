@@ -127,12 +127,13 @@
 
     <EditText
         android:id="@+id/MC_LineEditText"
-        android:layout_width="370dp"
+        android:layout_width="312dp"
         android:layout_height="70dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="586dp"
+        android:layout_alignTop="@+id/btn_addAppointDoctor"
         android:background="#7EE6E6E6"
         android:gravity="left"
         android:inputType="textMultiLine"
@@ -140,6 +141,8 @@
         android:maxLines="5"
         android:minLines="1"
         android:scrollbars="vertical"
+        android:paddingTop="10dp"
+        android:paddingStart="14dp"
         android:text="진료 후기를 작성해주세요"
         android:textColor="@color/ache_card_textColor"
         android:textSize="10sp"

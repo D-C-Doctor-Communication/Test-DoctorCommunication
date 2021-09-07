@@ -79,7 +79,7 @@
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable/mc_popup_right_btn.xml" value="0.19305555555555556" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable/mc_popup_save_btn.xml" value="0.19305555555555556" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/font/fontm.xml" value="0.1" />
-        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/activity_main.xml" value="0.20525956284153005" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/activity_main.xml" value="0.16" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/activity_mc_popup.xml" value="0.5" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/add_details.xml" value="0.31693989071038253" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/add_symptom.xml" value="0.1296875" />
@@ -110,8 +110,10 @@
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_level.xml" value="0.15" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_pattern.xml" value="0.25" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_worse.xml" value="0.25" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/setting_activity.xml" value="0.15888157894736843" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/symptom_list_item.xml" value="0.21851851851851853" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/symptom_registration_popup.xml" value="0.1" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/menu/main_bottom_nav_menu.xml" value="0.15888157894736843" />
       </map>
     </option>
   </component>
