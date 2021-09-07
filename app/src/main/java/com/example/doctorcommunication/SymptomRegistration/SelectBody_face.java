@@ -22,12 +22,14 @@ public class SelectBody_face extends AppCompatActivity {
     String [] FACE ={"오른쪽 귀","왼쪽 귀","오른쪽 눈","왼쪽 눈","코","목"}; //얼굴 세부 부위
     List<String> BODY = new ArrayList<>();
     String [] select_face; //선택한 팔 부위
+    int repeat;
 
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom");
         part = intent.getExtras().getInt("part");
-
+        repeat = intent.getExtras().getInt("repeat");
+        Log.d("repeat", repeat+"");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_body_face);
 
@@ -132,6 +134,7 @@ public class SelectBody_face extends AppCompatActivity {
                 Intent intent = new Intent(SelectBody_face.this, SelectLevel.class);
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("part",part);
+                intent.putExtra("repeat",repeat);
 
                 //세부 부위가 선택되어 있으면 BODY에 넣기
                 if(face01.isSelected()){
@@ -180,6 +183,8 @@ public class SelectBody_face extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectBody_face.this, SearchList.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("repeat",repeat);
+
                 startActivity(intent);
                 finish();
             }

@@ -23,12 +23,14 @@ public class SelectBody_stomach extends AppCompatActivity {
     String [] STOMACH ={"오른쪽 위 복부","명치","왼쪽 위 복부","오른쪽 복부","배꼽 부근","왼쪽 복부","오른쪽 아래 복부","왼쪽 아래 복부","아래쪽 복부"}; //복부 세부 부위
     List<String> BODY = new ArrayList<String>();
     String [] select_stomach; //선택한 복부 부위
+    int repeat;
 
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom");
         part = intent.getExtras().getInt("part");
-
+        repeat = intent.getExtras().getInt("repeat");
+        Log.d("repeat", repeat+"");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_body_stomach);
 
@@ -170,6 +172,7 @@ public class SelectBody_stomach extends AppCompatActivity {
                 Intent intent = new Intent(SelectBody_stomach.this, SelectLevel.class);
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("part",part);
+                intent.putExtra("repeat",repeat);
 
                 //복부 세부 부위가 선택되어 있으면 BODY에 넣기
                 if(stomach01.isSelected()){
@@ -227,6 +230,7 @@ public class SelectBody_stomach extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectBody_stomach.this, SearchList.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("repeat",repeat);
                 startActivity(intent);
                 finish();
             }

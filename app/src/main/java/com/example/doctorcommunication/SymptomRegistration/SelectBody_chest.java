@@ -22,12 +22,14 @@ public class SelectBody_chest extends AppCompatActivity {
     String [] CHEST ={"오른쪽 가슴","가슴 중앙","왼쪽 가슴","오른쪽 겨드랑이","왼쪽 겨드랑이"}; //가슴 세부 부위
     List<String> BODY = new ArrayList<>();
     String [] select_chest; //선택한 가슴 부위
+    int repeat;
 
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom");
         part = intent.getExtras().getInt("part");
-
+        repeat = intent.getExtras().getInt("repeat");
+        Log.d("repeat", repeat+"");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_body_chest);
 
@@ -117,6 +119,7 @@ public class SelectBody_chest extends AppCompatActivity {
                 Intent intent = new Intent(SelectBody_chest.this, SelectLevel.class);
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("part",part);
+                intent.putExtra("repeat",repeat);
 
                 //가슴슴 세부 부위가 선택되 있으면 BODY에 넣기
                 if(chest01.isSelected()){
@@ -164,6 +167,8 @@ public class SelectBody_chest extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectBody_chest.this, SearchList.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("repeat",repeat);
+
                 startActivity(intent);
                 finish();
             }

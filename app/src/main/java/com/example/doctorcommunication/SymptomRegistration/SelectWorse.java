@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Button;
@@ -44,6 +45,7 @@ public class SelectWorse extends AppCompatActivity {
     List<String> worse = new ArrayList<String>();
     int cnt=0;
     String p;
+    int repeat;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -54,7 +56,8 @@ public class SelectWorse extends AppCompatActivity {
         part =intent.getExtras().getInt("part");
         selected_levelNm =intent.getExtras().getString("levelNm");
         selected_pattern = intent.getStringArrayExtra("pattern");
-
+        repeat = intent.getExtras().getInt("repeat");
+        Log.d("repeat", repeat+"");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_worse);
 
@@ -110,6 +113,7 @@ public class SelectWorse extends AppCompatActivity {
                 intent.putExtra("levelNm",selected_levelNm);
                 intent.putExtra("pattern", selected_pattern);
                 intent.putExtra("worse",select_worse);
+                intent.putExtra("repeat",repeat);
 
                 startActivity(intent);
                 finish();
@@ -125,6 +129,7 @@ public class SelectWorse extends AppCompatActivity {
                 intent.putExtra("bparts",selected_body);
                 intent.putExtra("part",part);
                 intent.putExtra("levelNm",selected_levelNm);
+                intent.putExtra("repeat",repeat);
 
                 startActivity(intent);
                 finish();

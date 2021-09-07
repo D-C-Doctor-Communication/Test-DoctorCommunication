@@ -22,12 +22,13 @@ public class SelectBody_back extends AppCompatActivity {
     String [] BACK ={"왼쪽 승모근","오른쪽 승모근","왼쪽 어깨","오른쪽 어깨","등 전체","왼쪽 허리","오른쪽 허리"}; //등 세부 부위
     List<String> BODY = new ArrayList<>();
     String [] select_back; //선택한 머리 부위
-
+    int repeat;
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom");
         part = intent.getExtras().getInt("part");
-
+        repeat = intent.getExtras().getInt("repeat");
+        Log.d("repeat", repeat+"");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_body_hand);
         ImageButton nextpage = findViewById(R.id.nextpage) ;
@@ -142,6 +143,7 @@ public class SelectBody_back extends AppCompatActivity {
                 Intent intent = new Intent(SelectBody_back.this, SelectLevel.class);
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("part",part);
+                intent.putExtra("repeat",repeat);
 
                 //손 세부 부위가 선택되어 있으면 BODY에 넣기
                 if(back01.isSelected()){
@@ -194,6 +196,8 @@ public class SelectBody_back extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectBody_back.this, SearchList.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("repeat",repeat);
+
                 startActivity(intent);
                 finish();
             }

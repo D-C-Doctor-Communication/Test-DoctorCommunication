@@ -22,12 +22,14 @@ public class SelectBody_leg extends AppCompatActivity {
     String [] LEG ={"왼쪽 허벅지","오른쪽 허벅지","왼쪽 종아리","오른쪽 종아리","왼쪽 무릎","오른쪽 무릎","왼쪽 다리 전체","오른쪽 다리 전체"}; //다리 세부 부위
     List<String> BODY = new ArrayList<>();
     String [] select_leg; //선택한 다리 부위
+    int repeat;
 
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom");
         part = intent.getExtras().getInt("part");
-
+        repeat = intent.getExtras().getInt("repeat");
+        Log.d("repeat", repeat+"");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_body_leg);
 
@@ -156,6 +158,7 @@ public class SelectBody_leg extends AppCompatActivity {
                 Intent intent = new Intent(SelectBody_leg.this, SelectLevel.class);
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("part",part);
+                intent.putExtra("repeat",repeat);
 
                 //머리 세부 부위가 선택되어 있으면 BODY에 넣기
                 if(leg01.isSelected()){
@@ -211,6 +214,8 @@ public class SelectBody_leg extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectBody_leg.this, SearchList.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("repeat",repeat);
+
                 startActivity(intent);
                 finish();
             }

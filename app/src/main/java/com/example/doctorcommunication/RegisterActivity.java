@@ -157,7 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             } else {
                                 mDialog.dismiss();
-                                Toast.makeText(RegisterActivity.this, "이미 존재하는 이메일입니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "비밀번호는 6자 이상 입력해주세요.", Toast.LENGTH_SHORT).show();
                                 return;  // 해당 메소드 진행을 멈추고 빠져나감.
 
                             }

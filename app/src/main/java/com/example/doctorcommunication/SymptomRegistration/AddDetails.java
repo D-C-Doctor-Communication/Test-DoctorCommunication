@@ -23,7 +23,7 @@ public class AddDetails extends AppCompatActivity{
     String selected_level;
     String selected_levelNm;
     int part;
-
+    int repeat;
     TextView osymptom;
     String symptom;
 
@@ -39,7 +39,7 @@ public class AddDetails extends AppCompatActivity{
         selected_pattern = intent.getStringArrayExtra("pattern");
         selected_worse = intent.getStringArrayExtra("worse");
         selected_osymptom = intent.getStringArrayExtra("osymptom");
-
+        repeat = intent.getExtras().getInt("repeat");
 
         ImageButton backpage = (ImageButton)findViewById(R.id.backpage) ;
         ImageButton addpage = (ImageButton)findViewById(R.id.addpage) ;
@@ -78,6 +78,7 @@ public class AddDetails extends AppCompatActivity{
                 intent.putExtra("worse",selected_worse);
                 intent.putExtra("osymptom",selected_osymptom);
                 intent.putExtra("details",select_details);
+                intent.putExtra("repeat",repeat);
 
                 startActivity(intent);
                 finish();
@@ -95,6 +96,7 @@ public class AddDetails extends AppCompatActivity{
                 intent.putExtra("levelNm",selected_levelNm);
                 intent.putExtra("pattern",selected_pattern);
                 intent.putExtra("worse",selected_worse);
+                intent.putExtra("repeat",repeat);
 
                 startActivity(intent);
                 finish();

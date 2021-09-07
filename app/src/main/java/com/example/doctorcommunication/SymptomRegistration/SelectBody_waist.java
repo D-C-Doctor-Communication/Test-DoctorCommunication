@@ -23,12 +23,14 @@ public class SelectBody_waist extends AppCompatActivity {
     String []WAIST={"왼쪽 옆구리","허리 중앙","오른쪽 옆구리","허리 아래","꼬리뼈"}; //허리 세부 부위
     List<String> BODY = new ArrayList<String>();
     String [] select_waist; //선택한 허리 부위
+    int repeat;
 
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom");
         part = intent.getExtras().getInt("part");
-
+        repeat = intent.getExtras().getInt("repeat");
+        Log.d("repeat", repeat+"");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_body_waist);
 
@@ -114,6 +116,7 @@ public class SelectBody_waist extends AppCompatActivity {
                 Intent intent = new Intent(SelectBody_waist.this, SelectLevel.class);
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("part",part);
+                intent.putExtra("repeat",repeat);
 
                 //허리 세부 부위가 선택되어 있으면 BODY에 넣기
                 if(waist01.isSelected()){
@@ -161,6 +164,8 @@ public class SelectBody_waist extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectBody_waist.this,SearchList.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("repeat",repeat);
+
                 startActivity(intent);
                 finish();
             }

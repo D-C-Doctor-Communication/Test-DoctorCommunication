@@ -31,13 +31,14 @@ public class SelectBody_head extends AppCompatActivity {
     List<String> BODY = new ArrayList<>();
     String []select_head; //선택한 머리 부위
     private FirebaseAuth firebaseAuth;
-
+    int repeat;
 
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom");
         part = intent.getExtras().getInt("part");
-
+        repeat = intent.getExtras().getInt("repeat");
+        Log.d("repeat", repeat+"");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_body_head);
 
@@ -124,6 +125,7 @@ public class SelectBody_head extends AppCompatActivity {
                 Intent intent = new Intent(SelectBody_head.this, SelectLevel.class);
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("part",part);
+                intent.putExtra("repeat",repeat);
 
                 //머리 세부 부위가 선택되어 있으면 BODY에 넣기
                 if(head01.isSelected()){
@@ -170,6 +172,8 @@ public class SelectBody_head extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectBody_head.this, SearchList.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("repeat",repeat);
+
                 startActivity(intent);
                 finish();
             }

@@ -24,13 +24,15 @@ public class SelectLevel extends AppCompatActivity {
     StringBuilder change_level;
     String select_level;//선택한 통증 레벨(설명)
     String selected_body[]; //전 페이지 선택한 부위
+    int repeat;
 
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom"); //선택한 증상 받아오기
         part =intent.getExtras().getInt("part");
         selected_body = intent.getStringArrayExtra("bparts");
-
+        repeat = intent.getExtras().getInt("repeat");
+        Log.d("repeat", repeat+"");
         Log.e("backpart", String.valueOf(part));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_level);
@@ -72,6 +74,8 @@ public class SelectLevel extends AppCompatActivity {
                 intent.putExtra("part",part);
                 intent.putExtra("bparts",selected_body);
                 intent.putExtra("levelNm",num);
+                intent.putExtra("repeat",repeat);
+
                 startActivity(intent);
                 finish();
             }
@@ -90,6 +94,7 @@ public class SelectLevel extends AppCompatActivity {
                         intent = new Intent(SelectLevel.this, SelectBody_head.class);
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
+                        intent.putExtra("repeat",repeat);
 
                         startActivity(intent);
                         break;
@@ -99,6 +104,8 @@ public class SelectLevel extends AppCompatActivity {
                         intent = new Intent(SelectLevel.this, SelectBody_face.class);
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
+                        intent.putExtra("repeat",repeat);
+
                         startActivity(intent);
                         break;
                     }
@@ -107,6 +114,8 @@ public class SelectLevel extends AppCompatActivity {
                         intent = new Intent(SelectLevel.this, SelectBody_arm.class);
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
+                        intent.putExtra("repeat",repeat);
+
                         startActivity(intent);
                         break;
                     }
@@ -115,6 +124,8 @@ public class SelectLevel extends AppCompatActivity {
                         intent = new Intent(SelectLevel.this, SelectBody_leg.class);
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
+                        intent.putExtra("repeat",repeat);
+
                         startActivity(intent);
                         break;
                     }
@@ -123,6 +134,8 @@ public class SelectLevel extends AppCompatActivity {
                         intent = new Intent(SelectLevel.this, SelectBody_back.class);
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
+                        intent.putExtra("repeat",repeat);
+
                         startActivity(intent);
                         break;
                     }
@@ -131,6 +144,8 @@ public class SelectLevel extends AppCompatActivity {
                         intent = new Intent(SelectLevel.this, SelectBody_waist.class);
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
+                        intent.putExtra("repeat",repeat);
+
                         startActivity(intent);
                         break;
                     }
@@ -139,6 +154,8 @@ public class SelectLevel extends AppCompatActivity {
                         intent = new Intent(SelectLevel.this, SelectBody_chest.class);
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
+                        intent.putExtra("repeat",repeat);
+
                         startActivity(intent);
                         break;
                     }
@@ -147,6 +164,7 @@ public class SelectLevel extends AppCompatActivity {
                         intent = new Intent(SelectLevel.this, SelectBody_stomach.class);
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
+                        intent.putExtra("repeat",repeat);
 
                         startActivity(intent);
                         break;
@@ -156,12 +174,16 @@ public class SelectLevel extends AppCompatActivity {
                         intent = new Intent(SelectLevel.this, SelectBody_buttock.class);
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
+                        intent.putExtra("repeat",repeat);
+
                         startActivity(intent);
                         break;
                     }
                     case 11: {  //전신
                         Log.e("intentL", "11번");
                         intent = new Intent(SelectLevel.this, SearchList.class);
+                        intent.putExtra("repeat",repeat);
+
                         startActivity(intent);
                         break;
                     }
@@ -170,6 +192,8 @@ public class SelectLevel extends AppCompatActivity {
                         intent = new Intent(SelectLevel.this, SelectBody_hand.class);
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
+                        intent.putExtra("repeat",repeat);
+
                         startActivity(intent);
                         break;
                     }
@@ -178,6 +202,8 @@ public class SelectLevel extends AppCompatActivity {
                         intent = new Intent(SelectLevel.this, SelectBody_foot.class);
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
+                        intent.putExtra("repeat",repeat);
+
                         startActivity(intent);
                         break;
                     }

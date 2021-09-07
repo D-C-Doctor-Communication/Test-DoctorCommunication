@@ -22,12 +22,14 @@ public class SelectBody_arm extends AppCompatActivity {
     String [] ARM ={"왼팔 상박(앞)","오른팔 팔꿈치","왼팔 하박(앞)","왼팔 상박(뒤)","왼팔 팔꿈치","왼팔 하박(뒤)","오른팔 상박(앞)","오른팔 하박(앞)","오른팔 상박(뒤)","오른팔 하박(뒤)"}; //팔 세부 부위
     List<String> BODY = new ArrayList<>();
     String [] select_arm; //선택한 팔 부위
+    int repeat;
 
     public void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         symptom = intent.getExtras().getString("symptom");
         part = intent.getExtras().getInt("part");
-
+        repeat = intent.getExtras().getInt("repeat");
+        Log.d("repeat", repeat+"");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_body_arm);
 
@@ -186,6 +188,7 @@ public class SelectBody_arm extends AppCompatActivity {
                 Intent intent = new Intent(SelectBody_arm.this, SelectLevel.class);
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("part",part);
+                intent.putExtra("repeat",repeat);
 
                 //세부 부위가 선택되어 있으면 BODY에 넣기
                 if(arm01.isSelected()){
@@ -248,6 +251,8 @@ public class SelectBody_arm extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectBody_arm.this, SearchList.class);
                 intent.putExtra("symptom",symptom);
+                intent.putExtra("repeat",repeat);
+
                 startActivity(intent);
                 finish();
             }
