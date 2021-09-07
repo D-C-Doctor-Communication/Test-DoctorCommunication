@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_selected="false" android:textcolor="#29000000">
+    <item android:state_pressed="false" android:textColor="#29000000">
         <shape>
             <solid
                 android:color="#FFFFFF"/>
@@ -10,11 +10,11 @@
             <size
                 android:width="44dp"
                 android:height="22dp" />
-            <corners android:bottomRightRadius="3dp"
-                android:topRightRadius="3dp"/>
+            <corners android:bottomLeftRadius="3dp" android:bottomRightRadius="3dp"
+                android:topLeftRadius="3dp" android:topRightRadius="3dp"/>
         </shape>
     </item>
-    <item android:state_selected="true" android:textcolor="#ffffff">
+    <item android:state_pressed="true" android:textColor="#ffffff">
         <shape>
             <solid
                 android:color="#0078ff"/>
@@ -24,8 +24,8 @@
             <size
                 android:width="44dp"
                 android:height="22dp" />
-            <corners android:bottomRightRadius="3dp"
-                android:topRightRadius="3dp"/>
+            <corners android:bottomLeftRadius="3dp" android:bottomRightRadius="3dp"
+                android:topLeftRadius="3dp" android:topRightRadius="3dp"/>
         </shape>
     </item>
 </selector>
