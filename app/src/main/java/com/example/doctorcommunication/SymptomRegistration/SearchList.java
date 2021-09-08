@@ -2,6 +2,7 @@ package com.example.doctorcommunication.SymptomRegistration;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.text.Editable;
@@ -25,8 +26,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class SearchList extends AppCompatActivity {
 
@@ -47,6 +51,9 @@ public class SearchList extends AppCompatActivity {
     int repeat;
     String[] str = new String[5];
 
+    String shared = "date"; //식별이름
+    String todayDate; //key값
+    int count = -1; //value값
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -72,6 +79,16 @@ public class SearchList extends AppCompatActivity {
 
         adapter = new SearchAdapter(list,this);
         listView.setAdapter(adapter);
+
+
+        //날짜에 따른 정보 저장
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
+        todayDate = sdf.format(calendar.getTime());
+
+        SharedPreferences sharedPreferences = getSharedPreferences(shared,0);
+        count = sharedPreferences.getInt(todayDate,0);
+        Log.d("myapp",count+"");
 
         //증상 검색 edittext 부분 봐뀔 시 
         search_text.addTextChangedListener(new TextWatcher() {
@@ -289,5 +306,16 @@ public class SearchList extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        SharedPreferences sharedPreferences = getSharedPreferences(shared,0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        count++;
+        editor.putInt(todayDate,count);
+        editor.commit();
     }
 }
