@@ -34,12 +34,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="29dp"
+            android:text="가래"
             android:textColor="#000000"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="가래" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btn_gotoGraph"
@@ -129,7 +129,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:backgroundTint="#F4F4F6"
-                android:text="가래"
+                android:text="두통"
                 android:textColor="@color/black"
                 android:textSize="11sp"
                 tools:ignore="HardcodedText,SmallSp" />
@@ -142,7 +142,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:backgroundTint="#F4F4F6"
-                android:text="발열"
+                android:text="복통"
                 android:textColor="@color/black"
                 android:textSize="11sp"
                 tools:ignore="HardcodedText,SmallSp" />
@@ -155,7 +155,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:backgroundTint="#F4F4F6"
-                android:text="두통"
+                android:text="요통"
                 android:textColor="@color/black"
                 android:textSize="11sp"
                 tools:ignore="HardcodedText,SmallSp" />
@@ -234,13 +234,14 @@
 
 
     <ExpandableListView
-        android:id="@+id/DC_listView"
+        android:id="@+id/DC_listview"
         android:layout_width="match_parent"
-        android:layout_height="443dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/horizontalScrollView"
-        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
         android:layout_marginTop="10dp"
-        android:scrollbars="none" />
+        android:scrollbars="none"
+        android:indicatorRight="?android:attr/expandableListPreferredItemIndicatorRight"/>
+
 
 
 

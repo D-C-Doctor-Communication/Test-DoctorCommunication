@@ -53,7 +53,6 @@ public class SearchList extends AppCompatActivity {
 
     String shared = "date"; //식별이름
     String todayDate; //key값
-    int count = -1; //value값
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -87,8 +86,8 @@ public class SearchList extends AppCompatActivity {
         todayDate = sdf.format(calendar.getTime());
 
         SharedPreferences sharedPreferences = getSharedPreferences(shared,0);
-        count = sharedPreferences.getInt(todayDate,0);
-        Log.d("myapp",count+"");
+        repeat = sharedPreferences.getInt(todayDate,0);
+        Log.d("myapp",repeat+"");
 
         //증상 검색 edittext 부분 봐뀔 시 
         search_text.addTextChangedListener(new TextWatcher() {
@@ -314,8 +313,8 @@ public class SearchList extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences(shared,0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        count++;
-        editor.putInt(todayDate,count);
+        repeat++;
+        editor.putInt(todayDate,repeat);
         editor.commit();
     }
 }

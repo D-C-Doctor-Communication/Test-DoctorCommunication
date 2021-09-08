@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/font/fontm.xml" value="0.2609375" />
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/dc_list_group.xml" value="0.22239583333333332" />
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/dc_list_item.xml" value="0.5" />
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/dc_listview_item.xml" value="0.22239583333333332" />
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/mc_listview_item.xml" value="0.22239583333333332" />
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/meeting_doctor.xml" value="0.33" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/arm_clicked01.xml" value="0.235546875" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/arm_clicked02.xml" value="0.235546875" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/arm_clicked03.xml" value="0.235546875" />

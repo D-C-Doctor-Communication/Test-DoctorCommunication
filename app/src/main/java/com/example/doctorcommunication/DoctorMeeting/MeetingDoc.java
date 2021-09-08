@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,7 +26,7 @@ import com.example.doctorcommunication.Recording.Recording;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Year;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -49,6 +50,12 @@ public class MeetingDoc extends AppCompatActivity {
     //기간선택 (시작날짜/끝날짜)
     private Calendar startDate, endDate;
 
+    //증상기록 리스트
+    ExpandableListView expandableListView;
+    CustomAdapter adapter;
+    ArrayList<ParentData> groupListDatas;
+    ArrayList<ArrayList<ContentData>> childListDatas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +70,8 @@ public class MeetingDoc extends AppCompatActivity {
         //datePicker에 들어갈 시작/끝날짜 calendar 객체
         startDate = Calendar.getInstance();
         endDate = Calendar.getInstance();
+        //증상기록 리스트 뷰 연결
+        expandableListView = findViewById(R.id.DC_listview);
 
 
 
@@ -95,28 +104,33 @@ public class MeetingDoc extends AppCompatActivity {
 
 
 // -> 증상 선택 기능
-        //버튼은 수정할것임(사용할 수 있는 데이터에 맞추도록)
-        //각 증상에 대한 리스트
-        ListView dcListView = findViewById(R.id.DC_listView);
 
         //임시 onClickListener
         symptomBtn[0].setOnClickListener(v -> {
             Log.d("myapp", buttonValue[0] + " 버튼 눌림");
             symptom_title.setText(buttonValue[0]);
-            createDCList(0, dcListView);
+            setData(0);
+            Log.d("myapp", groupListDatas.size() + " " + childListDatas.size());
+            adapter = new CustomAdapter(this,groupListDatas,childListDatas);
+            expandableListView.setAdapter(adapter);
         });
 
         symptomBtn[1].setOnClickListener(v -> {
             Log.d("myapp", buttonValue[1] + " 버튼 눌림");
             symptom_title.setText(buttonValue[1]);
-            createDCList(1, dcListView);
+            setData(1);
+            adapter = new CustomAdapter(this,groupListDatas,childListDatas);
+            expandableListView.setAdapter(adapter);
         });
 
         symptomBtn[2].setOnClickListener(v -> {
             Log.d("myapp", buttonValue[2] + " 버튼 눌림");
             symptom_title.setText(buttonValue[2]);
-            createDCList(2, dcListView);
+            setData(2);
+            adapter = new CustomAdapter(this,groupListDatas,childListDatas);
+            expandableListView.setAdapter(adapter);
         });
+
 
 
 // -> 날짜 선택 기능
@@ -154,25 +168,6 @@ public class MeetingDoc extends AppCompatActivity {
             );
             datePickerDialog.show();
         });
-    }
-
-//db연동필요 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //기록 리스트 생성하는 메소드
-    public void createDCList(int index, ListView listView) {
-        //listView 참조 및 Adapter 연결
-        DCListViewAdapter adapter = new DCListViewAdapter();
-        listView.setAdapter(adapter);
-        //조건에 맞으면 리스트 생성
-        //Person1객체에서 각 증상정보를 가져와 list adapter에 추가함
-        for (int i = 0; i < Person1.symptom.length; i++) {
-            if (checkIsBetween(Person1.symptom[i].getDate()) && Person1.symptom[i].getPart().equals(buttonValue[index]))
-                adapter.addItem(Person1.symptom[i].getDate(),
-                        Person1.symptom[i].getPart() + Person1.symptom[i].getPain_level()
-                        , Person1.symptom[i].getPart(), Integer.parseInt(Person1.symptom[i].getPain_level()),
-                        Person1.symptom[i].getPain_characteristics(), Person1.symptom[i].getPain_situation(),
-                        Person1.symptom[i].getAccompany_pain(), Person1.symptom[i].getAdditional());
-        }
-        adapter.notifyDataSetChanged();
     }
 
     //날짜 초기값 지정
@@ -226,4 +221,60 @@ public class MeetingDoc extends AppCompatActivity {
         }
         return true;
     }
+
+    //db연동필요 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //리스트 데이터 설정
+    private void setData(int valudIdx){
+        //부모,자식 데이터 arraylist
+        groupListDatas = new ArrayList<ParentData>();
+        childListDatas = new ArrayList<ArrayList<ContentData>>();
+        int sizeList = 0;
+        //누른 버튼의 값 (증상 선택)
+        String selectedSymptom = buttonValue[valudIdx];
+
+        //선택된 증상 데이터 선별
+        for(int i=0;i< Person1.symptom.length;i++) {
+            if (Person1.symptom[i].getSymptom_name().equals(selectedSymptom)) {
+                Log.d("myapp",Person1.symptom[i].getSymptom_name().toString()+"과 "+buttonValue[valudIdx]+"비교");
+                Calendar calendar = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd", Locale.KOREA);
+                String dateStr = Person1.symptom[i].getDate();
+                String yoil = "";
+                try {
+                    Date date = sdf.parse(dateStr);
+                    calendar.setTime(date);
+                    yoil = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.KOREAN);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                //date
+                //symp_name
+                //pain_level
+                groupListDatas.add(new ParentData(
+                        dateStr + " ("+yoil+")",
+                        Person1.symptom[i].getPart(),
+                        Person1.symptom[i].getPain_level())
+                );
+                //list_part
+                //list_painLevel
+                //list_characteristics
+                //list_situation
+                //list_accompany_pain
+                //list_additional
+                childListDatas.add(new ArrayList<ContentData>());
+                childListDatas.get(sizeList).add(new ContentData(
+                        Person1.symptom[i].getPart(),
+                        Person1.symptom[i].getPain_level(),
+                        Person1.symptom[i].getPain_characteristics(),
+                        Person1.symptom[i].getPain_situation(),
+                        Person1.symptom[i].getAccompany_pain(),
+                        Person1.symptom[i].getAdditional())
+                );
+                sizeList++;
+            }
+        }
+
+        int a = 100;
+    }
+
 }

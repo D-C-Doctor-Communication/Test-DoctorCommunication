@@ -1,4 +1,4 @@
-package com.example.doctorcommunication.DoctorMeeting;
+package com.example.doctorcommunication;
 
 import android.widget.TextView;
 

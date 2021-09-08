@@ -1,4 +1,4 @@
-package com.example.doctorcommunication.DoctorMeeting;
+package com.example.doctorcommunication;
 
 import android.content.Context;
 import android.util.Log;
@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-import com.example.doctorcommunication.R;
 
 import java.util.ArrayList;
 
@@ -42,7 +40,7 @@ public class DCListViewAdapter extends BaseAdapter {
         //"dc_listview_item" 레이아웃을 inflate해서 convertView 참조 획득
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.dc_listview_item,parent,false);
+            convertView = inflater.inflate(R.layout.dc_list_item,parent,false);
         }
         //화면에 표시될 뷰에서(Layout이 inflate된 뷰) 위젯에 대한 접근권을 얻음
         dc_list_title_date = convertView.findViewById(R.id.dc_list_title_date);
