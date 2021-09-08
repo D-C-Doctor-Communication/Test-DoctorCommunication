@@ -51,7 +51,6 @@ public class OtherSymptom extends AppCompatActivity {
     Button osymptom_btn;
 
     FirebaseAuth firebaseAuth;
-    //final int[] repeat = {-1};
     // 날짜 받기
     long now = System.currentTimeMillis();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -74,6 +73,9 @@ public class OtherSymptom extends AppCompatActivity {
     @SuppressLint("WrongViewCast")
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.other_symptom);
+
         Intent intent = getIntent();
         selected_symptom = intent.getExtras().getString("symptom");
         selected_body = intent.getStringArrayExtra("bparts");
@@ -84,8 +86,6 @@ public class OtherSymptom extends AppCompatActivity {
         repeat = intent.getExtras().getInt("repeat");
 
         firebaseAuth =  FirebaseAuth.getInstance();
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.other_symptom);
 
         adapter = new ListViewAdapter();
         listView = (ListView)findViewById(R.id.osymptom_list);
@@ -149,13 +149,13 @@ public class OtherSymptom extends AppCompatActivity {
                     Log.d("hedag", selected_pattern[0]);
                     Log.d("hedag", selected_worse[0]);
 
+                    Log.d("sick", repeat+"");
                     myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("symptom").setValue(selected_symptom);
                     myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("part").setValue(selected_body[0]);
                     myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("painLevel").setValue(selected_levelNm);
                     myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("pain_characteristics").setValue(selected_pattern[0]);
                     myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("pain_situation").setValue(selected_worse[0]);
 
-                    repeat++;
                     AlertDialog.Builder Dialog_bd = new AlertDialog.Builder(OtherSymptom.this);
                     Dialog_bd.setMessage("증상이 입력되었습니다.");
 

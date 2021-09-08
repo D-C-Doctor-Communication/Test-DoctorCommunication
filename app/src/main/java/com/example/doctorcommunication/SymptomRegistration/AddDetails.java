@@ -11,6 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doctorcommunication.MainActivity;
 import com.example.doctorcommunication.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AddDetails extends AppCompatActivity{
     EditText add_details;
@@ -26,6 +33,12 @@ public class AddDetails extends AppCompatActivity{
     int repeat;
     TextView osymptom;
     String symptom;
+    FirebaseAuth firebaseAuth;
+
+    long now = System.currentTimeMillis();
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+    Date date = new Date();
+    String date_txt = sdf.format(date);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +53,8 @@ public class AddDetails extends AppCompatActivity{
         selected_worse = intent.getStringArrayExtra("worse");
         selected_osymptom = intent.getStringArrayExtra("osymptom");
         repeat = intent.getExtras().getInt("repeat");
+
+        firebaseAuth =  FirebaseAuth.getInstance();
 
         ImageButton backpage = (ImageButton)findViewById(R.id.backpage) ;
         ImageButton addpage = (ImageButton)findViewById(R.id.addpage) ;
@@ -79,6 +94,20 @@ public class AddDetails extends AppCompatActivity{
                 intent.putExtra("osymptom",selected_osymptom);
                 intent.putExtra("details",select_details);
                 intent.putExtra("repeat",repeat);
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference().child("users");
+
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                String uid = user.getUid();
+
+                myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("symptom").setValue(symptom);
+                myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("part").setValue(selected_body[0]);
+                myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("painLevel").setValue(selected_levelNm);
+                myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("pain_characteristics").setValue(selected_pattern[0]);
+                myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("pain_situation").setValue(selected_worse[0]);
+                myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("accompany_pain").setValue(selected_osymptom[0]);
+                myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("additional").setValue(select_details);
 
                 startActivity(intent);
                 finish();
