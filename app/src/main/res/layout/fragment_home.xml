@@ -9,9 +9,8 @@
         android:id="@+id/select_user"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="#D8D8D8"
-        android:layout_marginTop="?attr/actionBarSize"/>
-
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="#D8D8D8" />
 
     <HorizontalScrollView
         android:id="@+id/home_scrollView"
@@ -43,30 +42,38 @@
                     <TextView
                         android:id="@+id/card1_title"
                         style="@style/cards_title"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
                         android:text="증상 기록"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0" />
 
                     <TextView
                         android:id="@+id/card1_content"
                         style="@style/cards_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="38dp"
                         android:text="# 어디 아파요? "
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0" />
 
                     <Button
                         android:id="@+id/btn_addSymptom"
                         style="@style/cards_btn"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="11dp"
                         android:onClick="onClick_register"
                         android:text="기록하러 가기 >"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintVertical_bias="1" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -87,31 +94,43 @@
                     <TextView
                         android:id="@+id/card2_title"
                         style="@style/cards_title"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
                         android:text="의사와의 만남"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0" />
 
                     <TextView
                         android:id="@+id/card2_content"
                         style="@style/cards_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="38dp"
                         android:text="# 자세한 기록을 확인하세요. >"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0" />
 
                     <Button
                         android:id="@+id/btn_meetingDoc"
                         style="@style/cards_btn"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="11dp"
                         android:onClick="onClick_meetDC"
                         android:radius="8dp"
                         android:text="확인하러 가기 >"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="1" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -131,30 +150,42 @@
                     <TextView
                         android:id="@+id/card3_title"
                         style="@style/cards_title"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
                         android:text="녹음"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0" />
 
                     <TextView
                         android:id="@+id/card3_content"
                         style="@style/cards_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="38dp"
                         android:text="# 진찰내용을 기록해보세요. "
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0" />
 
                     <Button
                         android:id="@+id/btn_recording"
                         style="@style/cards_btn"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="11dp"
                         android:onClick="onClick_record"
                         android:text="녹음하러 가기 >"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="1" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
@@ -163,12 +194,12 @@
     <View
         android:id="@+id/line1"
         android:layout_width="match_parent"
-        android:layout_height="0.8dp"
+        android:layout_height="1dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="266dp"
+        android:layout_marginTop="265dp"
         android:layout_marginEnd="-5dp"
         android:background="#D8D8D8" />
 
@@ -177,13 +208,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="412dp"
-        android:layout_height="162dp"
+        android:layout_height="158dp"
         android:layout_below="@+id/line1"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="-1dp"
-        android:layout_marginTop="15dp"
         android:layout_marginEnd="0dp">
 
         <!--0000년 00월-->
@@ -192,19 +222,19 @@
         <TextView
             android:id="@+id/ymTextView"
             android:layout_width="123dp"
-            android:layout_height="42dp"
-            android:layout_marginStart="153dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="156dp"
             android:gravity="center"
             android:text=""
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/daysLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.409"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/daysLayout"
@@ -220,20 +250,13 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/wCalender_sun"
                 style="@style/wCalender"
-                android:layout_marginStart="17dp"
+                android:layout_marginStart="16dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/wCalender_mon"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/sun_dot"
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
-                    android:src="@drawable/week_calendar_dot"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:visibility="invisible"/>
 
                 <TextView
                     android:id="@+id/SUN_num"
@@ -243,8 +266,17 @@
                 <TextView
                     android:id="@+id/SUN_txt"
                     style="@style/wCalender_txt"
-                    android:layout_marginTop="50dp"
                     android:text="SUN" />
+
+                <ImageView
+                    android:id="@+id/sun_dot"
+                    android:layout_width="4dp"
+                    android:layout_height="4dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/week_calendar_dot"
+                    android:visibility="invisible" />
+
             </androidx.cardview.widget.CardView>
             <!--월요일-->
             <androidx.cardview.widget.CardView
@@ -253,17 +285,11 @@
                 android:layout_marginStart="10dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/wCalender_tue"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/wCalender_sun"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/mon_dot"
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:src="@drawable/week_calendar_dot"
-                    android:visibility="invisible" />
                 <TextView
                     android:id="@+id/MON_num"
                     style="@style/wCalender_num"
@@ -272,8 +298,17 @@
                 <TextView
                     android:id="@+id/MON_txt"
                     style="@style/wCalender_txt"
-                    android:layout_marginTop="50dp"
                     android:text="MON" />
+
+                <ImageView
+                    android:id="@+id/mon_dot"
+                    android:layout_width="4dp"
+                    android:layout_height="4dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/week_calendar_dot"
+                    android:visibility="invisible" />
+
             </androidx.cardview.widget.CardView>
             <!--화요일-->
             <androidx.cardview.widget.CardView
@@ -282,16 +317,11 @@
                 android:layout_marginStart="10dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/wCalender_wed"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/wCalender_mon"
                 app:layout_constraintTop_toTopOf="parent">
-                <ImageView
-                    android:id="@+id/tue_dot"
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
-                    android:src="@drawable/week_calendar_dot"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:visibility="invisible"/>
+
                 <TextView
                     android:id="@+id/TUE_num"
                     style="@style/wCalender_num"
@@ -300,8 +330,17 @@
                 <TextView
                     android:id="@+id/TUE_txt"
                     style="@style/wCalender_txt"
-                    android:layout_marginTop="50dp"
                     android:text="TUE" />
+
+                <ImageView
+                    android:id="@+id/tue_dot"
+                    android:layout_width="4dp"
+                    android:layout_height="4dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/week_calendar_dot"
+                    android:visibility="invisible" />
+
             </androidx.cardview.widget.CardView>
             <!--수요일-->
             <androidx.cardview.widget.CardView
@@ -310,16 +349,11 @@
                 android:layout_marginStart="10dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/wCalender_thu"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/wCalender_tue"
                 app:layout_constraintTop_toTopOf="parent">
-                <ImageView
-                    android:id="@+id/wed_dot"
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
-                    android:src="@drawable/week_calendar_dot"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:visibility="invisible"/>
+
                 <TextView
                     android:id="@+id/WED_num"
                     style="@style/wCalender_num"
@@ -328,8 +362,17 @@
                 <TextView
                     android:id="@+id/WED_txt"
                     style="@style/wCalender_txt"
-                    android:layout_marginTop="50dp"
                     android:text="WED" />
+
+                <ImageView
+                    android:id="@+id/wed_dot"
+                    android:layout_width="4dp"
+                    android:layout_height="4dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/week_calendar_dot"
+                    android:visibility="invisible" />
+
             </androidx.cardview.widget.CardView>
             <!--목요일-->
             <androidx.cardview.widget.CardView
@@ -338,16 +381,11 @@
                 android:layout_marginStart="10dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/wCalender_fri"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/wCalender_wed"
                 app:layout_constraintTop_toTopOf="parent">
-                <ImageView
-                    android:id="@+id/thu_dot"
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
-                    android:src="@drawable/week_calendar_dot"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:visibility="invisible"/>
+
                 <TextView
                     android:id="@+id/THU_num"
                     style="@style/wCalender_num"
@@ -356,8 +394,17 @@
                 <TextView
                     android:id="@+id/THU_txt"
                     style="@style/wCalender_txt"
-                    android:layout_marginTop="50dp"
                     android:text="THU" />
+
+                <ImageView
+                    android:id="@+id/thu_dot"
+                    android:layout_width="4dp"
+                    android:layout_height="4dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/week_calendar_dot"
+                    android:visibility="invisible" />
+
             </androidx.cardview.widget.CardView>
             <!--금요일-->
             <androidx.cardview.widget.CardView
@@ -366,16 +413,11 @@
                 android:layout_marginStart="10dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/wCalender_sat"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/wCalender_thu"
                 app:layout_constraintTop_toTopOf="parent">
-                <ImageView
-                    android:id="@+id/fri_dot"
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
-                    android:src="@drawable/week_calendar_dot"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:visibility="invisible"/>
+
                 <TextView
                     android:id="@+id/FRI_num"
                     style="@style/wCalender_num"
@@ -384,28 +426,31 @@
                 <TextView
                     android:id="@+id/FRI_txt"
                     style="@style/wCalender_txt"
-                    android:layout_marginTop="50dp"
                     android:text="FRI" />
+
+                <ImageView
+                    android:id="@+id/fri_dot"
+                    android:layout_width="4dp"
+                    android:layout_height="4dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/week_calendar_dot"
+                    android:visibility="invisible" />
+
             </androidx.cardview.widget.CardView>
             <!--토요일-->
             <androidx.cardview.widget.CardView
                 android:id="@+id/wCalender_sat"
                 style="@style/wCalender"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="17dp"
+                android:layout_marginEnd="16dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintStart_toEndOf="@+id/wCalender_fri"
                 app:layout_constraintTop_toTopOf="parent">
-                <ImageView
-                    android:id="@+id/sat_dot"
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
-                    android:src="@drawable/week_calendar_dot"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:visibility="invisible"/>
+
                 <TextView
                     android:id="@+id/SAT_num"
                     style="@style/wCalender_num"
@@ -414,8 +459,17 @@
                 <TextView
                     android:id="@+id/SAT_txt"
                     style="@style/wCalender_txt"
-                    android:layout_marginTop="50dp"
                     android:text="SAT" />
+
+                <ImageView
+                    android:id="@+id/sat_dot"
+                    android:layout_width="4dp"
+                    android:layout_height="4dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/week_calendar_dot"
+                    android:visibility="invisible" />
+
             </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -434,7 +488,6 @@
             android:layout_height="match_parent"
             android:background="@color/white">
             <TextView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="날짜를 선택해주세요"
@@ -443,7 +496,8 @@
         </RelativeLayout>
 
         <ListView
-
+            android:dividerHeight="0px"
+            android:divider="#FFFFFF"
             android:id="@+id/home_listView"
             android:layout_width="match_parent"
             android:layout_height="267dp"
