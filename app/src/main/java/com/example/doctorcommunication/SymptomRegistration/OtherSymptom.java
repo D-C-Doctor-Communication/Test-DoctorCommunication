@@ -57,8 +57,7 @@ public class OtherSymptom extends AppCompatActivity {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
     Date date = new Date();
     String date_txt = sdf.format(date);
-    //Date currentTime = Calendar.getInstance().getTime();
-    //String date_txt = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(currentTime);
+    int repeat;
 
     String selected_symptom;
     String[] select_osymptom; // 선택한 동반 증상
@@ -82,6 +81,7 @@ public class OtherSymptom extends AppCompatActivity {
         selected_levelNm = intent.getExtras().getString("levelNm");
         selected_pattern = intent.getStringArrayExtra("pattern");
         selected_worse = intent.getStringArrayExtra("worse");
+        repeat = intent.getExtras().getInt("repeat");
 
         firebaseAuth =  FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
@@ -134,10 +134,8 @@ public class OtherSymptom extends AppCompatActivity {
                     return;
                 }
 
-               // FirebaseDatabase database = FirebaseDatabase.getInstance();
-               // DatabaseReference myRef = database.getReference("users");
-                DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference myRef = database.child("users");
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference().child("users");
 
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 String uid = user.getUid();
@@ -151,87 +149,13 @@ public class OtherSymptom extends AppCompatActivity {
                     Log.d("hedag", selected_pattern[0]);
                     Log.d("hedag", selected_worse[0]);
 
+                    myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("symptom").setValue(selected_symptom);
+                    myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("part").setValue(selected_body[0]);
+                    myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("painLevel").setValue(selected_levelNm);
+                    myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("pain_characteristics").setValue(selected_pattern[0]);
+                    myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("pain_situation").setValue(selected_worse[0]);
 
-                    int repeat2 = 0;
-                    /*
-                    myRef.child(uid).child("date").child(date_txt).child("0").addValueEventListener(new ValueEventListener() {
-
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            Symptom2 symptom = snapshot.getValue(Symptom2.class);
-                            SearchList sl = new SearchList();
-                            sl.getIndex(0, symptom.getSymptom());
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-
-                        }
-                    });
-                    myRef.child(uid).child("date").child(date_txt).child("1").addValueEventListener(new ValueEventListener() {
-
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            Symptom2 symptom = snapshot.getValue(Symptom2.class);
-                            SearchList sl = new SearchList();
-                            sl.getIndex(1, symptom.getSymptom());
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-
-                        }
-                    });
-                    myRef.child(uid).child("date").child(date_txt).child("2").addValueEventListener(new ValueEventListener() {
-
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            Symptom2 symptom = snapshot.getValue(Symptom2.class);
-                            SearchList sl = new SearchList();
-                            sl.getIndex(2, symptom.getSymptom());
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-
-                        }
-                    });
-                    myRef.child(uid).child("date").child(date_txt).child("3").addValueEventListener(new ValueEventListener() {
-
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            Symptom2 symptom = snapshot.getValue(Symptom2.class);
-                            SearchList sl = new SearchList();
-                            sl.getIndex(3, symptom.getSymptom());
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-
-                        }
-                    });
-                    myRef.child(uid).child("date").child(date_txt).child("4").addValueEventListener(new ValueEventListener() {
-
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            Symptom2 symptom = snapshot.getValue(Symptom2.class);
-                            SearchList sl = new SearchList();
-                            sl.getIndex(4, symptom.getSymptom());
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-
-                        }
-                    });
-
-                    SearchList sl = new SearchList();
-                    for(int i=0; i<5; i++){
-                        if(!String.valueOf(sl.str[i]).equals("e")){
-                            repeat2++;
-                        }
-                    }
-                    myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat2)).child("symptom").setValue(selected_symptom);
-                    myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat2)).child("part").setValue(selected_body[0]);
-                    myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat2)).child("painLevel").setValue(selected_levelNm);
-                    myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat2)).child("pain_characteristics").setValue(selected_pattern[0]);
-                    myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat2)).child("pain_situation").setValue(selected_worse[0]);
-*/
+                    repeat++;
                     AlertDialog.Builder Dialog_bd = new AlertDialog.Builder(OtherSymptom.this);
                     Dialog_bd.setMessage("증상이 입력되었습니다.");
 
@@ -252,7 +176,6 @@ public class OtherSymptom extends AppCompatActivity {
 
                 }
 
-
                 intent.putExtra("symptom", selected_symptom);
                 intent.putExtra("part",part);
                 intent.putExtra("bparts",selected_body);
@@ -260,7 +183,7 @@ public class OtherSymptom extends AppCompatActivity {
                 intent.putExtra("pattern", selected_pattern);
                 intent.putExtra("worse",selected_worse);
                 intent.putExtra("osymptom", select_osymptom);
-
+                intent.putExtra("repeat",repeat);
                 startActivity(intent);
 
                 finish();
@@ -277,7 +200,7 @@ public class OtherSymptom extends AppCompatActivity {
                 intent.putExtra("part",part);
                 intent.putExtra("levelNm",selected_levelNm);
                 intent.putExtra("pattern",selected_pattern);
-
+                intent.putExtra("repeat",repeat);
                 startActivity(intent);
                 finish();
             }

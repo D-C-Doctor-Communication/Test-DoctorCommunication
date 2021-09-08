@@ -14,15 +14,24 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.doctorcommunication.DataManagement.Person1;
+import com.example.doctorcommunication.DataManagement.Symptom2;
 import com.example.doctorcommunication.DoctorMeeting.MeetingDoc;
 import com.example.doctorcommunication.HomeScreen.HomeListViewAdapter;
 import com.example.doctorcommunication.R;
 import com.example.doctorcommunication.SymptomRegistration.Search;
 import com.example.doctorcommunication.SymptomRegistration.SearchList;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,6 +41,7 @@ import java.util.Locale;
 
 public class Fragment_home extends Fragment {
     int count = -1;
+    FirebaseAuth firebaseAuth;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         Log.d("myapp","home탭 열림");
@@ -54,6 +64,12 @@ public class Fragment_home extends Fragment {
         wCalender[4] = view.findViewById(R.id.wCalender_thu); //목요일
         wCalender[5] = view.findViewById(R.id.wCalender_fri); //금요일
         wCalender[6] = view.findViewById(R.id.wCalender_sat); //토요일
+        firebaseAuth =  FirebaseAuth.getInstance();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference().child("users");
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        String uid = user.getUid();
 
 //카드1 - 증상등록으로 이동
         btn_addSymptom.setOnClickListener(v -> { //람다형식 사용 ~ new Button.OnClickListener()와 같은 기능
@@ -100,7 +116,20 @@ public class Fragment_home extends Fragment {
         weekCalendar.setWeekCalenderDate(view,todayDate,ymTextView,wDate);
         WeekCalendar.setCardColor(todayDate.getDay(),wCalender);
 
+//데이터 가져오기
+        /*myRef.child(uid).child("date").child("20210908").child("0").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Symptom2 symptom = snapshot.getValue(Symptom2.class);
+                String dd = snapshot.child("symptom").getValue(String.class);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });*/
+        //Log.d("월", );
 //ListView
         ListView listView = (ListView)view.findViewById(R.id.home_listView);
         //오늘로 기본 리스트 보여짐
