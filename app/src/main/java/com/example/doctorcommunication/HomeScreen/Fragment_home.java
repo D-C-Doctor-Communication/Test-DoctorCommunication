@@ -113,7 +113,9 @@ public class Fragment_home extends Fragment {
 
         WeekCalendar weekCalendar = new WeekCalendar();
         Date todayDate = new Date();
+        //점찍기
         weekCalendar.setWeekCalenderDate(view,todayDate,ymTextView,wDate);
+        //오늘날짜 색깔지정 (클릭한 날짜 색깔지정)
         WeekCalendar.setCardColor(todayDate.getDay(),wCalender);
 
 //데이터 가져오기
@@ -254,20 +256,18 @@ public class Fragment_home extends Fragment {
 
             //데이터가 있는 날짜에 점찍기
             boolean isDataExist = false;
+            //일 ~ 토
             for(int i=0;i<=6;i++){
                 isDataExist = false;
+                String checkDate = todaySdf.format(cal.getTime()).substring(0,4)+"."+todaySdf.format(cal.getTime()).substring(5,7)+"."+wDate[i].getText();
                 for(int j=0;j<Person1.symptom.length;j++){
-                    String checkDate = todaySdf.format(cal.getTime()).substring(0,4)+"."+todaySdf.format(cal.getTime()).substring(5,7)+"."+wDate[i].getText();
-                    Log.d("myapp",checkDate);
-                    if(Person1.symptom[i].getDate().equals(checkDate)){
+                    if(Person1.symptom[j].getDate().equals(checkDate)){
                         isDataExist = true;
                         break;
                     }
                 }
                 if(isDataExist) weekCalendarDot[i].setVisibility(View.VISIBLE);
             }
-            //if(Person1.symptom[0].isSameDate) weekCalendarDot[0].setVisibility(View.VISIBLE);
-
         }
     }
 }
