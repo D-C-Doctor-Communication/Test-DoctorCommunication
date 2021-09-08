@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -142,6 +143,7 @@ public class MeetingDoc extends AppCompatActivity {
             //DatePickerDialog 객체 생성
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     this,
+                    AlertDialog.THEME_DEVICE_DEFAULT_LIGHT,
                     //0000.00.00의 형식으로 입력받은 날짜를 startDate 텍스트뷰의 텍스트로 지정
                     (view, year, month, dayOfMonth) -> {
                         String PickedDate = year + "." + (month + 1) + "." + dayOfMonth;
@@ -149,7 +151,7 @@ public class MeetingDoc extends AppCompatActivity {
                         startDate.set(year,month+1,dayOfMonth);
                     }
                     //기본 세팅 날짜 지정 (위의 변수대로)
-                    , startDate.get(Calendar.YEAR), startDate.get(Calendar.MONTH), startDate.get(Calendar.DAY_OF_MONTH)
+                    , startDate.get(Calendar.YEAR), startDate.get(Calendar.MONTH)-1, startDate.get(Calendar.DAY_OF_MONTH)
             );
             //DatePickerDialog 표시
             datePickerDialog.show();
@@ -159,12 +161,13 @@ public class MeetingDoc extends AppCompatActivity {
         endDateText.setOnClickListener(v -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     this,
+                    AlertDialog.THEME_DEVICE_DEFAULT_LIGHT,
                     (view, year, month, dayOfMonth) -> {
                         String PickedDate = year + "." + (month + 1) + "." + dayOfMonth;
                         endDateText.setText(PickedDate);
                         endDate.set(year,month+1,dayOfMonth);
                     }
-                    , endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH), endDate.get(Calendar.DAY_OF_MONTH)
+                    , endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH)-1, endDate.get(Calendar.DAY_OF_MONTH)
             );
             datePickerDialog.show();
         });
@@ -214,7 +217,7 @@ public class MeetingDoc extends AppCompatActivity {
             case R.id.backToHome:
                 Intent backToHome = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(backToHome);
-                //마이크버튼(녹음하기)
+            //마이크버튼(녹음하기)
             case R.id.record:
                 Intent record = new Intent(getApplicationContext(), Recording.class);
                 startActivity(record);
@@ -234,7 +237,7 @@ public class MeetingDoc extends AppCompatActivity {
 
         //선택된 증상 데이터 선별
         for(int i=0;i< Person1.symptom.length;i++) {
-            if (Person1.symptom[i].getSymptom_name().equals(selectedSymptom)) {
+            if (Person1.symptom[i].getSymptom_name().equals(selectedSymptom)&&checkIsBetween(Person1.symptom[i].getDate())) {
                 Log.d("myapp",Person1.symptom[i].getSymptom_name().toString()+"과 "+buttonValue[valudIdx]+"비교");
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd", Locale.KOREA);

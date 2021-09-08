@@ -197,44 +197,24 @@ public class Fragment_home extends Fragment {
             }
         }
         static void createDataList(TextView ymTextView, TextView[] wDate, int index, ListView listView){
-            //각 요일별 isSameDate속성 false로 초기화
-            initializeisSameDate();
             //0000.00.00형식의 String 만들기
             String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
             clickedDate += "."+wDate[index].getText().toString();
-            //data의 날짜가 선택된 날짜와 일치하면 isSameDate 속성을 true로 변경
-            int sameDatacount = setSameDatetoTrue(clickedDate);
-            Log.d("myapp"," "+sameDatacount); //이후에 객체를 배열로 만들면 for문에 sameDataCount 사용
 
             //listView 참조 및 Adapter 연결
             HomeListViewAdapter adapter = new HomeListViewAdapter();
             //Adapter 지정
             listView.setAdapter(adapter);
-            //선택한 날짜와 같은 데이터일때 어댑터에 아이템 추가
 
+            //선택한 날짜와 같은 데이터일때 어댑터에 아이템 추가
             for(int i = 0; i< Person1.symptom.length; i++){
-                if(Person1.symptom[i].isSameDate) adapter.addItem(Person1.symptom[i].getPart(),R.drawable.img_pain_sym1,Integer.parseInt(Person1.symptom[i].getPain_level()),Person1.symptom[i].getPain_characteristics(),Person1.symptom[i].getPain_situation());
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                if(Person1.symptom[i].getDate().equals(clickedDate)){
+                    adapter.addItem(Person1.symptom[i].getPart(),R.drawable.img_pain_sym1,Integer.parseInt(Person1.symptom[i].getPain_level()),Person1.symptom[i].getPain_characteristics(),Person1.symptom[i].getPain_situation());
+                }
             }
             adapter.notifyDataSetChanged();
             Log.d("myapp","Adapter added");
-        }
-
-        static void initializeisSameDate(){
-            for(int i=0;i<Person1.symptom.length;i++){
-                Person1.symptom[i].isSameDate = false;
-            }
-        }
-
-        static int setSameDatetoTrue(String date){
-            int countSameDate = 0;
-            for(int i=0;i<Person1.symptom.length;i++) {
-                if(Person1.symptom[i].getDate().equals(date)){
-                    Person1.symptom[i].checkSameDate();
-                    countSameDate++;
-                }
-            }
-
-            return countSameDate;
         }
 
         @SuppressLint("SetTextI18n")
@@ -279,14 +259,14 @@ public class Fragment_home extends Fragment {
                 for(int j=0;j<Person1.symptom.length;j++){
                     String checkDate = todaySdf.format(cal.getTime()).substring(0,4)+"."+todaySdf.format(cal.getTime()).substring(5,7)+"."+wDate[i].getText();
                     Log.d("myapp",checkDate);
-                    if(setSameDatetoTrue(checkDate)!=0){
+                    if(Person1.symptom[i].getDate().equals(checkDate)){
                         isDataExist = true;
                         break;
                     }
                 }
                 if(isDataExist) weekCalendarDot[i].setVisibility(View.VISIBLE);
             }
-            if(Person1.symptom[0].isSameDate) weekCalendarDot[0 ].setVisibility(View.VISIBLE);
+            //if(Person1.symptom[0].isSameDate) weekCalendarDot[0].setVisibility(View.VISIBLE);
 
         }
     }
