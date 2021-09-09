@@ -252,6 +252,15 @@ public class Fragment_home extends Fragment {
                 //00일 텍스트 적용
                 wDate[i].setText(todaySdf.format(cal.getTime()).substring(8));
                 cal.add(Calendar.DAY_OF_MONTH, 1);
+
+                String monthValue;
+                if(cal.get(Calendar.MONTH)<10) monthValue = "0"+cal.get(Calendar.MONTH);
+                else monthValue = cal.get(Calendar.MONTH)+"";
+                String dayValue;
+                if(cal.get(Calendar.DAY_OF_MONTH)<10) dayValue = "0"+cal.get(Calendar.DAY_OF_MONTH);
+                else dayValue = cal.get(Calendar.DAY_OF_MONTH)+"";
+                //밑에 로그부분대로 파이어베이스에 넣으면 됩니다~ 특수문자없음
+                Log.d("myapp","캘린더 : "+cal.get(Calendar.YEAR)+monthValue+dayValue);
             }
 
             //데이터가 있는 날짜에 점찍기
