@@ -7,7 +7,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.doctorcommunication.DataManagement.Person1;
@@ -57,6 +60,9 @@ public class MeetingDoc extends AppCompatActivity {
     ArrayList<ParentData> groupListDatas;
     ArrayList<ArrayList<ContentData>> childListDatas;
 
+    //심각도 그래프 이동했을 때 누른 버튼 저장용
+    int btnClicked = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,19 +82,30 @@ public class MeetingDoc extends AppCompatActivity {
 
 
 
+
         // 증상에 대한 심각도 그래프로 이동하는 버튼
         gotoGraph = findViewById(R.id.btn_gotoGraph);
+//        gotoGraph.setOnClickListener(v -> {
+//            Log.d("mytag", "그래프 이동 버튼 눌림");
+//            //심각도 그래프 버튼을 누르면 상태분석 페이지 프래그먼트를 불러옴
+//            Fragment_conditionAnalysis fragment = new Fragment_conditionAnalysis();
+//            //프레그먼트를 프레임과 교체하여 띄움
+//            RelativeLayout meetingDocLayout = findViewById(R.id.meeting_doctor_Frame);
+//            getSupportFragmentManager().beginTransaction().add(R.id.meeting_doctor_Frame,fragment).commit();
+//            meetingDocLayout.setVisibility(View.INVISIBLE);
+//        });
         gotoGraph.setOnClickListener(v -> {
-            Log.d("mytag", "그래프 이동 버튼 눌림");
-            //심각도 그래프 버튼을 누르면 상태분석 페이지 프래그먼트를 불러옴
-            FragmentTransaction gotoGraph = getSupportFragmentManager().beginTransaction();
-            Fragment_conditionAnalysis fragment = new Fragment_conditionAnalysis();
-            //FrameLayout을 사용하였기 때문에 겹쳐보이지 않도록 의사와의 만남 페이지 unvisible로 설정
-            FrameLayout doc_frame = findViewById(R.id.meeting_doctor_Frame);
-            doc_frame.setVisibility(View.INVISIBLE);
-            //프레그먼트를 프레임과 교체하여 띄움
-            gotoGraph.replace(R.id.meeting_doctor_Frame, fragment); //meeting_doctor_Frame : meeting_doctor 최상위 레이아웃
-            gotoGraph.commit();
+            String sharedCode = "DoctorMeeting";
+            Intent intent = new Intent(this,MainActivity.class);
+            intent.putExtra("fileMovement",1);
+            //셰어드에 사용자가 눌렀던 증상 버튼 저장 (그래프값에 적용)
+            SharedPreferences sharedPreferences = getSharedPreferences(sharedCode,0);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("clickedButtonData",buttonValue[btnClicked]);
+            editor.commit();
+
+            startActivity(intent);
+            finish();
         });
 
         //날짜선택 버튼 위 증상 텍스트
@@ -114,6 +131,7 @@ public class MeetingDoc extends AppCompatActivity {
             Log.d("myapp", groupListDatas.size() + " " + childListDatas.size());
             adapter = new CustomAdapter(this,groupListDatas,childListDatas);
             expandableListView.setAdapter(adapter);
+            btnClicked = 0;
         });
 
         symptomBtn[1].setOnClickListener(v -> {
@@ -122,6 +140,7 @@ public class MeetingDoc extends AppCompatActivity {
             setData(1);
             adapter = new CustomAdapter(this,groupListDatas,childListDatas);
             expandableListView.setAdapter(adapter);
+            btnClicked = 1;
         });
 
         symptomBtn[2].setOnClickListener(v -> {
@@ -130,6 +149,7 @@ public class MeetingDoc extends AppCompatActivity {
             setData(2);
             adapter = new CustomAdapter(this,groupListDatas,childListDatas);
             expandableListView.setAdapter(adapter);
+            btnClicked = 2;
         });
 
 
@@ -141,6 +161,7 @@ public class MeetingDoc extends AppCompatActivity {
         //시작날짜 DatePickerDialog 동작
         startDateText.setOnClickListener(v -> {
             //DatePickerDialog 객체 생성
+            //R.style.MyDatePickerStyle,
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     this,
                     AlertDialog.THEME_DEVICE_DEFAULT_LIGHT,

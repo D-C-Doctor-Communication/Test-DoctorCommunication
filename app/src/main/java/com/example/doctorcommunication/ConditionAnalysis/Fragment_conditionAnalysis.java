@@ -4,6 +4,8 @@ package com.example.doctorcommunication.ConditionAnalysis;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -63,12 +65,14 @@ public class Fragment_conditionAnalysis extends Fragment {
     //사용자가 선택한 증상 목록
     List<String> selectedSymptom;
 
+
     //증상 빈도 순위
     private TextView firstSymptom;
     private TextView secondSymptom;
     private TextView thirdSymptom;
 
-
+    //의사와의 만남에서 넘어왔을 때 처리 데이터
+    int fromDC_data;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -96,23 +100,56 @@ public class Fragment_conditionAnalysis extends Fragment {
         select_symptom = view.findViewById(R.id.select_symptom);
 
 
-
-
         //현재 날짜를 기준으로 상단 선택 바 텍스트 기본 지정
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleFormatting = new SimpleDateFormat ( "yyyy년 MM월");
         Calendar time = Calendar.getInstance();
         String monthSelectText = simpleFormatting.format(time.getTime());
         monthSelect.setText(monthSelectText);
 
+
+        //의사와의 만남으로부터 이동했을 경우 데이터 처리
+        Intent fromDC_intent = getActivity().getIntent();
+        fromDC_data = fromDC_intent.getIntExtra("fileMovement",-1);
+        if(fromDC_data!=-1){
+            final String[] dataValue = getResources().getStringArray(R.array.symptom_list);
+            switch (fromDC_data){
+                case 0 : chartEvent(monthSelectText,dataValue[0]);
+                    break;
+                case 1 : chartEvent(monthSelectText,dataValue[1]);
+                    break;
+                case 2 : chartEvent(monthSelectText,dataValue[2]);
+                    break;
+            }
+        }
+
+
+
+        //의사와의 만남에서 넘어왔을 경우 눌린 증상버튼 저장된 shared 인식값
+        String sharedCode = "DoctorMeeting";
         //날짜 비교 위해 날짜형식을 "yyyy년 MM월" -> 0000.00형으로 바꿈
         String dataString = changeToString(monthSelectText);
         //기본 선택된 달의 각 텍스트 표시
-        reservation_count.setText(OrganizedData.appointmentDC(dataString)+"회");
-        severity_more_5.setText(OrganizedData.moreThanFive(dataString)+"회");
-        accrue_symptom_count.setText(OrganizedData.accruedData(dataString)+"개");
+        if(OrganizedData.appointmentDC(dataString)<10)
+            reservation_count.setText("0"+OrganizedData.appointmentDC(dataString)+"");
+        else
+            reservation_count.setText(OrganizedData.appointmentDC(dataString)+"");
+        if(OrganizedData.moreThanFive(dataString)<10)
+            severity_more_5.setText("0"+OrganizedData.moreThanFive(dataString)+"");
+        else
+            severity_more_5.setText(OrganizedData.moreThanFive(dataString)+"");
+        accrue_symptom_count.setText(OrganizedData.accruedData(dataString)+"");
         //그래프 초기 설정 (기본 두통과 가래로 선택)
         initGraph();
-        chartEvent(dataString,"두통","가래");
+        //의사와의 만남에서 선택된 버튼값이 있을경우
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(sharedCode,0);
+        String fromDC_value = sharedPreferences.getString("DoctorMeeting","");
+        if(!fromDC_value.equals("")){
+            chartEvent(dataString,fromDC_value);
+        }
+        else{
+            chartEvent(dataString,"두통","복통");
+        }
+
         //증상 순위 (날짜에 맞춰 텍스트 지정)
         setRanking(dataString,firstSymptom,secondSymptom,thirdSymptom);
 
@@ -132,11 +169,25 @@ public class Fragment_conditionAnalysis extends Fragment {
             monthSelect.setText(previousMonthText);
             //버튼 눌릴때마다 텍스트 새로고침
             String dataStr = changeToString(previousMonthText); //날짜형식 바꿈
-            reservation_count.setText(OrganizedData.appointmentDC(dataStr)+"회");
-            severity_more_5.setText(OrganizedData.moreThanFive(dataStr)+"회");
-            accrue_symptom_count.setText(OrganizedData.accruedData(dataStr)+"개");
+            if(OrganizedData.appointmentDC(dataStr)<10)
+                reservation_count.setText("0"+OrganizedData.appointmentDC(dataStr)+"");
+            else
+                reservation_count.setText(OrganizedData.appointmentDC(dataStr)+"");
+            if(OrganizedData.moreThanFive(dataStr)<10)
+                severity_more_5.setText("0"+OrganizedData.moreThanFive(dataStr)+"");
+            else
+                severity_more_5.setText(OrganizedData.moreThanFive(dataStr)+"");
+            accrue_symptom_count.setText(OrganizedData.accruedData(dataStr)+"");
             initGraph();
-            chartEvent(dataStr,"두통","가래");
+            //사용자가 선택해놓은 증상이 있으면 그것으로 새로고침
+            if(selectedSymptom.size()!=0){
+                if(selectedSymptom.size()==2){
+                    chartEvent(dataStr,selectedSymptom.get(0),selectedSymptom.get(1));
+                }
+                else chartEvent(dataStr,selectedSymptom.get(0));
+            }
+            else chartEvent(dataStr,"두통","복통");
+
             select_symptom.setOnClickListener(v1 -> {
                 //팝업 생성 메소드
                 Log.d("myapp",dataStr+" ");
@@ -148,18 +199,31 @@ public class Fragment_conditionAnalysis extends Fragment {
         });
 
 
-        //상단 날짜 선택 바 -> 다음음 버튼 눌렀을 경우 1달씩 늘림
+        //상단 날짜 선택 바 -> 다음 버튼 눌렀을 경우 1달씩 늘림
         nextBtn.setOnClickListener(v -> {
             time.add(Calendar.MONTH , +1);
             String nextMonthText = simpleFormatting.format(time.getTime());
             monthSelect.setText(nextMonthText);
             //버튼 눌릴때마다 텍스트 새로고침
             String dataStr = changeToString(nextMonthText); //날짜형식 바꿈
-            reservation_count.setText(OrganizedData.appointmentDC(dataStr)+"회");
-            severity_more_5.setText(OrganizedData.moreThanFive(dataStr)+"회");
-            accrue_symptom_count.setText(OrganizedData.accruedData(dataStr)+"개");
+            if(OrganizedData.appointmentDC(dataStr)<10)
+                reservation_count.setText("0"+OrganizedData.appointmentDC(dataStr)+"");
+            else
+                reservation_count.setText(OrganizedData.appointmentDC(dataStr)+"");
+            if(OrganizedData.moreThanFive(dataStr)<10)
+                severity_more_5.setText("0"+OrganizedData.moreThanFive(dataStr)+"");
+            else
+                severity_more_5.setText(OrganizedData.moreThanFive(dataStr)+"");
+            accrue_symptom_count.setText(OrganizedData.accruedData(dataStr)+"");
             initGraph();
-            chartEvent(dataStr,"두통","가래");
+            //사용자가 선택해놓은 증상이 있으면 그것으로 새로고침
+            if(selectedSymptom.size()!=0){
+                if(selectedSymptom.size()==2){
+                    chartEvent(dataStr,selectedSymptom.get(0),selectedSymptom.get(1));
+                }
+                else chartEvent(dataStr,selectedSymptom.get(0));
+            }
+            else chartEvent(dataStr,"두통","복통");
             //그래프 증상선택 버튼 이벤트
             select_symptom.setOnClickListener(v1 -> {
                 //팝업 생성 메소드
@@ -169,15 +233,8 @@ public class Fragment_conditionAnalysis extends Fragment {
             //증상 순위
             setRanking(dataStr,firstSymptom,secondSymptom,thirdSymptom);
         });
-
-
-
-
-
         return view;
     }
-
-
 
 
     //그래프 - 증상선택기능(팝업)
@@ -324,7 +381,7 @@ public class Fragment_conditionAnalysis extends Fragment {
         int thirdWeek = 0,tNum = 0;     //3주차 심각도의 총합과 개수
         int fourthWeek = 0,foNum = 0;   //4주차 심각도의 총합과 개수
         for(int i=0;i<Person1.symptom.length;i++){
-            if(!Person1.symptom[i].getPart().equals(symptom)) continue; //사용자가 선택한 증상인지 확인
+            if(!Person1.symptom[i].getSymptom_name().equals(symptom)) continue; //사용자가 선택한 증상인지 확인
             switch (isInSameWeek(Person1.symptom[i].getDate(),strDate)){ //사용자가 선택한 날짜인지 확인 (1주차면 1,2주차면 2..반환)
                 case 1 : //1주차
                     firstWeek += Integer.parseInt(Person1.symptom[i].getPain_level());
@@ -452,7 +509,6 @@ public class Fragment_conditionAnalysis extends Fragment {
         yRAxis.setDrawAxisLine(false); //오른쪽 라벨라인
         yRAxis.setDrawGridLines(false);
 
-
         //부가설명 공백으로 처리
         Description description = new Description();
         description.setText("");
@@ -494,7 +550,6 @@ public class Fragment_conditionAnalysis extends Fragment {
 
 
         LineData lineData = new LineData(lineDataSet1);
-
 
         Legend legend = lineChart.getLegend(); //레전드 설정 (차트 밑에 색과 라벨을 나타내는 설정)
 
