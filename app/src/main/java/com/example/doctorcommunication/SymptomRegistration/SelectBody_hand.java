@@ -18,8 +18,8 @@ import java.util.List;
 public class SelectBody_hand extends AppCompatActivity {
     String symptom;
     int part;
-    int [] CHECK_HAND =new int[10];
-    String [] HAND ={"왼손 손바닥","왼손 손목","왼손 손등","왼손 손목","왼손 손가락","오른손 손바닥","오른손 손목","오른손 손등","오른손 손목","오른손 손가락"}; //손 세부 부위
+    int [] CHECK_HAND =new int[6];
+    String [] HAND ={"왼손 손등","왼손 손목","왼손 손가락","오른손 손등","오른손 손목","오른손 손가락"}; //손 세부 부위
     List<String> BODY = new ArrayList<>();
     String [] select_hand; //선택한 머리 부위
     int repeat;
@@ -33,16 +33,12 @@ public class SelectBody_hand extends AppCompatActivity {
         setContentView(R.layout.select_body_hand);
         ImageButton nextpage = findViewById(R.id.nextpage) ;
         ImageButton backpage = findViewById(R.id.backpage) ;
-        ImageButton hand01 = findViewById(R.id.hand01) ;
-        ImageButton hand02 = findViewById(R.id.hand02) ;
-        ImageButton hand03 = findViewById(R.id.hand03) ;
-        ImageButton hand04 = findViewById(R.id.hand04) ;
-        ImageButton hand05 = findViewById(R.id.hand05) ;
-        ImageButton hand06 = findViewById(R.id.hand06) ;
-        ImageButton hand07 = findViewById(R.id.hand07) ;
-        ImageButton hand08 = findViewById(R.id.hand08) ;
-        ImageButton hand09 = findViewById(R.id.hand09) ;
-        ImageButton hand10 = findViewById(R.id.hand10) ;
+        ImageButton hand01 = findViewById(R.id.hand03) ;
+        ImageButton hand02 = findViewById(R.id.hand04) ;
+        ImageButton hand03 = findViewById(R.id.hand05) ;
+        ImageButton hand04 = findViewById(R.id.hand08) ;
+        ImageButton hand05 = findViewById(R.id.hand09) ;
+        ImageButton hand06 = findViewById(R.id.hand10) ;
 
         //손 세부 부위 select 유무 확인
         hand01.setOnClickListener(new View.OnClickListener() {
@@ -123,58 +119,6 @@ public class SelectBody_hand extends AppCompatActivity {
                 Log.e("ji", "click6");
             }
         });
-        hand07.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(CHECK_HAND[6]==0){
-                    hand07.setSelected(true);
-                    CHECK_HAND[6]=1;
-                }else {
-                    hand07.setSelected(false);
-                    CHECK_HAND[6]=0;
-                }
-                Log.e("ji", "click7");
-            }
-        });
-        hand08.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(CHECK_HAND[7]==0){
-                    hand08.setSelected(true);
-                    CHECK_HAND[7]=1;
-                }else {
-                    hand08.setSelected(false);
-                    CHECK_HAND[7]=0;
-                }
-                Log.e("ji", "click8");
-            }
-        });
-        hand09.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(CHECK_HAND[8]==0){
-                    hand09.setSelected(true);
-                    CHECK_HAND[8]=1;
-                }else {
-                    hand09.setSelected(false);
-                    CHECK_HAND[8]=0;
-                }
-                Log.e("ji", "click9");
-            }
-        });
-        hand10.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(CHECK_HAND[9]==0){
-                    hand10.setSelected(true);
-                    CHECK_HAND[9]=1;
-                }else {
-                    hand10.setSelected(false);
-                    CHECK_HAND[9]=0;
-                }
-                Log.e("ji", "click10");
-            }
-        });
 
         //다음 페이지 버튼
          nextpage.setOnClickListener(new View.OnClickListener() {
@@ -204,18 +148,6 @@ public class SelectBody_hand extends AppCompatActivity {
                 if(hand06.isSelected()){
                     BODY.add(HAND[5]);
                 }
-                if(hand07.isSelected()){
-                    BODY.add(HAND[6]);
-                }
-                if(hand08.isSelected()){
-                    BODY.add(HAND[7]);
-                }
-                if(hand09.isSelected()){
-                    BODY.add(HAND[8]);
-                }
-                if(hand10.isSelected()){
-                    BODY.add(HAND[9]);
-                }
 
 
                 //선택한 손 세부부위 string 변환해서 select_head에 넣기
@@ -240,6 +172,7 @@ public class SelectBody_hand extends AppCompatActivity {
                 finish();
             }
         });
+
         //뒤로가기 버튼
         backpage.setOnClickListener(new View.OnClickListener() {
             @Override

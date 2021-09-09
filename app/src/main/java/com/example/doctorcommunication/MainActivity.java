@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot snapshot) {
                 Symptom2 symptom = snapshot.getValue(Symptom2.class);
                 String dd = snapshot.child("symptom").getValue(String.class);
-//                Log.d("dd", "part: " + symptom.getSymptom()+dd);
+                //Log.d("dd", "part: " + symptom.getSymptom()+dd);
             }
 
             @Override
