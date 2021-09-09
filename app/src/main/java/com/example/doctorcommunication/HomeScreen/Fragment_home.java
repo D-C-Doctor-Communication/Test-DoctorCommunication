@@ -64,12 +64,9 @@ public class Fragment_home extends Fragment {
         wCalender[4] = view.findViewById(R.id.wCalender_thu); //목요일
         wCalender[5] = view.findViewById(R.id.wCalender_fri); //금요일
         wCalender[6] = view.findViewById(R.id.wCalender_sat); //토요일
-        firebaseAuth =  FirebaseAuth.getInstance();
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference().child("users");
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        String uid = user.getUid();
+
+
 
 //카드1 - 증상등록으로 이동
         btn_addSymptom.setOnClickListener(v -> { //람다형식 사용 ~ new Button.OnClickListener()와 같은 기능
@@ -116,20 +113,6 @@ public class Fragment_home extends Fragment {
         weekCalendar.setWeekCalenderDate(view,todayDate,ymTextView,wDate);
         WeekCalendar.setCardColor(todayDate.getDay(),wCalender);
 
-//데이터 가져오기
-        /*myRef.child(uid).child("date").child("20210908").child("0").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Symptom2 symptom = snapshot.getValue(Symptom2.class);
-                String dd = snapshot.child("symptom").getValue(String.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
-        //Log.d("월", );
 //ListView
         ListView listView = (ListView)view.findViewById(R.id.home_listView);
         //오늘로 기본 리스트 보여짐
@@ -212,6 +195,38 @@ public class Fragment_home extends Fragment {
             listView.setAdapter(adapter);
             //선택한 날짜와 같은 데이터일때 어댑터에 아이템 추가
 
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference().child("users");
+
+            //FirebaseUser user = firebaseAuth.getCurrentUser();
+            //String uid = user.getUid();
+            /*for(int i=0; i<5; i++){
+                .child(uid).child("date").child("20210908").child("0").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Symptom2 symptom = snapshot.getValue(Symptom2.class);
+                        String dd = snapshot.child("symptom").getValue(String.class);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+            /*myRef.child(uid).child("date").child("20210908").child("0").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Symptom2 symptom = snapshot.getValue(Symptom2.class);
+                    String dd = snapshot.child("symptom").getValue(String.class);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });*/
+            //Log.d("월", );
             for(int i = 0; i< Person1.symptom.length; i++){
                 if(Person1.symptom[i].isSameDate) adapter.addItem(Person1.symptom[i].getPart(),R.drawable.img_pain_sym1,Integer.parseInt(Person1.symptom[i].getPain_level()),Person1.symptom[i].getPain_characteristics(),Person1.symptom[i].getPain_situation());
             }
