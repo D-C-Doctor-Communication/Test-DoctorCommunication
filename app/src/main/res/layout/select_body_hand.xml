@@ -52,7 +52,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/line"
-        android:layout_width="350dp"
+        android:layout_width="250dp"
         android:layout_height="350dp"
         android:layout_marginTop="68dp"
         android:layout_marginBottom="68dp"
@@ -60,32 +60,17 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:src="@drawable/area_hand_line_01_off"
         app:layout_constraintBottom_toTopOf="@id/nextpage"
         app:layout_constraintEnd_toEndOf="@id/Rightguideline"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="@id/Leftguideline"
         app:layout_constraintTop_toBottomOf="@id/pattern_text1"
         app:layout_constraintVertical_bias="0" />
 
-    <ImageView
-        android:id="@+id/line2"
-        android:layout_width="62dp"
-        android:layout_height="238dp"
-        android:layout_marginLeft="63.1dp"
-        android:layout_marginTop="97.1dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/area_hand_line_02_off"
-        app:layout_constraintBottom_toBottomOf="@id/line"
-        app:layout_constraintEnd_toEndOf="@id/line"
-        app:layout_constraintStart_toStartOf="@id/line"
-        app:layout_constraintTop_toTopOf="@id/line"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintHorizontal_bias="0"/>
-
     <ImageButton
         android:id="@+id/hand05"
-        android:layout_width="276.1dp"
-        android:layout_height="92.1dp"
-        android:layout_marginLeft="37dp"
-        android:layout_marginTop="27.9dp"
+        android:layout_width="125dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="89dp"
+        android:layout_marginTop="16.5dp"
         android:scaleType="centerInside"
         android:background="@drawable/hand_clicked05"
         app:layout_constraintHorizontal_bias="0"
@@ -97,10 +82,10 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         />
     <ImageButton
         android:id="@+id/hand10"
-        android:layout_width="276.1dp"
-        android:layout_height="92.1dp"
-        android:layout_marginLeft="37dp"
-        android:layout_marginTop="195.7dp"
+        android:layout_width="125dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="89dp"
+        android:layout_marginTop="198.5dp"
         android:scaleType="centerInside"
         android:background="@drawable/hand_clicked10"
         app:layout_constraintHorizontal_bias="0"
@@ -111,43 +96,13 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         app:layout_constraintTop_toTopOf="@id/line"
         />
 
-    <ImageButton
-        android:id="@+id/hand01"
-        android:layout_width="75.2dp"
-        android:layout_height="62.7dp"
-        android:layout_marginLeft="65dp"
-        android:layout_marginTop="84.2dp"
-        android:scaleType="centerInside"
-        android:background="@drawable/hand_clicked01"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintBottom_toBottomOf="@id/line"
-        app:layout_constraintEnd_toEndOf="@id/line"
-        app:layout_constraintStart_toStartOf="@id/line"
-        app:layout_constraintTop_toTopOf="@id/line"
-        />
-    <ImageButton
-        android:id="@+id/hand06"
-        android:layout_width="75.2dp"
-        android:layout_height="62.7dp"
-        android:layout_marginTop="252dp"
-        android:layout_marginLeft="48dp"
-        android:scaleType="centerInside"
-        android:background="@drawable/hand_clicked06"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintBottom_toBottomOf="@id/line"
-        app:layout_constraintEnd_toEndOf="@id/line"
-        app:layout_constraintStart_toStartOf="@id/line"
-        app:layout_constraintTop_toTopOf="@id/line"
-        />
 
     <ImageButton
         android:id="@+id/hand03"
-        android:layout_width="75.2dp"
-        android:layout_height="59.6dp"
-        android:layout_marginLeft="209dp"
-        android:layout_marginTop="84.2dp"
+        android:layout_width="82dp"
+        android:layout_height="65dp"
+        android:layout_marginLeft="102dp"
+        android:layout_marginTop="78dp"
         android:scaleType="centerInside"
         android:background="@drawable/hand_clicked03"
         app:layout_constraintHorizontal_bias="0"
@@ -159,10 +114,10 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         />
     <ImageButton
         android:id="@+id/hand08"
-        android:layout_width="75.2dp"
-        android:layout_height="59.6dp"
-        android:layout_marginLeft="226.8dp"
-        android:layout_marginTop="252dp"
+        android:layout_width="82dp"
+        android:layout_height="65dp"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="260dp"
         android:scaleType="centerInside"
         android:background="@drawable/hand_clicked08"
         app:layout_constraintHorizontal_bias="0"
@@ -173,42 +128,12 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         app:layout_constraintTop_toTopOf="@id/line"
         />
 
-    <ImageButton
-        android:id="@+id/hand02"
-        android:layout_width="49.9dp"
-        android:layout_height="22.5dp"
-        android:layout_marginLeft="85.5dp"
-        android:layout_marginTop="144.8dp"
-        android:scaleType="centerInside"
-        android:background="@drawable/hand_clicked02"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintBottom_toBottomOf="@id/line"
-        app:layout_constraintEnd_toEndOf="@id/line"
-        app:layout_constraintStart_toStartOf="@id/line"
-        app:layout_constraintTop_toTopOf="@id/line"
-        />
-    <ImageButton
-        android:id="@+id/hand07"
-        android:layout_width="49.9dp"
-        android:layout_height="22.5dp"
-        android:layout_marginLeft="52.9dp"
-        android:layout_marginTop="312.6dp"
-        android:scaleType="centerInside"
-        android:background="@drawable/hand_clicked07"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintBottom_toBottomOf="@id/line"
-        app:layout_constraintEnd_toEndOf="@id/line"
-        app:layout_constraintStart_toStartOf="@id/line"
-        app:layout_constraintTop_toTopOf="@id/line"
-        />
 
     <ImageButton
         android:id="@+id/hand04"
-        android:layout_width="49.9dp"
-        android:layout_height="24dp"
-        android:layout_marginLeft="214.7dp"
+        android:layout_width="54.5dp"
+        android:layout_height="27dp"
+        android:layout_marginLeft="107.5dp"
         android:layout_marginTop="143.3dp"
         android:scaleType="centerInside"
         android:background="@drawable/hand_clicked04"
@@ -221,10 +146,10 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         />
     <ImageButton
         android:id="@+id/hand09"
-        android:layout_width="49.9dp"
-        android:layout_height="24dp"
-        android:layout_marginLeft="247.2dp"
-        android:layout_marginTop="311.1dp"
+        android:layout_width="54dp"
+        android:layout_height="27dp"
+        android:layout_marginLeft="143dp"
+        android:layout_marginTop="325dp"
         android:scaleType="centerInside"
         android:background="@drawable/hand_clicked09"
         app:layout_constraintHorizontal_bias="0"
