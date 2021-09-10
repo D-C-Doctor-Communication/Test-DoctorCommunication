@@ -1,5 +1,6 @@
 package com.example.doctorcommunication.DoctorMeeting;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
@@ -8,6 +9,8 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
@@ -46,11 +49,15 @@ public class MeetingDoc extends AppCompatActivity {
     private TextView symptom_title;
     //버튼 - 심각도 그래프로 이동하는 버튼
     private Button gotoGraph;
+    //증상선택 버튼 키값
+    private final int[] buttonKey = {R.id.btn_1_symptom,R.id.btn_2_symptom,R.id.btn_3_symptom,R.id.btn_4_symptom,R.id.btn_5_symptom
+            ,R.id.btn_6_symptom,R.id.btn_7_symptom,R.id.btn_8_symptom,R.id.btn_9_symptom,R.id.btn_10_symptom
+            ,R.id.btn_11_symptom,R.id.btn_12_symptom,R.id.btn_13_symptom,R.id.btn_14_symptom,R.id.btn_15_symptom
+            ,R.id.btn_16_symptom,R.id.btn_17_symptom,R.id.btn_18_symptom,R.id.btn_19_symptom,R.id.btn_20_symptom};
     //버튼 - 증상선택 버튼
-    private final Button[] symptomBtn = new Button[3]; //증상 개수(임시 3)
-    //button 키값
-    private final int[] buttonKey = {R.id.btn_1_symptom, R.id.btn_2_symptom, R.id.btn_3_symptom};
-    private final String[] buttonValue = {"두통", "복통", "요통"};
+    private final Button[] symptomBtn = new Button[buttonKey.length];
+    //증상선택 버튼 내용
+    private final String[] buttonValue = {"복통", "두통", "요통","손목 통증","흉통","무릎 통증","속 쓰림","팔꿈치 통증","엉덩이 통증","발열","기침","인후통","콧물","귀 통증","이명","피로","호흡곤란","떨림","소화불량","발목 통증"};
     //기간선택 (시작날짜/끝날짜)
     private Calendar startDate, endDate;
 
@@ -72,8 +79,16 @@ public class MeetingDoc extends AppCompatActivity {
         //기본 세팅
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction(); // 각 프레그먼트들로 이동하기 위한 객체 생성
         //툴바 구성 - 이전버튼, 녹음버튼있
-        Toolbar toolbar = findViewById(R.id.toolbar_meeting_doctor); //마이크, 이전버튼 들어있는 toolbar 생성
-        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle("의사와의 만남");
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back_btn);
+        //증상 선택 버튼
+        for (int i = 0; i < buttonKey.length; i++) {
+            symptomBtn[i] = findViewById(buttonKey[i]);
+        }
         //datePicker에 들어갈 시작/끝날짜 calendar 객체
         startDate = Calendar.getInstance();
         endDate = Calendar.getInstance();
@@ -85,15 +100,6 @@ public class MeetingDoc extends AppCompatActivity {
 
         // 증상에 대한 심각도 그래프로 이동하는 버튼
         gotoGraph = findViewById(R.id.btn_gotoGraph);
-//        gotoGraph.setOnClickListener(v -> {
-//            Log.d("mytag", "그래프 이동 버튼 눌림");
-//            //심각도 그래프 버튼을 누르면 상태분석 페이지 프래그먼트를 불러옴
-//            Fragment_conditionAnalysis fragment = new Fragment_conditionAnalysis();
-//            //프레그먼트를 프레임과 교체하여 띄움
-//            RelativeLayout meetingDocLayout = findViewById(R.id.meeting_doctor_Frame);
-//            getSupportFragmentManager().beginTransaction().add(R.id.meeting_doctor_Frame,fragment).commit();
-//            meetingDocLayout.setVisibility(View.INVISIBLE);
-//        });
         gotoGraph.setOnClickListener(v -> {
             String sharedCode = "DoctorMeeting";
             Intent intent = new Intent(this,MainActivity.class);
@@ -113,45 +119,6 @@ public class MeetingDoc extends AppCompatActivity {
         //기간 선택을 위한 DatePicker를 호출하는 버튼(TextView)
         startDateText = findViewById(R.id.startDate);
         endDateText = findViewById(R.id.endDate);
-
-
-        //증상 선택 버튼
-        for (int i = 0; i < buttonKey.length; i++) {
-            symptomBtn[i] = findViewById(buttonKey[i]);
-        }
-
-
-// -> 증상 선택 기능
-
-        //임시 onClickListener
-        symptomBtn[0].setOnClickListener(v -> {
-            Log.d("myapp", buttonValue[0] + " 버튼 눌림");
-            symptom_title.setText(buttonValue[0]);
-            setData(0);
-            Log.d("myapp", groupListDatas.size() + " " + childListDatas.size());
-            adapter = new CustomAdapter(this,groupListDatas,childListDatas);
-            expandableListView.setAdapter(adapter);
-            btnClicked = 0;
-        });
-
-        symptomBtn[1].setOnClickListener(v -> {
-            Log.d("myapp", buttonValue[1] + " 버튼 눌림");
-            symptom_title.setText(buttonValue[1]);
-            setData(1);
-            adapter = new CustomAdapter(this,groupListDatas,childListDatas);
-            expandableListView.setAdapter(adapter);
-            btnClicked = 1;
-        });
-
-        symptomBtn[2].setOnClickListener(v -> {
-            Log.d("myapp", buttonValue[2] + " 버튼 눌림");
-            symptom_title.setText(buttonValue[2]);
-            setData(2);
-            adapter = new CustomAdapter(this,groupListDatas,childListDatas);
-            expandableListView.setAdapter(adapter);
-            btnClicked = 2;
-        });
-
 
 
 // -> 날짜 선택 기능
@@ -194,6 +161,8 @@ public class MeetingDoc extends AppCompatActivity {
         });
     }
 
+
+
     //날짜 초기값 지정
     public void setDateText(Calendar cal){
         int mYear = cal.get(Calendar.YEAR);
@@ -211,9 +180,13 @@ public class MeetingDoc extends AppCompatActivity {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd", Locale.KOREA);
             Date date_wantCheck = dateFormat.parse(date);
             Calendar checkDate = Calendar.getInstance();
-            checkDate.setTime(date_wantCheck);
+            checkDate.set(date_wantCheck.getYear()+1900,date_wantCheck.getMonth()+1,date_wantCheck.getDate());
             //날짜가 범위 사이에 있는지 확인
-            return checkDate.compareTo(startDate) >= 0 && checkDate.compareTo(endDate) <= 0;
+            Log.d("myapp","checkIsBetween : "+checkDate.get(Calendar.YEAR)+"  "+checkDate.get(Calendar.MONTH)+"  "+checkDate.get(Calendar.DAY_OF_MONTH));
+            Log.d("myapp","checkIsBetween : "+startDate.get(Calendar.YEAR)+"  "+startDate.get(Calendar.MONTH)+"  "+startDate.get(Calendar.DAY_OF_MONTH));
+            Log.d("myapp","checkIsBetween : "+endDate.get(Calendar.YEAR)+"  "+endDate.get(Calendar.MONTH)+"  "+endDate.get(Calendar.DAY_OF_MONTH));
+            Log.d("myapp","result : "+checkDate.compareTo(startDate)+" , "+checkDate.compareTo(endDate));
+            return checkDate.compareTo(startDate) <= 0 && checkDate.compareTo(endDate) >= 0;
         }
         catch (ParseException e){
             Log.d("myapp", "예외 발생"+date);
@@ -223,32 +196,18 @@ public class MeetingDoc extends AppCompatActivity {
 
 // -> toolbar 기능
     @Override
-    //toolbar와 메뉴 구성 layout 연결
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.meeting_doc_toolbar_menu, menu);
-        return true;
-    }
-
-    @Override
-    //toolbar의 메뉴에 따라 각 경우의 동작 지정
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            //이전버튼
-            case R.id.backToHome:
-                Intent backToHome = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(backToHome);
-            //마이크버튼(녹음하기)
-            case R.id.record:
-                Intent record = new Intent(getApplicationContext(), Recording.class);
-                startActivity(record);
-        }
+
+        Log.d("myapp",item+"메뉴 눌림");
+        finish();
         return true;
+
     }
 
     //db연동필요 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //리스트 데이터 설정
     private void setData(int valudIdx){
+        Log.d("myapp","넘어옴");
         //부모,자식 데이터 arraylist
         groupListDatas = new ArrayList<ParentData>();
         childListDatas = new ArrayList<ArrayList<ContentData>>();
@@ -258,8 +217,9 @@ public class MeetingDoc extends AppCompatActivity {
 
         //선택된 증상 데이터 선별
         for(int i=0;i< Person1.symptom.length;i++) {
+            Log.d("myapp",Person1.symptom[i].getSymptom_name().toString()+"과 "+buttonValue[valudIdx]+"비교 - "+Person1.symptom[i].getSymptom_name().equals(selectedSymptom));
             if (Person1.symptom[i].getSymptom_name().equals(selectedSymptom)&&checkIsBetween(Person1.symptom[i].getDate())) {
-                Log.d("myapp",Person1.symptom[i].getSymptom_name().toString()+"과 "+buttonValue[valudIdx]+"비교");
+                Log.d("myapp","통과됨");
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd", Locale.KOREA);
                 String dateStr = Person1.symptom[i].getDate();
@@ -299,6 +259,27 @@ public class MeetingDoc extends AppCompatActivity {
         }
 
         int a = 100;
+    }
+
+
+    //증상별로 데이터 넘겨주기
+    public void sympOnClick(View view){
+        for(int i=0;i<buttonKey.length;i++){
+            symptomBtn[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
+            if(view.getId()==buttonKey[i]){
+                symptomBtn[i].setBackgroundColor(Color.parseColor("#0078ff"));
+                Log.d("myapp", buttonValue[i] + " 버튼 눌림");
+                //텍스트 지정
+                symptom_title.setText(buttonValue[i]);
+                //선택한 증상에 맞는 데이터 처리 (리스트 데이터 준비)
+                setData(i);
+                adapter = new CustomAdapter(this,groupListDatas,childListDatas);
+                //리스트 생성
+                expandableListView.setAdapter(adapter);
+                btnClicked = i;
+            }
+        }
+
     }
 
 }
