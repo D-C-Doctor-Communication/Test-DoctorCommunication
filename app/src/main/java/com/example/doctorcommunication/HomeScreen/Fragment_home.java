@@ -57,7 +57,8 @@ import java.util.Set;
 
 public class Fragment_home extends Fragment {
     int count = -1;
-    FirebaseAuth firebaseAuth;
+    static FirebaseAuth firebaseAuth;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         Log.d("myapp","home탭 열림");
@@ -66,6 +67,9 @@ public class Fragment_home extends Fragment {
         //사용자 이름 받아오기
         //TextView helloUser = view.findViewById(R.id.user_name);
         //helloUser.setText("회원이름");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference().child("users");
+
 
 //세팅
 
@@ -85,12 +89,6 @@ public class Fragment_home extends Fragment {
         wCalender[4] = view.findViewById(R.id.wCalender_thu); //목요일
         wCalender[5] = view.findViewById(R.id.wCalender_fri); //금요일
         wCalender[6] = view.findViewById(R.id.wCalender_sat); //토요일
-        firebaseAuth =  FirebaseAuth.getInstance();
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference().child("users");
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        String uid = user.getUid();
 
 //카드1 - 증상등록으로 이동
         btn_addSymptom.setOnClickListener(v -> { //람다형식 사용 ~ new Button.OnClickListener()와 같은 기능
@@ -135,21 +133,6 @@ public class Fragment_home extends Fragment {
         //오늘날짜 색깔지정 (클릭한 날짜 색깔지정)
         WeekCalendar.setCardColor(todayDate.getDay(),wCalender);
 
-
-//데이터 가져오기
-        /*myRef.child(uid).child("date").child("20210908").child("0").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Symptom2 symptom = snapshot.getValue(Symptom2.class);
-                String dd = snapshot.child("symptom").getValue(String.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
-        //Log.d("월", );
 //ListView
         ListView listView = (ListView)view.findViewById(R.id.home_listView);
         //오늘로 기본 리스트 보여짐
@@ -222,18 +205,88 @@ public class Fragment_home extends Fragment {
                     +""+wDate[index].getText().toString();
 
             //listView 참조 및 Adapter 연결
-            HomeListViewAdapter adapter = new HomeListViewAdapter();
+            HomeListViewAdapter adapter2 = new HomeListViewAdapter();
             //Adapter 지정
-            listView.setAdapter(adapter);
+            listView.setAdapter(adapter2);
+//            adapter.addItem(Person1.symptom[0].getPart(),R.drawable.img_pain_sym1,Integer.parseInt(Person1.symptom[0].getPain_level()),Person1.symptom[0].getPain_characteristics(),Person1.symptom[0].getPain_situation());
 
             //선택한 날짜와 같은 데이터일때 어댑터에 아이템 추가
-            for(int i = 0; i< Person1.symptom.length; i++){
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                if(Person1.symptom[i].getDate().equals(clickedDate)){
-                    adapter.addItem(Person1.symptom[i].getPart(),R.drawable.img_pain_sym1,Integer.parseInt(Person1.symptom[i].getPain_level()),Person1.symptom[i].getPain_characteristics(),Person1.symptom[i].getPain_situation());
-                }
+//            for(int i = 0; i< Person1.symptom.length; i++){
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                if(Person1.symptom[i].getDate().equals(clickedDate)){
+//                    adapter.addItem(Person1.symptom[i].getPart(),R.drawable.img_pain_sym1,Integer.parseInt(Person1.symptom[i].getPain_level()),Person1.symptom[i].getPain_characteristics(),Person1.symptom[i].getPain_situation());
+//                }
+//            }
+            firebaseAuth =  FirebaseAuth.getInstance();
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference().child("users");
+
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            String uid = user.getUid();
+            for(int i=0; i<5; i++){
+                Log.d("fire_j", String.valueOf(i));
+                myRef.child(uid).child("date").child(clickedDate).child(String.valueOf(i)).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String get_symptom = snapshot.child("symptom").getValue(String.class);
+                        String get_part = snapshot.child("part").getValue(String.class);
+                        String get_painLevel = snapshot.child("painLevel").getValue(String.class);
+                        String get_characteristics = snapshot.child("pain_characteristics").getValue(String.class);
+                        String get_situation = snapshot.child("pain_situation").getValue(String.class);
+
+                        Log.d("get_fire", get_symptom+","+get_part+","+get_painLevel+","+get_characteristics+","+get_situation);
+                        if(!get_part.equals("e")) {
+                            Log.d("fire_in", get_symptom);
+                            switch (get_symptom){
+                                case "두통":
+                                    Log.d("ee",get_part);
+                                          //   adapter2.addItem(Person1.symptom[0].getPart(),R.drawable.img_pain_sym1,Integer.parseInt(Person1.symptom[0].getPain_level()),Person1.symptom[0].getPain_characteristics(),Person1.symptom[0].getPain_situation());
+
+                                    adapter2.addItem(get_part, R.drawable.area_head_line, Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                case "기침": case "인후통": case "콧물": case "귀 통증": case "이명": case "눈물": case "코피": case "객혈": case "가래":
+                                    adapter2.addItem(get_part, R.drawable.area_face_line_off, Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                    case "팔꿈치 통증":
+                                    adapter2.addItem(get_part, R.drawable.area_arm_line_off , Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                        break;
+                                case "무릎 통증":
+                                    adapter2.addItem(get_part, R.drawable.area_leg_line_off, Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                case "요통":
+                                    adapter2.addItem(get_part, R.drawable.area_waist_line_off , Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                case "흉통":
+                                    adapter2.addItem(get_part, R.drawable.area_chest_line_off , Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                case "복통": case "속 쓰림": case "소화불량":
+                                    adapter2.addItem(get_part, R.drawable.area_stomach_line_on_01 , Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                case "엉덩이 통증":
+                                    adapter2.addItem(get_part, R.drawable.area_buttock_line_off , Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                case "발열": case "피로": case "호흡곤란": case "떨림": case "근육 경련": case "부종": case "가려움":
+                                    adapter2.addItem(get_part, R.drawable.area_head_line, Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                case "손목 통증":
+                                    adapter2.addItem(get_part, R.drawable.area_hand_line_01_off , Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                case "발목 통증":
+                                    adapter2.addItem(get_part, R.drawable.area_foot_line_off, Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                default:
+                            }
+                            adapter2.notifyDataSetChanged();
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) { }
+                });
             }
-            adapter.notifyDataSetChanged();
+
+            adapter2.notifyDataSetChanged();
             Log.d("myapp","Adapter added");
         }
 
