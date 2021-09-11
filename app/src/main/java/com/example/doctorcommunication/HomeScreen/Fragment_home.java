@@ -1,28 +1,43 @@
 package com.example.doctorcommunication.HomeScreen;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.doctorcommunication.ConditionAnalysis.Fragment_conditionAnalysis;
 import com.example.doctorcommunication.DataManagement.Person1;
 import com.example.doctorcommunication.DataManagement.Symptom2;
 import com.example.doctorcommunication.DoctorMeeting.MeetingDoc;
 import com.example.doctorcommunication.HomeScreen.HomeListViewAdapter;
+import com.example.doctorcommunication.MainActivity;
 import com.example.doctorcommunication.R;
+import com.example.doctorcommunication.Settings.SettingActivity;
 import com.example.doctorcommunication.SymptomRegistration.Search;
 import com.example.doctorcommunication.SymptomRegistration.SearchList;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +52,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Set;
 
 
 public class Fragment_home extends Fragment {
@@ -47,8 +63,13 @@ public class Fragment_home extends Fragment {
         Log.d("myapp","home탭 열림");
         View view = inflater.inflate(R.layout.fragment_home,container,false);
 
+        //사용자 이름 받아오기
+        //TextView helloUser = view.findViewById(R.id.user_name);
+        //helloUser.setText("회원이름");
 
 //세팅
+
+
         //카드 - 증상등록 버튼
         Button btn_addSymptom = (Button)view.findViewById(R.id.btn_addSymptom);
         //카드 - 의사와의 만남 버튼
@@ -64,9 +85,12 @@ public class Fragment_home extends Fragment {
         wCalender[4] = view.findViewById(R.id.wCalender_thu); //목요일
         wCalender[5] = view.findViewById(R.id.wCalender_fri); //금요일
         wCalender[6] = view.findViewById(R.id.wCalender_sat); //토요일
+        firebaseAuth =  FirebaseAuth.getInstance();
 
-
-
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference().child("users");
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        String uid = user.getUid();
 
 //카드1 - 증상등록으로 이동
         btn_addSymptom.setOnClickListener(v -> { //람다형식 사용 ~ new Button.OnClickListener()와 같은 기능
@@ -83,18 +107,14 @@ public class Fragment_home extends Fragment {
 
 //카드3 - 녹음하기 팝업 띄움
         btn_recording.setOnClickListener(v -> {
-            final View popupView = getLayoutInflater().inflate(R.layout.popup_recording, null);
-            final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setView(popupView);
 
-            final AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-
-        //취소버튼
-            Button btnCancel = popupView.findViewById(R.id.no_btn);
-            btnCancel.setOnClickListener(v1 -> alertDialog.dismiss());
+            InfoDialog infoDialog = new InfoDialog();
+            infoDialog.showDialog(getActivity());
 
         });
+
+
+
 
 //주간 캘린더 - 각 날짜에 맞도록 텍스트 주마다 변경
 
@@ -110,9 +130,26 @@ public class Fragment_home extends Fragment {
 
         WeekCalendar weekCalendar = new WeekCalendar();
         Date todayDate = new Date();
+        //점찍기
         weekCalendar.setWeekCalenderDate(view,todayDate,ymTextView,wDate);
+        //오늘날짜 색깔지정 (클릭한 날짜 색깔지정)
         WeekCalendar.setCardColor(todayDate.getDay(),wCalender);
 
+
+//데이터 가져오기
+        /*myRef.child(uid).child("date").child("20210908").child("0").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Symptom2 symptom = snapshot.getValue(Symptom2.class);
+                String dd = snapshot.child("symptom").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });*/
+        //Log.d("월", );
 //ListView
         ListView listView = (ListView)view.findViewById(R.id.home_listView);
         //오늘로 기본 리스트 보여짐
@@ -180,76 +217,24 @@ public class Fragment_home extends Fragment {
             }
         }
         static void createDataList(TextView ymTextView, TextView[] wDate, int index, ListView listView){
-            //각 요일별 isSameDate속성 false로 초기화
-            initializeisSameDate();
             //0000.00.00형식의 String 만들기
-            String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
-            clickedDate += "."+wDate[index].getText().toString();
-            //data의 날짜가 선택된 날짜와 일치하면 isSameDate 속성을 true로 변경
-            int sameDatacount = setSameDatetoTrue(clickedDate);
-            Log.d("myapp"," "+sameDatacount); //이후에 객체를 배열로 만들면 for문에 sameDataCount 사용
+            String clickedDate = ymTextView.getText().toString().substring(0,4)+""+ymTextView.getText().toString().substring(6,8)
+                    +""+wDate[index].getText().toString();
 
             //listView 참조 및 Adapter 연결
             HomeListViewAdapter adapter = new HomeListViewAdapter();
             //Adapter 지정
             listView.setAdapter(adapter);
+
             //선택한 날짜와 같은 데이터일때 어댑터에 아이템 추가
-
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference().child("users");
-
-            //FirebaseUser user = firebaseAuth.getCurrentUser();
-            //String uid = user.getUid();
-            /*for(int i=0; i<5; i++){
-                .child(uid).child("date").child("20210908").child("0").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Symptom2 symptom = snapshot.getValue(Symptom2.class);
-                        String dd = snapshot.child("symptom").getValue(String.class);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-            }
-            /*myRef.child(uid).child("date").child("20210908").child("0").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Symptom2 symptom = snapshot.getValue(Symptom2.class);
-                    String dd = snapshot.child("symptom").getValue(String.class);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });*/
-            //Log.d("월", );
             for(int i = 0; i< Person1.symptom.length; i++){
-                if(Person1.symptom[i].isSameDate) adapter.addItem(Person1.symptom[i].getPart(),R.drawable.img_pain_sym1,Integer.parseInt(Person1.symptom[i].getPain_level()),Person1.symptom[i].getPain_characteristics(),Person1.symptom[i].getPain_situation());
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                if(Person1.symptom[i].getDate().equals(clickedDate)){
+                    adapter.addItem(Person1.symptom[i].getPart(),R.drawable.img_pain_sym1,Integer.parseInt(Person1.symptom[i].getPain_level()),Person1.symptom[i].getPain_characteristics(),Person1.symptom[i].getPain_situation());
+                }
             }
             adapter.notifyDataSetChanged();
             Log.d("myapp","Adapter added");
-        }
-
-        static void initializeisSameDate(){
-            for(int i=0;i<Person1.symptom.length;i++){
-                Person1.symptom[i].isSameDate = false;
-            }
-        }
-
-        static int setSameDatetoTrue(String date){
-            int countSameDate = 0;
-            for(int i=0;i<Person1.symptom.length;i++) {
-                if(Person1.symptom[i].getDate().equals(date)){
-                    Person1.symptom[i].checkSameDate();
-                    countSameDate++;
-                }
-            }
-
-            return countSameDate;
         }
 
         @SuppressLint("SetTextI18n")
@@ -285,24 +270,42 @@ public class Fragment_home extends Fragment {
                 //00일 텍스트 적용
                 wDate[i].setText(todaySdf.format(cal.getTime()).substring(8));
                 cal.add(Calendar.DAY_OF_MONTH, 1);
+
+                String monthValue;
+                if(cal.get(Calendar.MONTH)<10) monthValue = "0"+cal.get(Calendar.MONTH);
+                else monthValue = cal.get(Calendar.MONTH)+"";
+                String dayValue;
+                if(cal.get(Calendar.DAY_OF_MONTH)<10) dayValue = "0"+cal.get(Calendar.DAY_OF_MONTH);
+                else dayValue = cal.get(Calendar.DAY_OF_MONTH)+"";
+                //밑에 로그부분대로 파이어베이스에 넣으면 됩니다~ 특수문자없음
+                Log.d("myapp","캘린더 : "+cal.get(Calendar.YEAR)+monthValue+dayValue);
             }
 
             //데이터가 있는 날짜에 점찍기
             boolean isDataExist = false;
+            //일 ~ 토
             for(int i=0;i<=6;i++){
                 isDataExist = false;
+                String checkDate = todaySdf.format(cal.getTime()).substring(0,4)+""+todaySdf.format(cal.getTime()).substring(5,7)+""+wDate[i].getText();
                 for(int j=0;j<Person1.symptom.length;j++){
-                    String checkDate = todaySdf.format(cal.getTime()).substring(0,4)+"."+todaySdf.format(cal.getTime()).substring(5,7)+"."+wDate[i].getText();
-                    Log.d("myapp",checkDate);
-                    if(setSameDatetoTrue(checkDate)!=0){
+                    if(Person1.symptom[j].getDate().equals(checkDate)){
                         isDataExist = true;
                         break;
                     }
                 }
                 if(isDataExist) weekCalendarDot[i].setVisibility(View.VISIBLE);
             }
-            if(Person1.symptom[0].isSameDate) weekCalendarDot[0 ].setVisibility(View.VISIBLE);
+        }
+    }
+    //이용불가 팝업
+    public class InfoDialog{
+        public void showDialog(Activity activity) {
+            final Dialog dialog = new Dialog(activity);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            //dialog.setContentView(R.layout.info_popup);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
+            dialog.show();
         }
     }
 }

@@ -59,6 +59,23 @@ public class MainActivity extends AppCompatActivity {
                     WindowManager.LayoutParams.FLAG_FULLSCREEN
             );
         }
+//home,진료기록,상태분석 fragment
+        homeFragment = new Fragment_home();
+        //android 기본 제공되는 액션바 제거 - 사용자 정의 액션바 사용하기 위함
+        getDelegate().getSupportActionBar();
+        //메인화면 네비게이션 뷰 생성(activity_main에 정의됨)
+        BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
+        //기본으로 선택되어있는 프래그먼트 지정
+        setDefaultFragment();
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+
+        //의사와의 만남 -> 메인 -> 상태분석 데이터 이동
+        Intent fromDC_intent = getIntent();
+        if(fromDC_intent.getIntExtra("fileMovement",0)==1){
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container,(Fragment)(new Fragment_conditionAnalysis()));
+        }
+
 
 //설정 fragment
         //설정버튼
@@ -71,15 +88,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 //home,진료기록,상태분석 fragment
-
-        homeFragment = new Fragment_home();
-        //android 기본 제공되는 액션바 제거 - 사용자 정의 액션바 사용하기 위함
-        getDelegate().getSupportActionBar();
-        //메인화면 네비게이션 뷰 생성(activity_main에 정의됨)
-        BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
-        //기본으로 선택되어있는 프래그먼트 지정
-        setDefaultFragment();
-        bottomNavigationView.setSelectedItemId(R.id.nav_home);
         bottomNavigationView.setOnItemSelectedListener((NavigationBarView.OnItemSelectedListener)(item -> {
 
             //네비바에서 선택한 아이디가 이미 눌려있는 아이디라면 동작하지 않음
@@ -118,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot snapshot) {
                 Symptom2 symptom = snapshot.getValue(Symptom2.class);
                 String dd = snapshot.child("symptom").getValue(String.class);
-                Log.d("dd", "part: " + symptom.getSymptom()+dd);
+                //Log.d("dd", "part: " + symptom.getSymptom()+dd);
             }
 
             @Override

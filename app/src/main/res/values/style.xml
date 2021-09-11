@@ -30,7 +30,7 @@
     <!--구분선-->
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0.5dp</item>
+        <item name="android:layout_height">1dp</item>
         <item name="android:background">#4B000000</item>
     </style>
 
@@ -101,8 +101,9 @@
     </style>
 
     <style name="wCalender">
-        <item name="android:layout_width">40dp</item>
-        <item name="android:layout_height">62dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="percentWidth">0.11</item>
+        <item name="android:layout_height">0dp</item>
         <item name="cardCornerRadius">10dp</item>
         <item name="cardBackgroundColor">#0a000000</item>
         <item name="android:textColor">@color/black</item>
@@ -151,5 +152,16 @@
         <item name="cardBackgroundColor">@color/ache_card_background</item>
         <item name="cardCornerRadius">15dp</item>
         <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+
+    <!-- DOCTOR MEETING - datePicker dialog -->
+    <style name="MyDatePickerStyle" parent="Theme.MaterialComponents.Light.Dialog.Alert.Bridge">
+        <!-- 상단 바-->
+        <item name="colorAccent">#6DC6E4</item>
+        <!--선택된 날짜-->
+        <item name="colorControlActivated">#CDCDCD</item>
+        <!-- 둥글게 -->
+        <item name="android:radius">20dp</item>
     </style>
 </resources>
