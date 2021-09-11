@@ -3,6 +3,7 @@ package com.example.doctorcommunication.HomeScreen;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +18,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.doctorcommunication.ConditionAnalysis.Fragment_conditionAnalysis;
 import com.example.doctorcommunication.DataManagement.Person1;
 import com.example.doctorcommunication.DataManagement.Symptom2;
 import com.example.doctorcommunication.DoctorMeeting.MeetingDoc;
@@ -96,8 +99,10 @@ public class Fragment_home extends Fragment {
         //취소버튼
             Button btnCancel = popupView.findViewById(R.id.no_btn);
             btnCancel.setOnClickListener(v1 -> alertDialog.dismiss());
-
         });
+
+
+
 
 //주간 캘린더 - 각 날짜에 맞도록 텍스트 주마다 변경
 
@@ -200,8 +205,8 @@ public class Fragment_home extends Fragment {
         }
         static void createDataList(TextView ymTextView, TextView[] wDate, int index, ListView listView){
             //0000.00.00형식의 String 만들기
-            String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
-            clickedDate += "."+wDate[index].getText().toString();
+            String clickedDate = ymTextView.getText().toString().substring(0,4)+""+ymTextView.getText().toString().substring(6,8)
+                +""+wDate[index].getText().toString();
 
             //listView 참조 및 Adapter 연결
             HomeListViewAdapter adapter = new HomeListViewAdapter();
@@ -268,7 +273,7 @@ public class Fragment_home extends Fragment {
             //일 ~ 토
             for(int i=0;i<=6;i++){
                 isDataExist = false;
-                String checkDate = todaySdf.format(cal.getTime()).substring(0,4)+"."+todaySdf.format(cal.getTime()).substring(5,7)+"."+wDate[i].getText();
+                String checkDate = todaySdf.format(cal.getTime()).substring(0,4)+""+todaySdf.format(cal.getTime()).substring(5,7)+""+wDate[i].getText();
                 for(int j=0;j<Person1.symptom.length;j++){
                     if(Person1.symptom[j].getDate().equals(checkDate)){
                         isDataExist = true;

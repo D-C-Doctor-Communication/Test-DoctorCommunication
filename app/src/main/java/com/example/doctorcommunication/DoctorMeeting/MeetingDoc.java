@@ -97,20 +97,9 @@ public class MeetingDoc extends AppCompatActivity {
 
 
 
-
         // 증상에 대한 심각도 그래프로 이동하는 버튼
         gotoGraph = findViewById(R.id.btn_gotoGraph);
         gotoGraph.setOnClickListener(v -> {
-            String sharedCode = "DoctorMeeting";
-            Intent intent = new Intent(this,MainActivity.class);
-            intent.putExtra("fileMovement",1);
-            //셰어드에 사용자가 눌렀던 증상 버튼 저장 (그래프값에 적용)
-            SharedPreferences sharedPreferences = getSharedPreferences(sharedCode,0);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("clickedButtonData",buttonValue[btnClicked]);
-            editor.commit();
-
-            startActivity(intent);
             finish();
         });
 
@@ -141,6 +130,8 @@ public class MeetingDoc extends AppCompatActivity {
                     //기본 세팅 날짜 지정 (위의 변수대로)
                     , startDate.get(Calendar.YEAR), startDate.get(Calendar.MONTH)-1, startDate.get(Calendar.DAY_OF_MONTH)
             );
+            //오늘 이후 비활성화
+            datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
             //DatePickerDialog 표시
             datePickerDialog.show();
         });
@@ -157,6 +148,12 @@ public class MeetingDoc extends AppCompatActivity {
                     }
                     , endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH)-1, endDate.get(Calendar.DAY_OF_MONTH)
             );
+            //오늘 이후 비활성화
+            Calendar c = Calendar.getInstance();
+            c.set(startDate.get(Calendar.YEAR),startDate.get(Calendar.MONTH)-1,startDate.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
+            datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+            //DatePickerDialog 표시
             datePickerDialog.show();
         });
     }
@@ -175,33 +172,21 @@ public class MeetingDoc extends AppCompatActivity {
 
     //날짜 조건 확인 (시작날짜와 끝날짜 사이)
     public boolean checkIsBetween(String date){
-        try {
-            //string형 날짜를 calendar형으로 변환
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd", Locale.KOREA);
-            Date date_wantCheck = dateFormat.parse(date);
-            Calendar checkDate = Calendar.getInstance();
-            checkDate.set(date_wantCheck.getYear()+1900,date_wantCheck.getMonth()+1,date_wantCheck.getDate());
-            //날짜가 범위 사이에 있는지 확인
-            Log.d("myapp","checkIsBetween : "+checkDate.get(Calendar.YEAR)+"  "+checkDate.get(Calendar.MONTH)+"  "+checkDate.get(Calendar.DAY_OF_MONTH));
-            Log.d("myapp","checkIsBetween : "+startDate.get(Calendar.YEAR)+"  "+startDate.get(Calendar.MONTH)+"  "+startDate.get(Calendar.DAY_OF_MONTH));
-            Log.d("myapp","checkIsBetween : "+endDate.get(Calendar.YEAR)+"  "+endDate.get(Calendar.MONTH)+"  "+endDate.get(Calendar.DAY_OF_MONTH));
-            Log.d("myapp","result : "+checkDate.compareTo(startDate)+" , "+checkDate.compareTo(endDate));
-            return checkDate.compareTo(startDate) <= 0 && checkDate.compareTo(endDate) >= 0;
-        }
-        catch (ParseException e){
-            Log.d("myapp", "예외 발생"+date);
-        }
+
+        //시작 / 끝 날짜
+        int start = startDate.get(Calendar.YEAR)*10000+startDate.get(Calendar.MONTH)*100+startDate.get(Calendar.DAY_OF_MONTH);
+        int end = endDate.get(Calendar.YEAR)*10000+endDate.get(Calendar.MONTH)*100+endDate.get(Calendar.DAY_OF_MONTH);
+
+        if(Integer.parseInt(date)>=start && Integer.parseInt(date)<=end) return true;
+
         return false;
     }
 
-// -> toolbar 기능
+// -> toolbar 기능 (뒤로가기 버튼)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        Log.d("myapp",item+"메뉴 눌림");
         finish();
         return true;
-
     }
 
     //db연동필요 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -217,18 +202,19 @@ public class MeetingDoc extends AppCompatActivity {
 
         //선택된 증상 데이터 선별
         for(int i=0;i< Person1.symptom.length;i++) {
-            Log.d("myapp",Person1.symptom[i].getSymptom_name().toString()+"과 "+buttonValue[valudIdx]+"비교 - "+Person1.symptom[i].getSymptom_name().equals(selectedSymptom));
             if (Person1.symptom[i].getSymptom_name().equals(selectedSymptom)&&checkIsBetween(Person1.symptom[i].getDate())) {
                 Log.d("myapp","통과됨");
                 Calendar calendar = Calendar.getInstance();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd", Locale.KOREA);
-                String dateStr = Person1.symptom[i].getDate();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
+                String init = Person1.symptom[i].getDate();
+                String dateStr = init.substring(0,4)+"."+init.substring(4,6)+"."+init.substring(6);
                 String yoil = "";
                 try {
-                    Date date = sdf.parse(dateStr);
+                    Date date = sdf.parse(Person1.symptom[i].getDate());
                     calendar.setTime(date);
                     yoil = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.KOREAN);
                 } catch (ParseException e) {
+                    Log.d("myapp","예외발생");
                     e.printStackTrace();
                 }
                 //date
