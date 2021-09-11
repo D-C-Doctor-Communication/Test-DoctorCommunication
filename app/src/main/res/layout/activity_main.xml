@@ -14,24 +14,18 @@
         android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="@+id/fragment_container" >
 
-        <TextView
-            android:text=""
-            android:textColor="#FFF"
-            android:fontFamily="@font/nanumsquareregular"
-            android:textSize="18sp"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-
-        <ImageButton
-            android:id="@+id/to_setting"
-            android:src="@android:drawable/ic_menu_set_as"
-            android:background="@color/white"
+        <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:src="@drawable/icon_logo"/>
+
+        <ImageView
+            android:id="@+id/to_setting"
+            android:src="@drawable/icon_profile"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:layout_gravity="right"
             android:layout_marginRight="20dp"
             android:layout_marginTop="5dp"/>
@@ -45,8 +39,7 @@
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        app:layout_constraintTop_toBottomOf="@+id/main_toolbar">
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

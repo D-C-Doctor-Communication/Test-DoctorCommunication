@@ -3,7 +3,7 @@
     <style name="Theme.DoctorCommunication" parent="Theme.AppCompat.Light">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimaryVariant">#FF707070</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -15,5 +15,9 @@
         <!--타이틀 바 없애기-->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <!--기본 배경색-->
+        <item name="android:windowBackground">@color/white</item>
+
     </style>
 </resources>

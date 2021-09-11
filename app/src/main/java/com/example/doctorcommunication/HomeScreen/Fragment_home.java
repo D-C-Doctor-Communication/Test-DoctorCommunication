@@ -1,21 +1,31 @@
 package com.example.doctorcommunication.HomeScreen;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,7 +35,9 @@ import com.example.doctorcommunication.DataManagement.Person1;
 import com.example.doctorcommunication.DataManagement.Symptom2;
 import com.example.doctorcommunication.DoctorMeeting.MeetingDoc;
 import com.example.doctorcommunication.HomeScreen.HomeListViewAdapter;
+import com.example.doctorcommunication.MainActivity;
 import com.example.doctorcommunication.R;
+import com.example.doctorcommunication.Settings.SettingActivity;
 import com.example.doctorcommunication.SymptomRegistration.Search;
 import com.example.doctorcommunication.SymptomRegistration.SearchList;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,6 +52,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Set;
 
 
 public class Fragment_home extends Fragment {
@@ -50,8 +63,13 @@ public class Fragment_home extends Fragment {
         Log.d("myapp","home탭 열림");
         View view = inflater.inflate(R.layout.fragment_home,container,false);
 
+        //사용자 이름 받아오기
+        TextView helloUser = view.findViewById(R.id.user_name);
+        helloUser.setText("회원이름");
 
 //세팅
+
+
         //카드 - 증상등록 버튼
         Button btn_addSymptom = (Button)view.findViewById(R.id.btn_addSymptom);
         //카드 - 의사와의 만남 버튼
@@ -89,16 +107,10 @@ public class Fragment_home extends Fragment {
 
 //카드3 - 녹음하기 팝업 띄움
         btn_recording.setOnClickListener(v -> {
-            final View popupView = getLayoutInflater().inflate(R.layout.popup_recording, null);
-            final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setView(popupView);
 
-            final AlertDialog alertDialog = builder.create();
-            alertDialog.show();
+            InfoDialog infoDialog = new InfoDialog();
+            infoDialog.showDialog(getActivity());
 
-        //취소버튼
-            Button btnCancel = popupView.findViewById(R.id.no_btn);
-            btnCancel.setOnClickListener(v1 -> alertDialog.dismiss());
         });
 
 
@@ -122,6 +134,7 @@ public class Fragment_home extends Fragment {
         weekCalendar.setWeekCalenderDate(view,todayDate,ymTextView,wDate);
         //오늘날짜 색깔지정 (클릭한 날짜 색깔지정)
         WeekCalendar.setCardColor(todayDate.getDay(),wCalender);
+
 
 //데이터 가져오기
         /*myRef.child(uid).child("date").child("20210908").child("0").addValueEventListener(new ValueEventListener() {
@@ -282,6 +295,17 @@ public class Fragment_home extends Fragment {
                 }
                 if(isDataExist) weekCalendarDot[i].setVisibility(View.VISIBLE);
             }
+        }
+    }
+    //이용불가 팝업
+    public class InfoDialog{
+        public void showDialog(Activity activity) {
+            final Dialog dialog = new Dialog(activity);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.info_popup);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+            dialog.show();
         }
     }
 }
