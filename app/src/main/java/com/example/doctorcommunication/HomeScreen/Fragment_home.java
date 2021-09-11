@@ -70,6 +70,8 @@ public class Fragment_home extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference().child("users");
 
+        TextView helloUser = view.findViewById(R.id.user_name);
+        helloUser.setText("회원이름");
 
 //세팅
 
@@ -133,6 +135,21 @@ public class Fragment_home extends Fragment {
         //오늘날짜 색깔지정 (클릭한 날짜 색깔지정)
         WeekCalendar.setCardColor(todayDate.getDay(),wCalender);
 
+
+//데이터 가져오기
+        /*myRef.child(uid).child("date").child("20210908").child("0").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Symptom2 symptom = snapshot.getValue(Symptom2.class);
+                String dd = snapshot.child("symptom").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });*/
+        //Log.d("월", );
 //ListView
         ListView listView = (ListView)view.findViewById(R.id.home_listView);
         //오늘로 기본 리스트 보여짐
@@ -201,8 +218,7 @@ public class Fragment_home extends Fragment {
         }
         static void createDataList(TextView ymTextView, TextView[] wDate, int index, ListView listView){
             //0000.00.00형식의 String 만들기
-            String clickedDate = ymTextView.getText().toString().substring(0,4)+""+ymTextView.getText().toString().substring(6,8)
-                    +""+wDate[index].getText().toString();
+            String clickedDate = ymTextView.getText().toString().substring(0,4)+""+ymTextView.getText().toString().substring(6,8)+""+wDate[index].getText().toString();
 
             //listView 참조 및 Adapter 연결
             HomeListViewAdapter adapter2 = new HomeListViewAdapter();
@@ -356,9 +372,11 @@ public class Fragment_home extends Fragment {
             final Dialog dialog = new Dialog(activity);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             //dialog.setContentView(R.layout.info_popup);
+            dialog.setContentView(R.layout.info_popup);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
             dialog.show();
         }
     }
 }
+

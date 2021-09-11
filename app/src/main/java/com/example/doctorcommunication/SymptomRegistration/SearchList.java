@@ -10,7 +10,9 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,6 +41,7 @@ public class SearchList extends AppCompatActivity {
     private ArrayList<String> nameArr;
     private SearchAdapter adapter;
     private EditText search_text; //증상 검색창
+    private ImageView back_btn;
 
     String[] symptom_Nm;
     String[] part_Nm;
@@ -58,6 +61,12 @@ public class SearchList extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_list);
+
+        back_btn = findViewById(R.id.back_btn);
+        back_btn.setOnClickListener(v -> {
+            finish();
+        });
+
         mContext=this;
         search_text = (EditText)findViewById(R.id.search_text);
         listView = (ListView)findViewById(R.id.search_list);

@@ -109,7 +109,7 @@ public class Fragment_medicalChart extends Fragment {
         int basicYear = date.getYear();
         int basicMonth = date.getMonth()+1;
         int basicDay = date.getDay();
-        selectedDateString = basicYear+"."+basicMonth+"."+basicDay;
+        selectedDateString = basicYear+""+basicMonth+""+basicDay;
 
         //00.00 (월) 텍스트 지정
         monthCalendar.setDateText(basicYear,basicMonth,basicDay,selectedDate);
@@ -141,8 +141,8 @@ public class Fragment_medicalChart extends Fragment {
             int Day = date1.getDay();
             //선택된 날짜 텍스트 변경 00.00(월)
             monthCalendar.setDateText(Year,Month,Day,selectedDate);
-            //0000.00.00형식의 날짜 저장
-            selectedDateString = Year+"."+Month+"."+Day;
+            //00000000형식의 날짜 저장
+            selectedDateString = Year+""+Month+""+Day;
 
             //어댑터 초기화
             adapter.clearData();
@@ -310,11 +310,10 @@ public class Fragment_medicalChart extends Fragment {
             //Data에서 병원예약 날짜가 존재하면 해당 날짜를 위의 arrayList에 저장
             for(int i=0;i<Person1.appointments.length;i++){
                 //병원예약날짜 받아오기
-                String[] time = Person1.appointments[i].getDate().split("\\.");
-                Log.d("myapp",Person1.appointments[i].getDate());
-                int year = Integer.parseInt(time[0]);
-                int month = Integer.parseInt(time[1]);
-                int dayy = Integer.parseInt(time[2]);
+                String dateValue = Person1.appointments[i].getDate();
+                int year = Integer.parseInt(dateValue.substring(0,4));
+                int month = Integer.parseInt(dateValue.substring(4,6));
+                int dayy = Integer.parseInt(dateValue.substring(6));
 
                 calendar.set(year,month-1,dayy);
                 CalendarDay day = CalendarDay.from(calendar);
