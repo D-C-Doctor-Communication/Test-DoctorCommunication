@@ -71,9 +71,6 @@ public class Fragment_conditionAnalysis extends Fragment {
     private TextView secondSymptom;
     private TextView thirdSymptom;
 
-    //의사와의 만남에서 넘어왔을 때 처리 데이터
-    int fromDC_data;
-
     @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -453,9 +450,6 @@ public class Fragment_conditionAnalysis extends Fragment {
     //그래프 관련 메소드
     //그래프 초기화(기본설정)
     private void initGraph(){
-
-        String[] xData = {"1주차","2주차","3주차","4주차"};
-        int[] yData = {0,2,4,6,8,10};
         //초기 기본 설정
         //X값 속성 설정
         XAxis xAxis = lineChart.getXAxis();
