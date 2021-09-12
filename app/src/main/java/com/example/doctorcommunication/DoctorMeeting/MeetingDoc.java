@@ -28,10 +28,7 @@ import android.widget.TextView;
 
 import com.example.doctorcommunication.DataManagement.Person1;
 import com.example.doctorcommunication.R;
-<<<<<<< HEAD
-=======
 import com.example.doctorcommunication.Recording.Recording;
->>>>>>> 165d23a (Person)
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,10 +36,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-<<<<<<< HEAD
-
-=======
->>>>>>> 165d23a (Person)
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -83,21 +76,15 @@ public class MeetingDoc extends AppCompatActivity {
     ArrayList<ParentData> groupListDatas;
     ArrayList<ArrayList<ContentData>> childListDatas;
 
-<<<<<<< HEAD
     //증상 없을경우 이미지
     ImageView notice_noData;
     //증상버튼 선택 안했을 경우 invisible
     RelativeLayout selectedDataLayout;
 
     //파이어베이스
-    static FirebaseAuth firebaseAuth;
     String fire_date;
-
-=======
     //심각도 그래프 이동했을 때 누른 버튼 저장용
     int btnClicked = -1;
-    String fire_date;
->>>>>>> 165d23a (Person)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -247,12 +234,6 @@ public class MeetingDoc extends AppCompatActivity {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String uid = user.getUid();
 
-        firebaseAuth =  FirebaseAuth.getInstance();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference().child("users");
-
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        String uid = user.getUid();
         //선택된 증상 데이터 선별
 
 
