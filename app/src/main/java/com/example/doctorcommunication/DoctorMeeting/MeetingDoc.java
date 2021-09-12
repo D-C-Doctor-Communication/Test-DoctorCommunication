@@ -1,5 +1,6 @@
 package com.example.doctorcommunication.DoctorMeeting;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -27,6 +28,10 @@ import android.widget.TextView;
 
 import com.example.doctorcommunication.DataManagement.Person1;
 import com.example.doctorcommunication.R;
+<<<<<<< HEAD
+=======
+import com.example.doctorcommunication.Recording.Recording;
+>>>>>>> 165d23a (Person)
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +39,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 165d23a (Person)
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -67,13 +75,15 @@ public class MeetingDoc extends AppCompatActivity {
     private final String[] buttonValue = {"복통", "두통", "요통","손목 통증","흉통","무릎 통증","속 쓰림","팔꿈치 통증","엉덩이 통증","발열","기침","인후통","콧물","귀 통증","이명","피로","호흡곤란","떨림","소화불량","발목 통증"};
     //기간선택 (시작날짜/끝날짜)
     private Calendar startDate, endDate;
-
+    static FirebaseAuth firebaseAuth;
+    int sizeList;
     //증상기록 리스트
     ExpandableListView expandableListView;
     CustomAdapter adapter;
     ArrayList<ParentData> groupListDatas;
     ArrayList<ArrayList<ContentData>> childListDatas;
 
+<<<<<<< HEAD
     //증상 없을경우 이미지
     ImageView notice_noData;
     //증상버튼 선택 안했을 경우 invisible
@@ -83,6 +93,11 @@ public class MeetingDoc extends AppCompatActivity {
     static FirebaseAuth firebaseAuth;
     String fire_date;
 
+=======
+    //심각도 그래프 이동했을 때 누른 버튼 저장용
+    int btnClicked = -1;
+    String fire_date;
+>>>>>>> 165d23a (Person)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -196,7 +211,7 @@ public class MeetingDoc extends AppCompatActivity {
 
     //날짜 조건 확인 (시작날짜와 끝날짜 사이)
     public boolean checkIsBetween(String date){
-
+        Log.d("check_date", date);
         //시작 / 끝 날짜
         int start = startDate.get(Calendar.YEAR)*10000+startDate.get(Calendar.MONTH)*100+startDate.get(Calendar.DAY_OF_MONTH);
         int end = endDate.get(Calendar.YEAR)*10000+endDate.get(Calendar.MONTH)*100+endDate.get(Calendar.DAY_OF_MONTH);
@@ -221,7 +236,7 @@ public class MeetingDoc extends AppCompatActivity {
         //부모,자식 데이터 arraylist
         groupListDatas = new ArrayList<ParentData>();
         childListDatas = new ArrayList<ArrayList<ContentData>>();
-        int sizeList = 0;
+        sizeList = 0;
         //누른 버튼의 값 (증상 선택)
         String selectedSymptom = buttonValue[valudIdx];
         //파이어베이스
@@ -232,7 +247,16 @@ public class MeetingDoc extends AppCompatActivity {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String uid = user.getUid();
 
+        firebaseAuth =  FirebaseAuth.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference().child("users");
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        String uid = user.getUid();
         //선택된 증상 데이터 선별
+
+
+
         for(int i=0;i< Person1.symptom.length;i++) {
             if (Person1.symptom[i].getSymptom_name().equals(selectedSymptom)&&checkIsBetween(Person1.symptom[i].getDate())) {
                 Log.d("myapp","통과됨");
