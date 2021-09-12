@@ -1,6 +1,8 @@
 package com.example.doctorcommunication;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import androidx.fragment.app.FragmentTransaction;
@@ -10,10 +12,14 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.WindowInsets;
 import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.doctorcommunication.ConditionAnalysis.Fragment_conditionAnalysis;
 import com.example.doctorcommunication.DataManagement.Symptom2;
@@ -59,27 +65,25 @@ public class MainActivity extends AppCompatActivity {
                     WindowManager.LayoutParams.FLAG_FULLSCREEN
             );
         }
-//home,진료기록,상태분석 fragment
+
+
+
+        //home,진료기록,상태분석 fragment
         homeFragment = new Fragment_home();
         //android 기본 제공되는 액션바 제거 - 사용자 정의 액션바 사용하기 위함
         getDelegate().getSupportActionBar();
         //메인화면 네비게이션 뷰 생성(activity_main에 정의됨)
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
         //기본으로 선택되어있는 프래그먼트 지정
-        setDefaultFragment();
+        FragmentTransaction initFragment = getSupportFragmentManager().beginTransaction();
+        initFragment.add(R.id.fragment_container, homeFragment);
+        initFragment.commit();
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
-
-        //의사와의 만남 -> 메인 -> 상태분석 데이터 이동
-        Intent fromDC_intent = getIntent();
-        if(fromDC_intent.getIntExtra("fileMovement",0)==1){
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container,(Fragment)(new Fragment_conditionAnalysis()));
-        }
 
 
 //설정 fragment
         //설정버튼
-        ImageButton setting = findViewById(R.id.to_setting);
+        ImageView setting = findViewById(R.id.to_setting);
         setting.setOnClickListener(v -> {
             Intent intent = new Intent(this, SettingActivity.class);
             startActivity(intent);
@@ -136,10 +140,22 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    //기본으로 선택되어있는 프래그먼트 지정
-    public void setDefaultFragment() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment_container, homeFragment);
-        transaction.commit();
+
+    //툴바 기능
+    /*
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_toolbar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("myapp","메뉴 작동함");
+        Intent intent = new Intent(this,SettingActivity.class);
+        startActivity(intent);
+        return true;
+    }
+     */
+
 }

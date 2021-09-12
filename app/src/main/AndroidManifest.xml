@@ -33,7 +33,7 @@
         </activity>
         <activity
             android:name=".DoctorMeeting.MeetingDoc"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light" />
         <activity
             android:name=".Settings.SettingActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

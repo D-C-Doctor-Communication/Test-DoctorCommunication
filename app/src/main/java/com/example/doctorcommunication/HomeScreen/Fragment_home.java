@@ -1,28 +1,43 @@
 package com.example.doctorcommunication.HomeScreen;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.doctorcommunication.ConditionAnalysis.Fragment_conditionAnalysis;
 import com.example.doctorcommunication.DataManagement.Person1;
 import com.example.doctorcommunication.DataManagement.Symptom2;
 import com.example.doctorcommunication.DoctorMeeting.MeetingDoc;
 import com.example.doctorcommunication.HomeScreen.HomeListViewAdapter;
+import com.example.doctorcommunication.MainActivity;
 import com.example.doctorcommunication.R;
+import com.example.doctorcommunication.Settings.SettingActivity;
 import com.example.doctorcommunication.SymptomRegistration.Search;
 import com.example.doctorcommunication.SymptomRegistration.SearchList;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,18 +52,30 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Set;
 
 
 public class Fragment_home extends Fragment {
     int count = -1;
-    FirebaseAuth firebaseAuth;
+    static FirebaseAuth firebaseAuth;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         Log.d("myapp","home탭 열림");
         View view = inflater.inflate(R.layout.fragment_home,container,false);
 
+        //사용자 이름 받아오기
+        //TextView helloUser = view.findViewById(R.id.user_name);
+        //helloUser.setText("회원이름");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference().child("users");
+
+        TextView helloUser = view.findViewById(R.id.user_name);
+        helloUser.setText("회원이름");
 
 //세팅
+
+
         //카드 - 증상등록 버튼
         Button btn_addSymptom = (Button)view.findViewById(R.id.btn_addSymptom);
         //카드 - 의사와의 만남 버튼
@@ -64,12 +91,6 @@ public class Fragment_home extends Fragment {
         wCalender[4] = view.findViewById(R.id.wCalender_thu); //목요일
         wCalender[5] = view.findViewById(R.id.wCalender_fri); //금요일
         wCalender[6] = view.findViewById(R.id.wCalender_sat); //토요일
-        firebaseAuth =  FirebaseAuth.getInstance();
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference().child("users");
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        String uid = user.getUid();
 
 //카드1 - 증상등록으로 이동
         btn_addSymptom.setOnClickListener(v -> { //람다형식 사용 ~ new Button.OnClickListener()와 같은 기능
@@ -86,18 +107,14 @@ public class Fragment_home extends Fragment {
 
 //카드3 - 녹음하기 팝업 띄움
         btn_recording.setOnClickListener(v -> {
-            final View popupView = getLayoutInflater().inflate(R.layout.popup_recording, null);
-            final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setView(popupView);
 
-            final AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-
-        //취소버튼
-            Button btnCancel = popupView.findViewById(R.id.no_btn);
-            btnCancel.setOnClickListener(v1 -> alertDialog.dismiss());
+            InfoDialog infoDialog = new InfoDialog();
+            infoDialog.showDialog(getActivity());
 
         });
+
+
+
 
 //주간 캘린더 - 각 날짜에 맞도록 텍스트 주마다 변경
 
@@ -117,6 +134,7 @@ public class Fragment_home extends Fragment {
         weekCalendar.setWeekCalenderDate(view,todayDate,ymTextView,wDate);
         //오늘날짜 색깔지정 (클릭한 날짜 색깔지정)
         WeekCalendar.setCardColor(todayDate.getDay(),wCalender);
+
 
 //데이터 가져오기
         /*myRef.child(uid).child("date").child("20210908").child("0").addValueEventListener(new ValueEventListener() {
@@ -200,22 +218,91 @@ public class Fragment_home extends Fragment {
         }
         static void createDataList(TextView ymTextView, TextView[] wDate, int index, ListView listView){
             //0000.00.00형식의 String 만들기
-            String clickedDate = ymTextView.getText().toString().substring(0,4)+"."+ymTextView.getText().toString().substring(6,8);
-            clickedDate += "."+wDate[index].getText().toString();
+            String clickedDate = ymTextView.getText().toString().substring(0,4)+""+ymTextView.getText().toString().substring(6,8)+""+wDate[index].getText().toString();
 
             //listView 참조 및 Adapter 연결
-            HomeListViewAdapter adapter = new HomeListViewAdapter();
+            HomeListViewAdapter adapter2 = new HomeListViewAdapter();
             //Adapter 지정
-            listView.setAdapter(adapter);
+            listView.setAdapter(adapter2);
+//            adapter.addItem(Person1.symptom[0].getPart(),R.drawable.img_pain_sym1,Integer.parseInt(Person1.symptom[0].getPain_level()),Person1.symptom[0].getPain_characteristics(),Person1.symptom[0].getPain_situation());
 
             //선택한 날짜와 같은 데이터일때 어댑터에 아이템 추가
-            for(int i = 0; i< Person1.symptom.length; i++){
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                if(Person1.symptom[i].getDate().equals(clickedDate)){
-                    adapter.addItem(Person1.symptom[i].getPart(),R.drawable.img_pain_sym1,Integer.parseInt(Person1.symptom[i].getPain_level()),Person1.symptom[i].getPain_characteristics(),Person1.symptom[i].getPain_situation());
-                }
+//            for(int i = 0; i< Person1.symptom.length; i++){
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                if(Person1.symptom[i].getDate().equals(clickedDate)){
+//                    adapter.addItem(Person1.symptom[i].getPart(),R.drawable.img_pain_sym1,Integer.parseInt(Person1.symptom[i].getPain_level()),Person1.symptom[i].getPain_characteristics(),Person1.symptom[i].getPain_situation());
+//                }
+//            }
+            firebaseAuth =  FirebaseAuth.getInstance();
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference().child("users");
+
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            String uid = user.getUid();
+            for(int i=0; i<5; i++){
+                Log.d("fire_j", String.valueOf(i));
+                myRef.child(uid).child("date").child(clickedDate).child(String.valueOf(i)).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String get_symptom = snapshot.child("symptom").getValue(String.class);
+                        String get_part = snapshot.child("part").getValue(String.class);
+                        String get_painLevel = snapshot.child("painLevel").getValue(String.class);
+                        String get_characteristics = snapshot.child("pain_characteristics").getValue(String.class);
+                        String get_situation = snapshot.child("pain_situation").getValue(String.class);
+
+                        Log.d("get_fire", get_symptom+","+get_part+","+get_painLevel+","+get_characteristics+","+get_situation);
+                        if(!get_part.equals("e")) {
+                            Log.d("fire_in", get_symptom);
+                            switch (get_symptom){
+                                case "두통":
+                                    Log.d("ee",get_part);
+                                          //   adapter2.addItem(Person1.symptom[0].getPart(),R.drawable.img_pain_sym1,Integer.parseInt(Person1.symptom[0].getPain_level()),Person1.symptom[0].getPain_characteristics(),Person1.symptom[0].getPain_situation());
+
+                                    adapter2.addItem(get_part, R.drawable.area_head_line, Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                case "기침": case "인후통": case "콧물": case "귀 통증": case "이명": case "눈물": case "코피": case "객혈": case "가래":
+                                    adapter2.addItem(get_part, R.drawable.area_face_line_off, Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                    case "팔꿈치 통증":
+                                    adapter2.addItem(get_part, R.drawable.area_arm_line_off , Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                        break;
+                                case "무릎 통증":
+                                    adapter2.addItem(get_part, R.drawable.area_leg_line_off, Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                case "요통":
+                                    adapter2.addItem(get_part, R.drawable.area_waist_line_off , Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                case "흉통":
+                                    adapter2.addItem(get_part, R.drawable.area_chest_line_off , Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                case "복통": case "속 쓰림": case "소화불량":
+                                    adapter2.addItem(get_part, R.drawable.area_stomach_line_on_01 , Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                case "엉덩이 통증":
+                                    adapter2.addItem(get_part, R.drawable.area_buttock_line_off , Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                case "발열": case "피로": case "호흡곤란": case "떨림": case "근육 경련": case "부종": case "가려움":
+                                    adapter2.addItem(get_part, R.drawable.area_head_line, Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                case "손목 통증":
+                                    adapter2.addItem(get_part, R.drawable.area_hand_line_01_off , Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                case "발목 통증":
+                                    adapter2.addItem(get_part, R.drawable.area_foot_line_off, Integer.parseInt(get_painLevel),get_characteristics, get_situation);
+                                    break;
+                                default:
+                            }
+                            adapter2.notifyDataSetChanged();
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) { }
+                });
             }
-            adapter.notifyDataSetChanged();
+
+            adapter2.notifyDataSetChanged();
             Log.d("myapp","Adapter added");
         }
 
@@ -268,7 +355,7 @@ public class Fragment_home extends Fragment {
             //일 ~ 토
             for(int i=0;i<=6;i++){
                 isDataExist = false;
-                String checkDate = todaySdf.format(cal.getTime()).substring(0,4)+"."+todaySdf.format(cal.getTime()).substring(5,7)+"."+wDate[i].getText();
+                String checkDate = todaySdf.format(cal.getTime()).substring(0,4)+""+todaySdf.format(cal.getTime()).substring(5,7)+""+wDate[i].getText();
                 for(int j=0;j<Person1.symptom.length;j++){
                     if(Person1.symptom[j].getDate().equals(checkDate)){
                         isDataExist = true;
@@ -279,4 +366,17 @@ public class Fragment_home extends Fragment {
             }
         }
     }
+    //이용불가 팝업
+    public class InfoDialog{
+        public void showDialog(Activity activity) {
+            final Dialog dialog = new Dialog(activity);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            //dialog.setContentView(R.layout.info_popup);
+            dialog.setContentView(R.layout.info_popup);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+            dialog.show();
+        }
+    }
 }
+

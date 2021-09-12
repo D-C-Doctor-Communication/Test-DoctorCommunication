@@ -1,6 +1,7 @@
 package com.example.doctorcommunication.HomeScreen;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.doctorcommunication.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
 public class HomeListViewAdapter extends BaseAdapter {
-
+    static FirebaseAuth firebaseAuth;
     private ImageView record_img;
     private TextView record_title;
     private TextView record_content_painLevel;

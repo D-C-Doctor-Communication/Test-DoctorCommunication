@@ -63,16 +63,13 @@ public class Fragment_conditionAnalysis extends Fragment {
     //팝업으로 증상 선택 처리
     AlertDialog.Builder builder;
     //사용자가 선택한 증상 목록
-    List<String> selectedSymptom;
+    List<String> selectedSymptom = new ArrayList<>();
 
 
     //증상 빈도 순위
     private TextView firstSymptom;
     private TextView secondSymptom;
     private TextView thirdSymptom;
-
-    //의사와의 만남에서 넘어왔을 때 처리 데이터
-    int fromDC_data;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -106,26 +103,6 @@ public class Fragment_conditionAnalysis extends Fragment {
         String monthSelectText = simpleFormatting.format(time.getTime());
         monthSelect.setText(monthSelectText);
 
-
-        //의사와의 만남으로부터 이동했을 경우 데이터 처리
-        Intent fromDC_intent = getActivity().getIntent();
-        fromDC_data = fromDC_intent.getIntExtra("fileMovement",-1);
-        if(fromDC_data!=-1){
-            final String[] dataValue = getResources().getStringArray(R.array.symptom_list);
-            switch (fromDC_data){
-                case 0 : chartEvent(monthSelectText,dataValue[0]);
-                    break;
-                case 1 : chartEvent(monthSelectText,dataValue[1]);
-                    break;
-                case 2 : chartEvent(monthSelectText,dataValue[2]);
-                    break;
-            }
-        }
-
-
-
-        //의사와의 만남에서 넘어왔을 경우 눌린 증상버튼 저장된 shared 인식값
-        String sharedCode = "DoctorMeeting";
         //날짜 비교 위해 날짜형식을 "yyyy년 MM월" -> 0000.00형으로 바꿈
         String dataString = changeToString(monthSelectText);
         //기본 선택된 달의 각 텍스트 표시
@@ -140,19 +117,9 @@ public class Fragment_conditionAnalysis extends Fragment {
         accrue_symptom_count.setText(OrganizedData.accruedData(dataString)+"");
         //그래프 초기 설정 (기본 두통과 가래로 선택)
         initGraph();
-        //의사와의 만남에서 선택된 버튼값이 있을경우
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(sharedCode,0);
-        String fromDC_value = sharedPreferences.getString("DoctorMeeting","");
-        if(!fromDC_value.equals("")){
-            chartEvent(dataString,fromDC_value);
-        }
-        else{
-            chartEvent(dataString,"두통","복통");
-        }
-
+        chartEvent(dataString,"두통","복통");
         //증상 순위 (날짜에 맞춰 텍스트 지정)
         setRanking(dataString,firstSymptom,secondSymptom,thirdSymptom);
-
         //그래프 증상선택 버튼 이벤트
         select_symptom.setOnClickListener(v -> {
             //팝업 생성 메소드
@@ -180,13 +147,15 @@ public class Fragment_conditionAnalysis extends Fragment {
             accrue_symptom_count.setText(OrganizedData.accruedData(dataStr)+"");
             initGraph();
             //사용자가 선택해놓은 증상이 있으면 그것으로 새로고침
-            if(selectedSymptom.size()!=0){
+            if(selectedSymptom.size()==0){
+                chartEvent(dataStr,"두통","복통");
+            }
+            else {
                 if(selectedSymptom.size()==2){
                     chartEvent(dataStr,selectedSymptom.get(0),selectedSymptom.get(1));
                 }
                 else chartEvent(dataStr,selectedSymptom.get(0));
             }
-            else chartEvent(dataStr,"두통","복통");
 
             select_symptom.setOnClickListener(v1 -> {
                 //팝업 생성 메소드
@@ -329,12 +298,12 @@ public class Fragment_conditionAnalysis extends Fragment {
     //기능별 공통사용 메소드
     //선택한 날과 각 데이터의 달을 비교하기위해 선택한 달을 0000.00형으로 바꿈
     public static String changeToString(String selectedMonth){
-        return selectedMonth.substring(0,4)+"."+selectedMonth.substring(6,8);
+        return selectedMonth.substring(0,4)+""+selectedMonth.substring(6,8);
     }
     //데이터의 기록 날짜가 상단 바에서 선택한 달과 일치하면 true 반환
     public static boolean isInSameMonth(String recordedDate,String strDate){ //0000년 00월
         //0000.00.00(데이터.getDate())과 선택한(0000.00) 달 비교
-        return recordedDate.substring(0, 7).equals(strDate);
+        return recordedDate.substring(0, 6).equals(strDate);
     }
 
 
@@ -428,9 +397,9 @@ public class Fragment_conditionAnalysis extends Fragment {
     //1주차에 존재하면 1 반환
     //2주차 : 2, 3주차 : 3, 4주차 : 4
     static int isInSameWeek(String recordedDate,String strDate){ //각각 데이터가 입력된 날짜, 상단 바에서 선택한 날짜
-        //0000.00.00(데이터.getDate())과 선택한(0000.00) 달 비교
-        if(recordedDate.substring(0,7).equals(strDate)){
-            int checkDate = Integer.parseInt(recordedDate.substring(8)); //몇일인지 저장
+        //getDate()와 선택한 날짜 비교
+        if(recordedDate.substring(0,6).equals(strDate)){
+            int checkDate = Integer.parseInt(recordedDate.substring(6)); //몇일인지 저장
             if(checkDate>=1&&checkDate<=7) return 1;
             else if(checkDate>=8&&checkDate<=14) return 2;
             else if(checkDate>=15&&checkDate<=21) return 3;
@@ -481,9 +450,6 @@ public class Fragment_conditionAnalysis extends Fragment {
     //그래프 관련 메소드
     //그래프 초기화(기본설정)
     private void initGraph(){
-
-        String[] xData = {"1주차","2주차","3주차","4주차"};
-        int[] yData = {0,2,4,6,8,10};
         //초기 기본 설정
         //X값 속성 설정
         XAxis xAxis = lineChart.getXAxis();
@@ -522,12 +488,8 @@ public class Fragment_conditionAnalysis extends Fragment {
     }
     //체크박스에서 선택한 증상 1개를 받아 그래프(1개)를 그림
     private void chartEvent(String strDate,String firstSymp){ //날짜와 사용자가 선택한 증상 1개를 받아옴
+        Log.d("myapp","strDate : " + strDate);
         int[] dataArray1 = getAverageOfWeek(strDate,firstSymp); //날짜에 해당하는 데이터 배열을 받아옴
-
-        //값이 모두 0일 경우 dim처리
-//        if(dataArray1[0]==0&&dataArray1[1]==0&&dataArray1[2]==0&&dataArray1[3]==0){
-//            getActivity().getWindow().setBackgroundDrawable(new ColorDrawable(0x7f000000));
-//        }
 
         //그래프 데이터 리스트 생성 (x축 한칸당 값, y값)
         List<Entry> entries1 = new ArrayList<>(); //첫번째 증상
@@ -567,10 +529,6 @@ public class Fragment_conditionAnalysis extends Fragment {
         int[] dataArray1 = getAverageOfWeek(strDate,firstSymp); //날짜에 해당하는 데이터 배열을 받아옴
         int[] dataArray2 = getAverageOfWeek(strDate,secondSymp);
 
-        //값이 모두 0일 경우 dim처리
-//        if(dataArray1[0]==0&&dataArray1[1]==0&&dataArray1[2]==0&&dataArray1[3]==0){
-//            getActivity().getWindow().setBackgroundDrawable(new ColorDrawable(0x7f000000));
-//        }
 
         //그래프 데이터 리스트 생성 (x축 한칸당 값, y값)
         ArrayList<Entry> entries1 = new ArrayList<>(); //첫번째 증상
