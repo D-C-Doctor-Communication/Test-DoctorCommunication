@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_selected="false" android:textcolor="#29000000">
+    <item android:state_selected="false" android:textColor="#29000000">
         <shape>
             <solid
                 android:color="#FFFFFF"/>
@@ -14,7 +14,7 @@
                 android:topLeftRadius="3dp"/>
         </shape>
     </item>
-    <item android:state_selected="true" android:textcolor="#ffffff">
+    <item android:state_selected="true" android:textColor="#ffffff">
         <shape>
             <solid
                 android:color="#0078ff"/>
