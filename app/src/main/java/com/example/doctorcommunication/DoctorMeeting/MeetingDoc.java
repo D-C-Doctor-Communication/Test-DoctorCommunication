@@ -56,7 +56,7 @@ public class MeetingDoc extends AppCompatActivity {
     //날짜선택 버튼 위 증상 텍스트
     private TextView symptom_title;
     //버튼 - 심각도 그래프로 이동하는 버튼
-    private Button gotoGraph;
+    private TextView gotoGraph;
     //증상선택 버튼 키값
     private final int[] buttonKey = {R.id.btn_1_symptom,R.id.btn_2_symptom,R.id.btn_3_symptom,R.id.btn_4_symptom,R.id.btn_5_symptom
             ,R.id.btn_6_symptom,R.id.btn_7_symptom,R.id.btn_8_symptom,R.id.btn_9_symptom,R.id.btn_10_symptom
