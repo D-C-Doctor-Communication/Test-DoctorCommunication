@@ -1,7 +1,9 @@
 package com.example.doctorcommunication.SymptomRegistration;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -108,6 +110,12 @@ public class AddDetails extends AppCompatActivity{
                 myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("pain_situation").setValue(selected_worse[0]);
                 myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("accompany_pain").setValue(selected_osymptom[0]);
                 myRef.child(uid).child("date").child(date_txt).child(String.valueOf(repeat)).child("additional").setValue(select_details);
+
+                SharedPreferences sharedPreferences= getSharedPreferences("symptom", MODE_PRIVATE);    // test 이름의 기본모드 설정
+                SharedPreferences.Editor editor= sharedPreferences.edit(); //sharedPreferences를 제어할 editor를 선언
+                editor.putString("inputText",selected_symptom); // key,value 형식으로 저장
+                editor.commit();    //최종 커밋. 커밋을 해야 저장이 된다.
+                Log.e("증상", "증상저장2");
 
                 startActivity(intent);
                 finish();

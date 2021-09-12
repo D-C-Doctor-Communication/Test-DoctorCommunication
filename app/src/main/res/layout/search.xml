@@ -94,19 +94,19 @@
         app:layout_constraintStart_toStartOf="@+id/Leftguideline"
         app:layout_constraintTop_toBottomOf="@+id/search_text02" />
 
-    <TextView
-        android:id="@+id/often_symptom"
+    <LinearLayout
+        android:id="@+id/lately_layout"
         android:layout_width="0dp"
-        android:layout_height="25dp"
-        android:gravity="left|center"
-        android:layout_marginTop="140dp"
-        android:layout_marginLeft="8dp"
-        android:text="자주 찾으시는 증상"
-        android:textSize="10sp"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintBottom_toTopOf="@+id/Downguideline"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/Rightguideline"
         app:layout_constraintStart_toStartOf="@+id/Leftguideline"
-        app:layout_constraintTop_toBottomOf="@+id/search_text02" />
+        app:layout_constraintTop_toBottomOf="@+id/last_symptom"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintVertical_bias="0"
+        android:orientation="horizontal">
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

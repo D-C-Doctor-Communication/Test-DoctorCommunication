@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="180">
+           >
 
             <!--CARD1-->
             <androidx.cardview.widget.CardView
@@ -226,7 +226,7 @@
             android:gravity="center"
             android:text=""
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/daysLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -250,10 +250,10 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/wCalender_sun"
                 style="@style/wCalender"
-                android:layout_marginStart="16dp"
                 app:cardElevation="0dp"
+                android:layout_marginStart="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/wCalender_mon"
+                app:layout_constraintEnd_toStartOf="@id/wCalender_mon"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">

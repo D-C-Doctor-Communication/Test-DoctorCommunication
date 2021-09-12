@@ -14,6 +14,7 @@
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/arm_clicked08.xml" value="0.235546875" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/arm_clicked09.xml" value="0.235546875" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/arm_clicked10.xml" value="0.235546875" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/body_clicked01.xml" value="0.21981981981981982" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/btn_radius_ractangle.xml" value="0.14027777777777778" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/buttock_clicked01.xml" value="0.25769230769230766" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/buttock_clicked02.xml" value="0.25769230769230766" />
@@ -85,7 +86,7 @@
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/add_symptom.xml" value="0.1296875" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/dc_listview_item.xml" value="0.1" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/fragment_condition_analysis.xml" value="0.1" />
-        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/fragment_medical_chart.xml" value="0.33" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/home_listview_item.xml" value="0.1133879781420765" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/mc_info_popup.xml" value="0.1" />
@@ -97,6 +98,7 @@
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/search_list.xml" value="0.22" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_body_arm.xml" value="0.33" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_body_back.xml" value="0.211328125" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_body_body.xml" value="0.35703125" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_body_buttock.xml" value="0.5" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_body_chest.xml" value="0.24444444444444444" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_body_face.xml" value="0.33" />

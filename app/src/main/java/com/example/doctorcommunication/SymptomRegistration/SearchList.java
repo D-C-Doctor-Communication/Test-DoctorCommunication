@@ -44,7 +44,6 @@ public class SearchList extends AppCompatActivity {
     String[] part_Nm;
     int[] part_num;
     JSONObject jo;
-    String [] whole_body={"전신"};
     String registration;
     private Context mContext;
     private TextView txt_preferences;
@@ -203,9 +202,9 @@ public class SearchList extends AppCompatActivity {
                 }
                 case 11 : {  //전신
                     Log.e("her!", "11번");
-                    intent = new Intent(SearchList.this, SelectLevel.class);
+                    intent = new Intent(SearchList.this, SelectBody_body.class);
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
-                    intent.putExtra("part", whole_body);
+                    intent.putExtra("part",part_num[position]);
                     intent.putExtra("repeat",repeat);
                     startActivity(intent);
                     break;
