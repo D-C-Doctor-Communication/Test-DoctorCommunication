@@ -3,7 +3,10 @@ package com.example.doctorcommunication.HomeScreen;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class HomeListViewItem {
+    static FirebaseAuth firebaseAuth;
     private int record_img;
     private String record_title;
     private int record_content_painLevel;
