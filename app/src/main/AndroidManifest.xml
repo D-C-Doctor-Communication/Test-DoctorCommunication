@@ -59,6 +59,7 @@
         <activity android:name=".SymptomRegistration.SelectBody_back" />
         <activity android:name=".SymptomRegistration.SelectBody_foot" />
         <activity android:name=".SymptomRegistration.SelectBody_face" />
+        <activity android:name=".SymptomRegistration.SelectBody_body" />
         <activity android:name=".SymptomRegistration.SelectLevel" />
         <activity android:name=".SymptomRegistration.AddDetails" />
         <activity android:name=".SignActivity"/>

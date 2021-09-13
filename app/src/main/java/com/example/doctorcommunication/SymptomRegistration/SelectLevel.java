@@ -181,9 +181,10 @@ public class SelectLevel extends AppCompatActivity {
                     }
                     case 11: {  //전신
                         Log.e("intentL", "11번");
-                        intent = new Intent(SelectLevel.this, SearchList.class);
+                        intent = new Intent(SelectLevel.this, SelectBody_body.class);
+                        intent.putExtra("symptom", symptom);
+                        intent.putExtra("part", part);
                         intent.putExtra("repeat",repeat);
-
                         startActivity(intent);
                         break;
                     }
