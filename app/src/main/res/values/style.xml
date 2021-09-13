@@ -38,6 +38,7 @@
     <!--Calendar-->
     <style name="Monthlycalendar_header">
         <item name="android:textSize">20sp</item>
+        <item name="fontFamily">@font/nanumsquareregular</item>
     </style>
 
 

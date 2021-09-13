@@ -7,37 +7,43 @@
     android:paddingLeft="24dp"
     android:paddingTop="10dp">
 
-    <androidx.constraintlayout.utils.widget.ImageFilterView
-        android:id="@+id/icon"
-        android:layout_width="46dp"
-        android:layout_height="53dp"
-        tools:srcCompat="@tools:sample/avatars[3]" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/titleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="제목텍스트"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="46dp"
+            android:layout_height="53dp"
+            android:src="@drawable/clinic_checkup"/>
         <LinearLayout
+            android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical">
             <TextView
-                android:id="@+id/location"
+                android:id="@+id/titleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="장소"/>
-            <TextView
-                android:id="@+id/time"
+                android:text="제목텍스트"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="18sp"/>
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="시간"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="장소"/>
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="시간"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>
