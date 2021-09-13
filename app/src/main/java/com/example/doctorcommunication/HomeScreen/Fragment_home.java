@@ -57,21 +57,33 @@ import java.util.Set;
 
 public class Fragment_home extends Fragment {
     int count = -1;
-    static FirebaseAuth firebaseAuth;
+
+    static FirebaseAuth firebaseAuth =  FirebaseAuth.getInstance();
+    static FirebaseDatabase database = FirebaseDatabase.getInstance();
+    static DatabaseReference myRef = database.getReference().child("users");
+    static FirebaseUser user = firebaseAuth.getCurrentUser();
+    static String uid = user.getUid();
+
+    //데이터가 있는 날짜에 점찍기
+    static boolean isDataExist = false;
+    static String fire_date="";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         Log.d("myapp","home탭 열림");
         View view = inflater.inflate(R.layout.fragment_home,container,false);
-
+        myRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String get_name = snapshot.child("name").getValue(String.class);
+                TextView helloUser = view.findViewById(R.id.user_name);
+                helloUser.setText(get_name);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { }
+        });
         //사용자 이름 받아오기
-        //TextView helloUser = view.findViewById(R.id.user_name);
-        //helloUser.setText("회원이름");
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference().child("users");
 
-        TextView helloUser = view.findViewById(R.id.user_name);
-        helloUser.setText("회원이름");
 
 //세팅
 
@@ -135,21 +147,6 @@ public class Fragment_home extends Fragment {
         //오늘날짜 색깔지정 (클릭한 날짜 색깔지정)
         WeekCalendar.setCardColor(todayDate.getDay(),wCalender);
 
-
-//데이터 가져오기
-        /*myRef.child(uid).child("date").child("20210908").child("0").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Symptom2 symptom = snapshot.getValue(Symptom2.class);
-                String dd = snapshot.child("symptom").getValue(String.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
-        //Log.d("월", );
 //ListView
         ListView listView = (ListView)view.findViewById(R.id.home_listView);
         //오늘로 기본 리스트 보여짐
@@ -197,8 +194,6 @@ public class Fragment_home extends Fragment {
             WeekCalendar.setCardColor(6,wCalender);
         });
 
-
-
         return view;
     }
 
@@ -224,21 +219,7 @@ public class Fragment_home extends Fragment {
             HomeListViewAdapter adapter2 = new HomeListViewAdapter();
             //Adapter 지정
             listView.setAdapter(adapter2);
-//            adapter.addItem(Person1.symptom[0].getPart(),R.drawable.img_pain_sym1,Integer.parseInt(Person1.symptom[0].getPain_level()),Person1.symptom[0].getPain_characteristics(),Person1.symptom[0].getPain_situation());
 
-            //선택한 날짜와 같은 데이터일때 어댑터에 아이템 추가
-//            for(int i = 0; i< Person1.symptom.length; i++){
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                if(Person1.symptom[i].getDate().equals(clickedDate)){
-//                    adapter.addItem(Person1.symptom[i].getPart(),R.drawable.img_pain_sym1,Integer.parseInt(Person1.symptom[i].getPain_level()),Person1.symptom[i].getPain_characteristics(),Person1.symptom[i].getPain_situation());
-//                }
-//            }
-            firebaseAuth =  FirebaseAuth.getInstance();
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference().child("users");
-
-            FirebaseUser user = firebaseAuth.getCurrentUser();
-            String uid = user.getUid();
             for(int i=0; i<5; i++){
                 Log.d("fire_j", String.valueOf(i));
                 myRef.child(uid).child("date").child(clickedDate).child(String.valueOf(i)).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -308,7 +289,7 @@ public class Fragment_home extends Fragment {
 
         @SuppressLint("SetTextI18n")
         void setWeekCalenderDate(View view, Date date, TextView ymTextView, TextView[] wDate){ //주간캘린더 날짜변경 메소드
-
+            firebaseAuth =  FirebaseAuth.getInstance();
             //각 요일의 점
             ImageView[] weekCalendarDot = new ImageView[]{
                     view.findViewById(R.id.sun_dot),
@@ -350,16 +331,31 @@ public class Fragment_home extends Fragment {
                 Log.d("myapp","캘린더 : "+cal.get(Calendar.YEAR)+monthValue+dayValue);
             }
 
-            //데이터가 있는 날짜에 점찍기
-            boolean isDataExist = false;
             //일 ~ 토
             for(int i=0;i<=6;i++){
                 isDataExist = false;
                 String checkDate = todaySdf.format(cal.getTime()).substring(0,4)+""+todaySdf.format(cal.getTime()).substring(5,7)+""+wDate[i].getText();
-                for(int j=0;j<Person1.symptom.length;j++){
-                    if(Person1.symptom[j].getDate().equals(checkDate)){
-                        isDataExist = true;
-                        break;
+                for(int j = 1; j <= 30; j++){
+                    fire_date = String.valueOf(j);
+                    if((int)(Math.log10(j)+1) == 1) fire_date = "0"+fire_date;
+                    fire_date = "202109" +  fire_date;
+                    Log.d("myapp","fire_date : "+fire_date);
+                    for(int k=0; k<5; k++){
+                        myRef.child(uid).child("date").child(fire_date).child(String.valueOf(k)).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                String get_symptom = snapshot.child("symptom").getValue(String.class);
+                                Log.d("myappp",fire_date+" 와 "+checkDate+" 비교");
+
+                                if(!get_symptom.equals("e") && fire_date.equals(checkDate)){
+                                    isDataExist = true;
+                                    Log.d("trrr", String.valueOf(isDataExist));
+                                }
+
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) { }
+                        });
                     }
                 }
                 if(isDataExist) weekCalendarDot[i].setVisibility(View.VISIBLE);

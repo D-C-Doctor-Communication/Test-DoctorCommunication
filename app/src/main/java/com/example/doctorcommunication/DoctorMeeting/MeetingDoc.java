@@ -4,29 +4,31 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
+import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.doctorcommunication.DataManagement.Person1;
+import com.example.doctorcommunication.ConditionAnalysis.Fragment_conditionAnalysis;
+import com.example.doctorcommunication.MainActivity;
 import com.example.doctorcommunication.R;
 import com.example.doctorcommunication.Recording.Recording;
 import com.google.firebase.auth.FirebaseAuth;
@@ -62,8 +64,6 @@ public class MeetingDoc extends AppCompatActivity {
             ,R.id.btn_16_symptom,R.id.btn_17_symptom,R.id.btn_18_symptom,R.id.btn_19_symptom,R.id.btn_20_symptom};
     //버튼 - 증상선택 버튼
     private final Button[] symptomBtn = new Button[buttonKey.length];
-    //선택된 버튼 인덱스
-    private int selectedButtonIdx=0;
     //증상선택 버튼 내용
     private final String[] buttonValue = {"복통", "두통", "요통","손목 통증","흉통","무릎 통증","속 쓰림","팔꿈치 통증","엉덩이 통증","발열","기침","인후통","콧물","귀 통증","이명","피로","호흡곤란","떨림","소화불량","발목 통증"};
     //기간선택 (시작날짜/끝날짜)
@@ -76,15 +76,9 @@ public class MeetingDoc extends AppCompatActivity {
     ArrayList<ParentData> groupListDatas;
     ArrayList<ArrayList<ContentData>> childListDatas;
 
-    //증상 없을경우 이미지
-    ImageView notice_noData;
-    //증상버튼 선택 안했을 경우 invisible
-    RelativeLayout selectedDataLayout;
-
-    //파이어베이스
-    String fire_date;
     //심각도 그래프 이동했을 때 누른 버튼 저장용
     int btnClicked = -1;
+    String fire_date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,8 +89,8 @@ public class MeetingDoc extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction(); // 각 프레그먼트들로 이동하기 위한 객체 생성
         //툴바 구성 - 이전버튼, 녹음버튼있
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        actionBar.setCustomView(R.layout.dc_actionbar);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle("의사와의 만남");
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_back_btn);
@@ -109,24 +103,13 @@ public class MeetingDoc extends AppCompatActivity {
         endDate = Calendar.getInstance();
         //증상기록 리스트 뷰 연결
         expandableListView = findViewById(R.id.DC_listview);
-        //데이터 없을경우
-        notice_noData = findViewById(R.id.notice_noData);
-        selectedDataLayout = findViewById(R.id.selectedDataLayout);
 
 
 
-        //증상 심각도 팝업 띄우기
+        // 증상에 대한 심각도 그래프로 이동하는 버튼
         gotoGraph = findViewById(R.id.btn_gotoGraph);
         gotoGraph.setOnClickListener(v -> {
-            String graphDate = startDate.get(Calendar.YEAR)+""+startDate.get(Calendar.MONTH);
-            //팝업 띄우기
-            GraphDialog graphDialog = new GraphDialog(MeetingDoc.this,graphDate,buttonValue[selectedButtonIdx]);
-            graphDialog.setCancelable(true);
-            graphDialog.setCanceledOnTouchOutside(true);
-            graphDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-            graphDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            graphDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-            graphDialog.show();
+            finish();
         });
 
         //날짜선택 버튼 위 증상 텍스트
@@ -208,7 +191,7 @@ public class MeetingDoc extends AppCompatActivity {
         return false;
     }
 
-// -> toolbar 기능 (뒤로가기 버튼)
+    // -> toolbar 기능 (뒤로가기 버튼)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         finish();
@@ -226,89 +209,112 @@ public class MeetingDoc extends AppCompatActivity {
         sizeList = 0;
         //누른 버튼의 값 (증상 선택)
         String selectedSymptom = buttonValue[valudIdx];
-        //파이어베이스
+
         firebaseAuth =  FirebaseAuth.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference().child("users");
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String uid = user.getUid();
-
         //선택된 증상 데이터 선별
 
 
+        for(int i=1; i<=30; i++){
+            fire_date = String.valueOf(i);
+            if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
+            fire_date = "202109" +  fire_date;
 
-        for(int i=0;i< Person1.symptom.length;i++) {
-            if (Person1.symptom[i].getSymptom_name().equals(selectedSymptom)&&checkIsBetween(Person1.symptom[i].getDate())) {
-                Log.d("myapp","통과됨");
-                Calendar calendar = Calendar.getInstance();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
-                String init = Person1.symptom[i].getDate();
-                String dateStr = init.substring(0,4)+"."+init.substring(4,6)+"."+init.substring(6);
-                String yoil = "";
-                try {
-                    Date date = sdf.parse(Person1.symptom[i].getDate());
-                    calendar.setTime(date);
-                    yoil = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.KOREAN);
-                } catch (ParseException e) {
-                    Log.d("myapp","예외발생");
-                    e.printStackTrace();
+            if(checkIsBetween(fire_date)){
+                Log.d("fire_Date", fire_date);
+                for(int j=0; j<5; j++){
+                    myRef.child(uid).child("date").child(fire_date).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            String get_symptom = snapshot.child("symptom").getValue(String.class);
+                            String get_part = snapshot.child("part").getValue(String.class);
+                            String get_painLevel = snapshot.child("painLevel").getValue(String.class);
+                            String get_characteristics = snapshot.child("pain_characteristics").getValue(String.class);
+                            String get_situation = snapshot.child("pain_situation").getValue(String.class);
+                            String get_accompany_pain = snapshot.child("accompany_pain").getValue(String.class);
+                            String get_additional = snapshot.child("additional").getValue(String.class);
+
+                            Log.d("get_fire", get_symptom+","+get_part+","+get_painLevel+","+get_characteristics+","+get_situation+","+get_accompany_pain+","+get_additional);
+
+                            if((!get_symptom.equals("e")) && get_symptom.equals(selectedSymptom)) {
+                                Log.d("fire_Date 통과", get_symptom+selectedSymptom);
+                                Calendar calendar = Calendar.getInstance();
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
+                                Log.d("datestr", fire_date);
+                                String dateStr = fire_date.substring(0,4)+"."+fire_date.substring(4,6)+"."+fire_date.substring(6);
+                                Log.d("datestr", dateStr);
+                                String yoil = "";
+                                try {
+                                    Date date = sdf.parse(fire_date);
+                                    calendar.setTime(date);
+                                    yoil = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.KOREAN);
+                                } catch (ParseException e) {
+                                    Log.d("myapp","예외발생");
+                                    e.printStackTrace();
+                                }
+                                Log.d("parent", dateStr+","+yoil+get_part+","+get_painLevel);
+                                groupListDatas.add(new ParentData(
+                                        dateStr + " ("+yoil+")",
+                                        "get_part",
+                                        "get_painLevel")
+                                );
+                                childListDatas.add(new ArrayList<ContentData>());
+                                Log.d("get_fire2", get_symptom+","+get_part+","+get_painLevel+","+get_characteristics+","+get_situation+","+get_accompany_pain+","+get_additional);
+                                childListDatas.get(sizeList).add(new ContentData(
+                                        "get_part" ,
+                                        get_painLevel,
+                                        "get_characteristics" ,
+                                        "get_situation" ,
+                                        "get_accompany_pain",
+                                        "get_additional")
+                                );
+                                Log.d("sizelist",sizeList+"");
+                                childListDatas.get(sizeList).add(new ContentData(
+                                        "get_part" ,
+                                        get_painLevel,
+                                        "get_characteristics" ,
+                                        "get_situation" ,
+                                        "get_accompany_pain",
+                                        "get_additional")
+                                );
+                                sizeList++;
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) { }
+                    });
                 }
-                //date
-                //symp_name
-                //pain_level
-                groupListDatas.add(new ParentData(
-                        dateStr + " ("+yoil+")",
-                        Person1.symptom[i].getPart(),
-                        Person1.symptom[i].getPain_level())
-                );
-                //list_part
-                //list_painLevel
-                //list_characteristics
-                //list_situation
-                //list_accompany_pain
-                //list_additional
-                childListDatas.add(new ArrayList<ContentData>());
-                childListDatas.get(sizeList).add(new ContentData(
-                        Person1.symptom[i].getPart(),
-                        Person1.symptom[i].getPain_level(),
-                        Person1.symptom[i].getPain_characteristics(),
-                        Person1.symptom[i].getPain_situation(),
-                        Person1.symptom[i].getAccompany_pain(),
-                        Person1.symptom[i].getAdditional())
-                );
-                sizeList++;
             }
         }
-        if(groupListDatas.size()==0) notice_noData.setVisibility(View.VISIBLE);
-        else notice_noData.setVisibility(View.GONE);
+
     }
 
 
     //증상별로 데이터 넘겨주기
     public void sympOnClick(View view){
         for(int i=0;i<buttonKey.length;i++){
-            //레이아웃 변경
-            selectedDataLayout.setVisibility(View.VISIBLE);
-            symptomBtn[i].setBackgroundResource(R.drawable.dc_button_nonclicked);
-            int color_black = ContextCompat.getColor(getApplicationContext(),R.color.black);
-            symptomBtn[i].setTextColor(color_black);
+            symptomBtn[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
             if(view.getId()==buttonKey[i]){
-                //레이아웃 변경
-                int color_white = ContextCompat.getColor(getApplicationContext(),R.color.white);
-                symptomBtn[i].setTextColor(color_white);
-                symptomBtn[i].setBackgroundResource(R.drawable.dc_button_clicked);
+                symptomBtn[i].setBackgroundColor(Color.parseColor("#0078ff"));
                 Log.d("myapp", buttonValue[i] + " 버튼 눌림");
                 //텍스트 지정
                 symptom_title.setText(buttonValue[i]);
                 //선택한 증상에 맞는 데이터 처리 (리스트 데이터 준비)
+
                 setData(i);
+                //Log.d("list", childListDatas.get(0).get(0).getPart());
                 adapter = new CustomAdapter(this,groupListDatas,childListDatas);
                 //리스트 생성
                 expandableListView.setAdapter(adapter);
-                selectedButtonIdx = i;
+                adapter.notifyDataSetChanged();
+                btnClicked = i;
             }
         }
 
     }
+
 }

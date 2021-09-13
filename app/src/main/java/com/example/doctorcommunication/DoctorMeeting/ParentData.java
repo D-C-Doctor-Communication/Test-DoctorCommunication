@@ -24,19 +24,27 @@ public class ParentData {
 
     public String getPain_level() {
         String value="";
-        switch(Integer.parseInt(pain_level)){
-            case 0: value = "통증이 없음 (0)";
-            case 1: value = "괜찮은 통증 (1)";
-            case 2: value = "조금 아픈 통증 (2)";
-            case 3: value = "웬만한 통증 (3)";
-            case 4: value = "괴로운 통증 (4)";
-            case 5: value = "매우 괴로운 통증 (5)";
-            case 6: value = "극심한 통증 (6)";
-            case 7: value = "매우 극심한 통증 (6)";
-            case 8: value = "끔찍한 통증 (6)";
-            case 9: value = "참을 수 없는 통증 (6)";
-            case 10: value = "상상할 수 없는 통증 (6)";
+        try{
+            switch(Integer.parseInt(pain_level)){
+                case 0: value = "통증이 없음 (0)";
+                case 1: value = "괜찮은 통증 (1)";
+                case 2: value = "조금 아픈 통증 (2)";
+                case 3: value = "웬만한 통증 (3)";
+                case 4: value = "괴로운 통증 (4)";
+                case 5: value = "매우 괴로운 통증 (5)";
+                case 6: value = "극심한 통증 (6)";
+                case 7: value = "매우 극심한 통증 (6)";
+                case 8: value = "끔찍한 통증 (6)";
+                case 9: value = "참을 수 없는 통증 (6)";
+                case 10: value = "상상할 수 없는 통증 (6)";
+            }
+        } catch (NumberFormatException e){
+            value = "알수없음";
         }
+        catch (Exception e){
+            value = "최종예외";
+        }
+
         return value;
     }
 }

@@ -107,14 +107,20 @@ public class RegisterActivity extends AppCompatActivity {
                                 hashMap.put("accompany_pain","e");
                                 hashMap.put("additional","e");
 
-                                //HashMap<String> hashMap = new HashMap<>();
+                                hashMap.put("time","e");
+                                hashMap.put("scheduleName","e");
+                                hashMap.put("place","e");
+                                hashMap.put("clinic_checkup", "e");
+                                hashMap.put("clinic_clinic", "e");
 
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                                 DatabaseReference myRef = database.getReference().child("users");
 
                                 myRef.child(uid).child("email").setValue(email);
                                 myRef.child(uid).child("name").setValue(name);
+
                                 String date="";
+                                String schedule="";
                                 for(int i=1; i<=30; i++) {
                                     int length = (int) (Math.log10(i) + 1);
                                     if (length == 1) {
@@ -128,27 +134,6 @@ public class RegisterActivity extends AppCompatActivity {
                                     }
                                 }
 
-
-//                                myRef.child(uid).child("date").child("20210901").child("0").addValueEventListener(new ValueEventListener() {
-//                                    @Override
-//                                    public void onDataChange(DataSnapshot snapshot) {
-//                                        Symptom2 symptom = snapshot.getValue(Symptom2.class);
-//                                        Log.d(TAG, "part: " + symptom.getSymptom());
-//                                    }
-//
-//                                    @Override
-//                                    public void onCancelled(DatabaseError error) {
-//
-//                                    }
-//                                });
-
-                                //List nameList = new ArrayList<String>(Arrays.asList(arr));
-                                //~
-                                /*reference.child(uid).setValue(hashMap);*/
-
-                                //writeNewUser(uid);
-
-                                //mDatabase.child("Users").child(userId).child("date").setValue(nameList);
                                 // 가입이 이루어져을시 가입 화면을 빠져나감
                                 Toast.makeText(RegisterActivity.this, "회원가입에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
