@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doctorcommunication.R;
 
+import java.util.List;
+
 public class DataInfo_PopupActivity extends AppCompatActivity {
 
 
@@ -35,11 +37,9 @@ public class DataInfo_PopupActivity extends AppCompatActivity {
         //동적으로 추가
         for(int i=0;i<2;i++){
             DataInfo_PopupLayout n_layout = new DataInfo_PopupLayout(getApplicationContext());
-            LinearLayout addLayout = (LinearLayout)findViewById(R.id.addLayout);
+            LinearLayout addLayout = (LinearLayout)findViewById(R.id.container);
             addLayout.addView(n_layout);
         }
-
-
     }
 
     @Override
