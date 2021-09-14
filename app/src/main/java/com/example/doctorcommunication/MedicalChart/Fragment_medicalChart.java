@@ -8,31 +8,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import org.threeten.bp.DayOfWeek;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.TextStyle;
 
-import com.example.doctorcommunication.DataManagement.Appointment;
 import com.example.doctorcommunication.DataManagement.Person1;
-import com.example.doctorcommunication.MedicalChart.MCListViewAdapter;
-import com.example.doctorcommunication.MedicalChart.MC_DotEventDecorator;
-import com.example.doctorcommunication.MedicalChart.MC_PopupActivity;
 import com.example.doctorcommunication.R;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -54,9 +48,7 @@ public class Fragment_medicalChart extends Fragment {
     //진료 일정 추가하기
     TextView btn_addAppointDoctor;
     //진료 일정이 없습니다 텍스트
-    TextView noneDataText;
-    //진료 후기 작성하기
-    TextView btn_writeReview;
+    ImageView noneData;
     //진료 후기 수정 버튼
     ImageButton MC_editBtn;
     //진료 후기 텍스트 - 입력란
@@ -66,7 +58,6 @@ public class Fragment_medicalChart extends Fragment {
     static final int REQ_ADD_CONTACT = 1;
     //리스트
     ListView listView;
-    MCListViewAdapter listViewAdapter;
     //각 날짜를 클릭했을 때 사용할 어댑터
     MCListViewAdapter adapter = new MCListViewAdapter();
     //기록 데이터 확인 버튼
@@ -82,8 +73,6 @@ public class Fragment_medicalChart extends Fragment {
         materialCalendarView = view.findViewById(R.id.calendarView);
         //선택한 날짜
         selectedDate = view.findViewById(R.id.selectedDate);
-        //진료 일정 추가하기
-        //btn_addAppointDoctor = view.findViewById(R.id.btn_addAppointDoctor);
         //진료 후기 수정 버튼
         MC_editBtn = view.findViewById(R.id.MC_editBtn);
         //진료 후기 텍스트 - 입력란
@@ -91,8 +80,8 @@ public class Fragment_medicalChart extends Fragment {
         MC_LineTextView = view.findViewById(R.id.MC_LineTextView);
         //병원 일정 추가하기 버튼
         btn_addAppointDoctor = view.findViewById(R.id.btn_addAppointDoctor);
-        //진료 일정이 없습니다 TextView
-        noneDataText = view.findViewById(R.id.noneDataText);
+        //진료 일정이 없습니다 ImageView
+        noneData = view.findViewById(R.id.noneData);
         //기록 데이터 확인 버튼
         show_data = view.findViewById(R.id.show_data);
 
@@ -109,7 +98,16 @@ public class Fragment_medicalChart extends Fragment {
         int basicYear = date.getYear();
         int basicMonth = date.getMonth()+1;
         int basicDay = date.getDay();
-        selectedDateString = basicYear+""+basicMonth+""+basicDay;
+        if(basicMonth<10){
+            if(basicDay<10) selectedDateString = basicYear+"0"+basicMonth+"0"+basicDay;
+            else selectedDateString = basicYear+"0"+basicMonth+""+basicDay;
+        }
+        else{
+            if(basicDay<10){
+                if(basicDay<10) selectedDateString = basicYear+""+basicMonth+"0"+basicDay;
+                else selectedDateString = basicYear+""+basicMonth+""+basicDay;
+            }
+        }
 
         //00.00 (월) 텍스트 지정
         monthCalendar.setDateText(basicYear,basicMonth,basicDay,selectedDate);
@@ -142,8 +140,16 @@ public class Fragment_medicalChart extends Fragment {
             //선택된 날짜 텍스트 변경 00.00(월)
             monthCalendar.setDateText(Year,Month,Day,selectedDate);
             //00000000형식의 날짜 저장
-            selectedDateString = Year+""+Month+""+Day;
-
+            if(Month<10){
+                if(Day<10) selectedDateString = Year+"0"+Month+"0"+Day;
+                else selectedDateString = Year+"0"+Month+""+Day;
+            }
+            else{
+                if(Month<10){
+                    if(Day<10) selectedDateString = Year+""+Month+"0"+Day;
+                    else selectedDateString = Year+""+Month+""+Day;
+                }
+            }
             //어댑터 초기화
             adapter.clearData();
             //진료 일정 조회 + 리스트 생성
@@ -162,6 +168,8 @@ public class Fragment_medicalChart extends Fragment {
         //데이터 확인 팝업 띄움
         show_data.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(),DataInfo_PopupActivity.class);
+            Log.d("myapp","selectedDateString : "+selectedDateString+"");
+            intent.putExtra("selectedDate",selectedDateString);
             startActivity(intent);
         });
 
@@ -178,105 +186,123 @@ public class Fragment_medicalChart extends Fragment {
 
 
     //데이터 관련 메소드
-        //진료 일정 조회 + 리스트 생성
-        public void checkAppointment(){
-            //listview 참조 및 adapter 연결
-            MCListViewAdapter listViewAdapter = new MCListViewAdapter();
-            listView.setAdapter(listViewAdapter);
+    //진료 일정 조회 + 리스트 생성
+    public void checkAppointment(){
+        //listview 참조 및 adapter 연결
+        MCListViewAdapter listViewAdapter = new MCListViewAdapter();
 
-            for(int i=0;i<Person1.appointments.length;i++){
-                if(Person1.appointments[i].getDate().equals(selectedDateString)){
-                    if(Person1.appointments[i].getSort().equals("검사")){
-                        listViewAdapter.addItem(R.drawable.clinic_checkup,Person1.appointments[i].getName(),Person1.appointments[i].getLocation(),Person1.appointments[i].getTime());
-                        listView.setVisibility(View.VISIBLE);
-                        noneDataText.setVisibility(View.INVISIBLE);
-                        btn_addAppointDoctor.setBackgroundColor(Color.parseColor("#0f000000"));
-                    }
-                    else if(Person1.appointments[i].getSort().equals("진료")){
-                        listViewAdapter.addItem(R.drawable.clinic_clinic,Person1.appointments[i].getName(),Person1.appointments[i].getLocation(),Person1.appointments[i].getTime());
-                        listView.setVisibility(View.VISIBLE);
-                        noneDataText.setVisibility(View.INVISIBLE);
-                        btn_addAppointDoctor.setBackgroundColor(Color.parseColor("#0f000000"));
-                    }
-                }
-            }
-            listViewAdapter.notifyDataSetChanged();
-            Log.d("myapp","Adapter added");
-        }
-
-        //진료 후기 작성
-        public void changeTextEdit(String selectedDateString){
-            //텍스트뷰가 활성화중일 때
-            if(MC_LineTextView.getVisibility()==View.VISIBLE){
-                String temp1 = MC_LineTextView.getText().toString();
-                MC_LineTextView.setVisibility(View.INVISIBLE);
-                MC_LineEditText.setVisibility(View.VISIBLE);
-                MC_LineEditText.setText(temp1);
-            }
-            //editText가 활성화중일 때
-            else if(MC_LineEditText.getVisibility()==View.VISIBLE){
-                MC_LineEditText.setVisibility(View.INVISIBLE);
-                MC_LineTextView.setVisibility(View.VISIBLE);
-                String temp = MC_LineEditText.getText().toString();
-                MC_LineTextView.setText(temp);
-                monthCalendar.changeMemo(selectedDateString,temp);
-            }
-        }
-        //listView의 개수에 맞춰 높이조절
-        private void setListViewHeight(ListView listView) {
-            ListAdapter listAdapter = listView.getAdapter();
-            if (listAdapter == null)
-                return;
-
-            int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-            int totalHeight = 0;
-            View view = null;
-            for (int i = 0; i < listAdapter.getCount(); i++) {
-                view = listAdapter.getView(i, view, listView);
-                if (i == 0)
-                    view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, WindowManager.LayoutParams.WRAP_CONTENT));
-
-                view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-                totalHeight += view.getMeasuredHeight();
-            }
-            ViewGroup.LayoutParams params = listView.getLayoutParams();
-            params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-            listView.setLayoutParams(params);
-        }
-
-        //팝업창으로부터 입력받은 정보 저장하는 메소드
-        @Override
-        public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-            if (requestCode == REQ_ADD_CONTACT) {
-                if (resultCode == RESULT_OK) {
-                    //일정이 존재하면 listView visible로 바꿈
-                    noneDataText.setVisibility(View.INVISIBLE);
+        int listDataCount = 0;
+        for(int i=0;i<Person1.appointments.length;i++){
+            if(Person1.appointments[i].getDate().equals(selectedDateString)){
+                if(Person1.appointments[i].getSort().equals("검사")){
+                    listViewAdapter.addItem(R.drawable.clinic_checkup,Person1.appointments[i].getName(),Person1.appointments[i].getLocation(),Person1.appointments[i].getTime());
                     listView.setVisibility(View.VISIBLE);
-                    //일정 이름을 MC_PopupActivity로부터 받아옴
-                    String scheduleName = intent.getStringExtra("schedule_name");
-                    //장소를 MC_PopupActivity로부터 받아옴
-                    String location = intent.getStringExtra("location");
-                    //선택된 시간(timePicker) MC_PopupActivity로부터 받아옴
-                    String selectedTime = intent.getStringExtra("selected_time");
-                    //진료일정인지, 검사일정인지를 MC_PopupActivity로부터 받아옴 (진료일정이라면 "진료"값 저장)
-                    String typeOfSchedule = intent.getStringExtra("selected_button");
-                    //일정이 생성될때마다 ListViewAdapter에 데이터를 추가함
-                    //일정의 종류가 진료인지, 검사인지 확인하여 각 값에 맞는 이미지 코드를 add함
-                    //listview 참조 및 adapter 연결
-                    listView.setAdapter(adapter);
-                    if(typeOfSchedule.equals("검사")){
-                        adapter.addItem(R.drawable.clinic_checkup,scheduleName,location,selectedTime);
-                    }
-                    else if(typeOfSchedule.equals("진료")){
-                        adapter.addItem(R.drawable.clinic_clinic,scheduleName,location,selectedTime);
-                    }
-                    //일정 생성 객체
-                    addToAppointmentData(selectedDateString,scheduleName,location,selectedTime,typeOfSchedule);
-                    adapter.notifyDataSetChanged();
-
+                    noneData.setVisibility(View.INVISIBLE);
+                    btn_addAppointDoctor.setBackgroundResource(R.drawable.mc_button_nonclicked);
+                    btn_addAppointDoctor.setTextColor(Color.BLACK);
                 }
+                else if(Person1.appointments[i].getSort().equals("진료")){
+                    listViewAdapter.addItem(R.drawable.clinic_clinic,Person1.appointments[i].getName(),Person1.appointments[i].getLocation(),Person1.appointments[i].getTime());
+                    listView.setVisibility(View.VISIBLE);
+                    noneData.setVisibility(View.INVISIBLE);
+                    btn_addAppointDoctor.setBackgroundResource(R.drawable.mc_button_nonclicked);
+                    btn_addAppointDoctor.setTextColor(Color.BLACK);
+                }
+                Log.d("myapp","checkAppointment 데이터 추가됨");
+                listDataCount++;
             }
         }
+
+
+        listView.setAdapter(listViewAdapter);
+        setListViewHeightBasedOnChildren(listView);
+        listViewAdapter.notifyDataSetChanged();
+
+        if (listDataCount==0){
+            noneData.setVisibility(View.VISIBLE);
+            btn_addAppointDoctor.setBackgroundResource(R.drawable.mc_button_clicked);
+            btn_addAppointDoctor.setTextColor(Color.WHITE);
+        }
+        Log.d("myapp","Adapter added, count : "+listDataCount);
+    }
+
+    //진료 후기 작성
+    public void changeTextEdit(String selectedDateString){
+        //텍스트뷰가 활성화중일 때
+        if(MC_LineTextView.getVisibility()==View.VISIBLE){
+            String temp1 = MC_LineTextView.getText().toString();
+            MC_LineTextView.setVisibility(View.INVISIBLE);
+            MC_LineEditText.setVisibility(View.VISIBLE);
+            MC_LineEditText.setText(temp1);
+        }
+        //editText가 활성화중일 때
+        else if(MC_LineEditText.getVisibility()==View.VISIBLE){
+            MC_LineEditText.setVisibility(View.INVISIBLE);
+            MC_LineTextView.setVisibility(View.VISIBLE);
+            String temp = MC_LineEditText.getText().toString();
+            MC_LineTextView.setText(temp);
+            monthCalendar.changeMemo(selectedDateString,temp);
+        }
+    }
+    //listView의 개수에 맞춰 높이조절
+    private void setListViewHeight(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)
+            return;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, WindowManager.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+    }
+
+    //팝업창으로부터 입력받은 정보 저장하는 메소드
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == REQ_ADD_CONTACT) {
+            if (resultCode == RESULT_OK) {
+                //일정이 존재하면 listView visible로 바꿈
+                noneData.setVisibility(View.INVISIBLE);
+                listView.setVisibility(View.VISIBLE);
+
+                //일정 이름을 MC_PopupActivity로부터 받아옴
+                String scheduleName = intent.getStringExtra("schedule_name");
+                //장소를 MC_PopupActivity로부터 받아옴
+                String location = intent.getStringExtra("location");
+                //선택된 시간(timePicker) MC_PopupActivity로부터 받아옴
+                String selectedTime = intent.getStringExtra("selected_time");
+                //진료일정인지, 검사일정인지를 MC_PopupActivity로부터 받아옴 (진료일정이라면 "진료"값 저장)
+                String typeOfSchedule = intent.getStringExtra("selected_button");
+                //일정이 생성될때마다 ListViewAdapter에 데이터를 추가함
+                //일정의 종류가 진료인지, 검사인지 확인하여 각 값에 맞는 이미지 코드를 add함
+                //listview 참조 및 adapter 연결
+                listView.setAdapter(adapter);
+                if(typeOfSchedule.equals("검사")){
+                    adapter.addItem(R.drawable.clinic_checkup,scheduleName,location,selectedTime);
+                }
+                else if(typeOfSchedule.equals("진료")){
+                    adapter.addItem(R.drawable.clinic_clinic,scheduleName,location,selectedTime);
+                }
+                adapter.notifyDataSetChanged();
+                btn_addAppointDoctor.setBackgroundResource(R.drawable.mc_button_nonclicked);
+                btn_addAppointDoctor.setTextColor(Color.BLACK);
+
+                //파이어베이스에 등록정보 저장
+                Log.d("myapp","일정 생성 완료 => 날짜 : "+selectedDateString+" 일정이름 : "+scheduleName+" 장소 : "+location+" 시간 : "+selectedTime+" 종류 : "+typeOfSchedule);
+
+            }
+        }
+    }
 
     //캘린더 관련 메소드
     static class monthCalendar{
@@ -324,7 +350,6 @@ public class Fragment_medicalChart extends Fragment {
 
         //00.00 (월) 텍스트 표시
         public static void setDateText(int Year, int Month, int Day,TextView selectedDate){
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MM.dd ");
             CalendarDay date = CalendarDay.from(Year,Month,Day);
             org.threeten.bp.LocalDate date1 = LocalDate.of(Year, Month, Day);
             DayOfWeek dayOfWeek = date1.getDayOfWeek();
@@ -333,10 +358,27 @@ public class Fragment_medicalChart extends Fragment {
         }
     }
 
-    //팝업창을 통해 입력받은 정보로 병원 일정 객체 생성
-    public void addToAppointmentData(String date, String scheduleName,String location,String selectedTime,String typeOfSchedule){
-        //Person1.appointments에 객체 생성
-        Log.d("myapp","일정 생성 완료 => 날짜 : "+date+" 일정이름 : "+scheduleName+" 장소 : "+location+" 시간 : "+selectedTime+" 종류 : "+typeOfSchedule);
+
+    //리스트뷰 높이 조절
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) return;
+
+        int totalHeight = 0;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.AT_MOST);
+
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View item = listAdapter.getView(i, null, listView);
+            ImageView imageView = item.findViewById(R.id.icon);
+            imageView.measure(desiredWidth,View.MeasureSpec.UNSPECIFIED);
+            totalHeight += imageView.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        Log.d("myapp",params.height+"로 높이 조정됨");
+        listView.requestLayout();
     }
 
 }
