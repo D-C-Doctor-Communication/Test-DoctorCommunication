@@ -7,12 +7,15 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.doctorcommunication.R;
 
@@ -33,6 +36,7 @@ public class MC_PopupActivity extends AppCompatActivity {
     //검사|진료 선택 버튼
     Button checkup_btn,treatment_btn;
     boolean isCheckupPressed,isTreatmentPressed;
+    String buttonString="e";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,91 +46,122 @@ public class MC_PopupActivity extends AppCompatActivity {
         //전체화면 모드(상태바 제거)
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_mc_popup);
-
-
+        setContentView(R.layout.mc_register_popup);
 
         //저장 | X버튼
         ok_btn = findViewById(R.id.ok_btn);
         cancel_btn = findViewById(R.id.cancel_button);
-
         //timepicker 설정
         time_picker = findViewById(R.id.time_picker);
         //12시간 기준
         time_picker.setIs24HourView(false);
-
         //검사|진료 선택 버튼
         checkup_btn = findViewById(R.id.checkup_btn);
         treatment_btn = findViewById(R.id.treatment_btn);
+        // '장소'
+        location = findViewById(R.id.location) ;
+        // '일정이름'
+        scheduleName = findViewById(R.id.scheduleName) ;
 
-        checkup_btn.setOnClickListener(v -> {
-            checkWhichBtnClicked(checkup_btn,treatment_btn);
+
+
+        //TimePicker
+        //선택된 시간 저장을 위한 String 변수(시,분,오전|오후)
+        String hour,minute,AmPm;
+        //AMPM계산을 위한 int형 시간
+        int nHour;
+        //선택된 시간값 저장 (버전마다 timepicker에서 시간을 받아오는 메소드가 다름)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            hour = time_picker.getHour() + "";
+            minute = time_picker.getMinute() + "";
+            nHour = time_picker.getHour();
+        } else {
+            hour = time_picker.getCurrentHour() + "";
+            minute = time_picker.getCurrentMinute() + "";
+            nHour = time_picker.getCurrentHour();
+        }
+        AmPm = getAmPm(nHour);
+
+
+        scheduleName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                check();
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                check();
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                check();
+            }
         });
-        treatment_btn.setOnClickListener(v -> {
-            checkWhichBtnClicked(treatment_btn,checkup_btn);
+        location.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                check();
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                check();
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                check();
+            }
         });
+
+
+        // '검사 | 진료 ' 버튼
+        //검사 버튼
+        checkup_btn.setOnClickListener( v1 -> {
+            checkup_btn.setBackgroundResource(R.drawable.mc_popup_left_btn_clicked);
+            checkup_btn.setTextColor(Color.WHITE);
+            treatment_btn.setBackgroundResource(R.drawable.mc_popup_right_btn);
+            treatment_btn.setTextColor(Color.parseColor("#29000000"));
+            buttonString= "검사";
+            check();
+        });
+        //진료 버튼
+        treatment_btn.setOnClickListener( v1 -> {
+            checkup_btn.setBackgroundResource(R.drawable.mc_popup_left_btn);
+            checkup_btn.setTextColor(Color.parseColor("#29000000"));
+            treatment_btn.setBackgroundResource(R.drawable.mc_popup_right_btn_clicked);
+            treatment_btn.setTextColor(Color.WHITE);
+            buttonString = "진료";
+            check();
+        });
+
+
+
+
+
 
         //저장버을 눌렀을 때에만 Fragment_medicalChart로 입력값 전달
         ok_btn.setOnClickListener(v->{
-            //인텐트 객체 생성
-            Intent intent =new Intent();
+            if(scheduleName.getText().toString().trim().length()>0 && location.getText().toString().trim().length()>0 && !buttonString.equals("e")){
+                //인텐트 객체 생성
+                Intent intent = new Intent();
 
-//TimePicker
-            //선택된 시간 저장을 위한 String 변수(시,분,오전|오후)
-            String hour,minute,AmPm;
-            //AMPM계산을 위한 int형 시간
-            int nHour;
-            //선택된 시간값 저장 (버전마다 timepicker에서 시간을 받아오는 메소드가 다름)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                hour = time_picker.getHour() + "";
-                minute = time_picker.getMinute() + "";
-                nHour = time_picker.getHour();
-            } else {
-                hour = time_picker.getCurrentHour() + "";
-                minute = time_picker.getCurrentMinute() + "";
-                nHour = time_picker.getCurrentHour();
+                //시간
+                intent.putExtra("selected_time", hour + ":" + minute + " " + AmPm);
+                //장소
+                String locationText = location.getText().toString();
+                intent.putExtra("location", locationText);
+                //이름
+                String scheduleNameText = scheduleName.getText().toString();
+                intent.putExtra("schedule_name", scheduleNameText);
+                //종류
+                intent.putExtra("selected_button", buttonString);
+
+                // Activity 종료와 동시에 값이 저장된 intent 객체 전달
+                setResult(RESULT_OK, intent);
+                finish();
             }
-            AmPm = getAmPm(nHour);
-            // 선택된 시간 값을 String 값으로 변환하여 전달
-            intent.putExtra("selected_time",hour+":"+minute+" "+AmPm);
-
-// '일정이름' 입력 값을 String 값으로 그대로 전달
-            scheduleName = findViewById(R.id.scheduleName) ;
-            intent.putExtra("schedule_name", scheduleName.getText().toString()) ;
-
-// '검사 | 진료 ' 버튼의 눌림여부를 boolean 값으로 전달 (각 버튼 선택되면 색상 바뀜 기능 추가)
-            checkWhichBtnClicked(checkup_btn, treatment_btn);
-
-            //검사 버튼
-            checkup_btn.setOnClickListener( v1 -> {
-                checkWhichBtnClicked(checkup_btn, treatment_btn);
-                isCheckupPressed = true;
-                isTreatmentPressed = false;
-            });
-            //진료 버튼
-            treatment_btn.setOnClickListener( v1 -> {
-                checkWhichBtnClicked(treatment_btn, checkup_btn);
-                isTreatmentPressed = true;
-                isCheckupPressed = false;
-            });
-            String buttonString = "";
-            if(isTreatmentPressed){
-                intent.putExtra("selected_button", "진료");
+            else{
+                Toast.makeText(this,"입력 양식을 확인해주세요",Toast.LENGTH_SHORT).show();
             }
-            else if(isCheckupPressed){
-                intent.putExtra("selected_button", "검사");
-            }
-
-            intent.putExtra("selected_button", "검사");
-
-// '장소' 입력 값을 String 값으로 그대로 전달
-            location = findViewById(R.id.location) ;
-            intent.putExtra("location", location.getText().toString()) ;
-
-
-// Activity 종료와 동시에 값이 저장된 intent 객체 전달
-            setResult(RESULT_OK, intent) ;
-            finish() ;
         });
 
         //X버튼 눌렀을 경우 데이터 저장 없이 activity 종료
@@ -135,14 +170,15 @@ public class MC_PopupActivity extends AppCompatActivity {
         });
 
     }
-    private void checkWhichBtnClicked(Button selectedBtn,Button nonSelectedBtn){
-        Log.d("myapp",selectedBtn.toString()+"버튼이 클릭됨");
-        //선택된 버튼은 파란색으로, 나머지는 하얀색으로 지정
-        selectedBtn.setBackgroundColor(Color.parseColor("#0078ff"));
-        nonSelectedBtn.setBackgroundColor(Color.WHITE);
-        //선택된 버튼의 글자색은 하얀색으로, 나머지는 회색으로 지정
-        selectedBtn.setTextColor(Color.WHITE);
-        nonSelectedBtn.setTextColor(Color.parseColor("#29000000"));
+
+    public void check(){
+        if(scheduleName.getText().toString().trim().length()>0 && location.getText().toString().trim().length()>0 && !buttonString.equals("e")){
+            ok_btn.setBackgroundResource(R.drawable.mc_button_clicked);
+            ok_btn.setTextColor(Color.WHITE);
+        } else {
+            ok_btn.setBackgroundResource(R.drawable.mc_button_nonclicked);
+            ok_btn.setTextColor(Color.WHITE);
+        }
     }
 
     //PM,AM값 계산 메소드

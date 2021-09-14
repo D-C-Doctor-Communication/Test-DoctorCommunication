@@ -14,6 +14,7 @@
         <ImageView
             android:id="@+id/icon"
             android:layout_width="46dp"
+            android:maxWidth="46dp"
             android:layout_height="53dp"
             android:src="@drawable/clinic_checkup"/>
         <LinearLayout
