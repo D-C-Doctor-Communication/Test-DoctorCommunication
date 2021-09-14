@@ -1,5 +1,7 @@
 package com.example.doctorcommunication.DoctorMeeting;
 
+import android.util.Log;
+
 public class ContentData {
     //parent - 날짜,증상명,통증정도()
     //child - 부위,통증정도,통증양상,악화상황,동반증상,추가사항
@@ -12,12 +14,25 @@ public class ContentData {
 
 
     public ContentData(String part,String pain_level,String situation,String characteristics,String accompany_symp,String additional){
+        Log.d("myapp","Content 들어감");
         this.part = part;
         this.pain_level = pain_level;
         this.situation = situation;
         this.characteristics = characteristics;
-        this.accompany_symp = accompany_symp;
-        this.additional = additional;
+        if(accompany_symp.equals("e")){
+            this.accompany_symp = "해당 없음";
+        }
+        else{
+            this.accompany_symp = accompany_symp;
+        }
+        if(additional.equals("e")){
+            this.additional = "해당 없음";
+        }
+        else{
+            this.additional = additional;
+        }
+
+
     }
 
     public String getCharacteristics(){ return characteristics; }

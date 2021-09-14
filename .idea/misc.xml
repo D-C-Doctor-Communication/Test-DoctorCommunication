@@ -3,8 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/drawable-v24/dc_button_clicked.xml" value="0.1864864864864865" />
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/drawable-v24/dc_button_nonclicked.xml" value="0.1864864864864865" />
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/drawable-v24/mc_button_clicked.xml" value="0.1864864864864865" />
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/drawable-v24/mc_button_nonclicked.xml" value="0.1864864864864865" />
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/fragment_home.xml" value="0.1662162162162162" />
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/fragment_medical_chart.xml" value="0.33" />
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/home_listview_item.xml" value="0.1662162162162162" />
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/mc_info_popup.xml" value="0.26756756756756755" />
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/mc_info_popup_item.xml" value="0.23648648648648649" />
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/mc_listview_item.xml" value="0.23198198198198197" />
         <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/meeting_doctor.xml" value="0.24322916666666666" />
         <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/menu/meeting_doc_toolbar_menu.xml" value="0.24583333333333332" />
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1864864864864865" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-24/mc_popup_save_btn.xml" value="0.22864583333333333" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/arm_clicked01.xml" value="0.235546875" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/arm_clicked02.xml" value="0.235546875" />
