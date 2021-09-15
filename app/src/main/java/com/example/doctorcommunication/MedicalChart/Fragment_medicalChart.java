@@ -174,6 +174,7 @@ public class Fragment_medicalChart extends Fragment {
         });
 
 
+
         //진료 일정 추가
         btn_addAppointDoctor.setOnClickListener(v->{
             //팝업 호출
@@ -293,6 +294,7 @@ public class Fragment_medicalChart extends Fragment {
                 else if(typeOfSchedule.equals("진료")){
                     adapter.addItem(R.drawable.clinic_clinic,scheduleName,location,selectedTime);
                 }
+                setListViewHeightBasedOnChildren(listView);
                 adapter.notifyDataSetChanged();
                 btn_addAppointDoctor.setBackgroundResource(R.drawable.mc_button_nonclicked);
                 btn_addAppointDoctor.setTextColor(Color.BLACK);
@@ -380,5 +382,7 @@ public class Fragment_medicalChart extends Fragment {
         Log.d("myapp",params.height+"로 높이 조정됨");
         listView.requestLayout();
     }
+
+
 
 }
