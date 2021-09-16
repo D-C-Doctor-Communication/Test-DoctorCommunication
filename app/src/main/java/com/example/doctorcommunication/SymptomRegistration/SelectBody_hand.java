@@ -168,6 +168,7 @@ public class SelectBody_hand extends AppCompatActivity {
                 intent.putExtra("bparts",select_hand);
                 for(int i = 0; i< select_hand.length; i++)
                     Log.e("jj", select_hand[i]);
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }
@@ -180,6 +181,7 @@ public class SelectBody_hand extends AppCompatActivity {
                 Intent intent = new Intent(SelectBody_hand.this, SearchList.class);
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("repeat",repeat);
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }

@@ -14,36 +14,61 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doctorcommunication.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.Arrays;
 import java.util.LinkedList;
 
 
 public class Search extends AppCompatActivity {
-    String[] lately_symptom;
+    JSONArray lately_symptom;
+    String l_symptom;
     LinkedList<String> LATELY = new LinkedList<String>();
+    String symptom;
+    int repeat;
+    SharedPreferences sharedPreferences;
+    SharedPreferences list;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
 
-        LinearLayout View = (LinearLayout)findViewById(R.id.lately_layout);
+        LinearLayout View = (LinearLayout) findViewById(R.id.lately_layout);
         TextView Search_click = (TextView) findViewById(R.id.search_text02);
-        lately_symptom=new String[5];
 
-        SharedPreferences sharedPreferences= getSharedPreferences("symptom", MODE_PRIVATE);    // test 이름의 기본모드 설정, 만약 test key값이 있다면 해당 값을 불러옴.
-        String symptom = sharedPreferences.getString("inputText","");
-        Log.e("증상", "저장완료 - "+symptom);    // SharedPreferences에 저장되어있던 값 찍기.
+        Intent intent = getIntent();
+        repeat = intent.getExtras().getInt("repeat");
 
-        if(LATELY.size()>=5){
-            LATELY.addFirst(symptom);
-            LATELY.removeLast();
-        }else{
-            LATELY.addFirst(symptom);
-        }
+        sharedPreferences = getSharedPreferences("symptom", MODE_PRIVATE);
+        if (sharedPreferences != null) {
+            symptom = sharedPreferences.getString("inputText", "");
+            Log.e("증상", "저장완료 - " + symptom);    // SharedPreferences에 저장되어있던 값 찍기.
 
-        for(int i=0; i<LATELY.size(); i++){
-            Button btn = new Button(this);
-            btn.setText(LATELY.get(i));
-            View.addView(btn);
+
+
+            list= getSharedPreferences("symptomlist", MODE_PRIVATE);
+            l_symptom = list.getString("array",null);
+
+            try {
+                lately_symptom = new JSONArray(l_symptom);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            lately_symptom.put(symptom);
+
+            for (int i = 0; i < lately_symptom.length(); i++) {
+                Button btn = new Button(this);
+                try {
+                    btn.setText(lately_symptom.toString(i));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                View.addView(btn);
+            }
+
+
         }
 
 
@@ -51,12 +76,23 @@ public class Search extends AppCompatActivity {
         Search_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("시작", "서치 페이지" );
+                Log.e("시작", "서치 페이지");
                 Intent intent = new Intent(Search.this, SearchList.class);
+                intent.putExtra("repeat", repeat);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        list = getSharedPreferences("symptomlist", MODE_PRIVATE);
+        SharedPreferences.Editor editor = list.edit();
+        editor.putString("array", lately_symptom.toString());
+        //Log.e("리스트",lately_symptom.toString());
+        editor.commit();
+    }
 }

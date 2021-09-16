@@ -139,6 +139,7 @@ public class SelectBody_buttock extends AppCompatActivity {
                 intent.putExtra("bparts",select_buttock);
                 for(int i = 0; i< select_buttock.length; i++)
                     Log.e("jj", select_buttock[i]);
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }
@@ -150,7 +151,7 @@ public class SelectBody_buttock extends AppCompatActivity {
                 Intent intent = new Intent(SelectBody_buttock.this, SearchList.class);
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("repeat",repeat);
-
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }

@@ -114,7 +114,7 @@ public class SelectWorse extends AppCompatActivity {
                 intent.putExtra("pattern", selected_pattern);
                 intent.putExtra("worse",select_worse);
                 intent.putExtra("repeat",repeat);
-
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }
@@ -130,7 +130,7 @@ public class SelectWorse extends AppCompatActivity {
                 intent.putExtra("part",part);
                 intent.putExtra("levelNm",selected_levelNm);
                 intent.putExtra("repeat",repeat);
-
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }

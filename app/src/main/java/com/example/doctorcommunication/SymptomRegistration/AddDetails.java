@@ -113,10 +113,10 @@ public class AddDetails extends AppCompatActivity{
 
                 SharedPreferences sharedPreferences= getSharedPreferences("symptom", MODE_PRIVATE);    // test 이름의 기본모드 설정
                 SharedPreferences.Editor editor= sharedPreferences.edit(); //sharedPreferences를 제어할 editor를 선언
-                editor.putString("inputText",selected_symptom); // key,value 형식으로 저장
+                editor.putString("inputText",symptom); // key,value 형식으로 저장
                 editor.commit();    //최종 커밋. 커밋을 해야 저장이 된다.
                 Log.e("증상", "증상저장2");
-
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }
@@ -134,7 +134,7 @@ public class AddDetails extends AppCompatActivity{
                 intent.putExtra("pattern",selected_pattern);
                 intent.putExtra("worse",selected_worse);
                 intent.putExtra("repeat",repeat);
-
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }

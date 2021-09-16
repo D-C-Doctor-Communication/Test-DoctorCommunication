@@ -192,6 +192,7 @@ public class OtherSymptom extends AppCompatActivity {
                 intent.putExtra("worse",selected_worse);
                 intent.putExtra("osymptom", select_osymptom);
                 intent.putExtra("repeat",repeat);
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
 
                 finish();
@@ -209,6 +210,7 @@ public class OtherSymptom extends AppCompatActivity {
                 intent.putExtra("levelNm",selected_levelNm);
                 intent.putExtra("pattern",selected_pattern);
                 intent.putExtra("repeat",repeat);
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }

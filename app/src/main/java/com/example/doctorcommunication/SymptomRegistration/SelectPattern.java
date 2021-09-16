@@ -116,6 +116,7 @@ public class SelectPattern extends AppCompatActivity {
                             .show();
                     return;
                 }
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
 
@@ -131,7 +132,7 @@ public class SelectPattern extends AppCompatActivity {
                 intent.putExtra("part",part);
                 intent.putExtra("bparts",selected_body);
                 intent.putExtra("repeat",repeat);
-
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }
