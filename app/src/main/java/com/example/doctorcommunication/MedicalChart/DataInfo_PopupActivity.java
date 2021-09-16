@@ -54,6 +54,7 @@ public class DataInfo_PopupActivity extends AppCompatActivity {
         String selectedDate = intent.getStringExtra("selectedDate");
         //for문으로 선택된 날짜에 대한 데이터 개수 구할것.
 
+        //[FIREBASE] for문으로 기록된 증상있는만큼 layout inflate
         for(int i=0;i<3;i++) {
             View view = LayoutInflater.from(this).inflate(R.layout.mc_info_popup_item, container, false);
 

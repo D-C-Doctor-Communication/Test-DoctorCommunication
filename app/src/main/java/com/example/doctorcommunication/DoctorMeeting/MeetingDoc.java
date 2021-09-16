@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -79,8 +80,12 @@ public class MeetingDoc extends AppCompatActivity {
     ArrayList<ArrayList<ContentData>> childListDatas;
 
     //심각도 그래프 이동했을 때 누른 버튼 저장용
-    int btnClicked = -1;
+    int btnClicked = 0;
     String fire_date;
+
+    RelativeLayout selectedDataLayout;
+    ImageView noneData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +97,9 @@ public class MeetingDoc extends AppCompatActivity {
         //툴바 구성 - 이전버튼, 녹음버튼있
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle("의사와의 만남");
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(R.layout.dc_actionbar);
+        actionBar.setElevation(0);
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_back_btn);
@@ -119,8 +126,8 @@ public class MeetingDoc extends AppCompatActivity {
         //기간 선택을 위한 DatePicker를 호출하는 버튼(TextView)
         startDateText = findViewById(R.id.startDate);
         endDateText = findViewById(R.id.endDate);
-
-
+        selectedDataLayout = findViewById(R.id.selectedDataLayout);
+        noneData = findViewById(R.id.noneData);
 // -> 날짜 선택 기능
         //기본날짜 오늘로 지정
         setDateText(startDate);
@@ -145,6 +152,7 @@ public class MeetingDoc extends AppCompatActivity {
             datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
             //DatePickerDialog 표시
             datePickerDialog.show();
+            setData(btnClicked);
         });
 
         //종료날짜 DatePickerDialog 동작
@@ -166,6 +174,7 @@ public class MeetingDoc extends AppCompatActivity {
             datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
             //DatePickerDialog 표시
             datePickerDialog.show();
+            setData(btnClicked);
         });
     }
 
@@ -217,7 +226,6 @@ public class MeetingDoc extends AppCompatActivity {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String uid = user.getUid();
 
-        String stringDateValue;
         //선택된 증상 데이터 선별
         for(int i=1; i<=30; i++){
             fire_date = String.valueOf(i);
@@ -269,19 +277,28 @@ public class MeetingDoc extends AppCompatActivity {
                                         symptom.getAccompany_pain(),
                                         symptom.getAdditional())
                                 );
-                                //Log.d("list", childListDatas.get(0).get(0).getPart());
-                                adapter = new CustomAdapter(MeetingDoc.this,groupListDatas,childListDatas);
-                                //리스트 생성
-                                expandableListView.setAdapter(adapter);
-                                adapter.notifyDataSetChanged();
+
                                 sizeList++;
                                 Log.d("myapp","sizeList : "+sizeList+"");
                             }
+                            if(sizeList==0){
+                                selectedDataLayout.setVisibility(View.INVISIBLE);
+                                noneData.setVisibility(View.VISIBLE);
+                            }else{
+                                selectedDataLayout.setVisibility(View.VISIBLE);
+                                noneData.setVisibility(View.INVISIBLE);
+                            }
+                            //Log.d("list", childListDatas.get(0).get(0).getPart());
+                            adapter = new CustomAdapter(MeetingDoc.this,groupListDatas,childListDatas);
+                            //리스트 생성
+                            expandableListView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) { }
                     });
                 }
+
             }
         }
 
@@ -291,9 +308,11 @@ public class MeetingDoc extends AppCompatActivity {
     //증상별로 데이터 넘겨주기
     public void sympOnClick(View view){
         for(int i=0;i<buttonKey.length;i++){
-            symptomBtn[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
+            symptomBtn[i].setTextColor(Color.BLACK);
+            symptomBtn[i].setBackgroundResource(R.drawable.dc_button_nonclicked);
             if(view.getId()==buttonKey[i]){
-                symptomBtn[i].setBackgroundColor(Color.parseColor("#0078ff"));
+                symptomBtn[i].setTextColor(Color.WHITE);
+                symptomBtn[i].setBackgroundResource(R.drawable.dc_button_clicked);
                 Log.d("myapp", buttonValue[i] + " 버튼 눌림");
                 //텍스트 지정
                 symptom_title.setText(buttonValue[i]);

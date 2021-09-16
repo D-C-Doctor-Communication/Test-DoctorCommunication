@@ -158,7 +158,6 @@ public class Fragment_medicalChart extends Fragment {
             //진료 후기 작성
             String memotext1 = monthCalendar.getSameDateMomo(selectedDateString);
             MC_LineTextView.setText(memotext1);
-            MC_LineEditText.setText(memotext1);
             //수정버튼을 눌렀을때 텍스트뷰,에디트뷰 상태에 따라 수정기능 on off
             MC_editBtn.setOnClickListener(v -> {
                 changeTextEdit(selectedDateString);
@@ -193,6 +192,7 @@ public class Fragment_medicalChart extends Fragment {
         MCListViewAdapter listViewAdapter = new MCListViewAdapter();
 
         int listDataCount = 0;
+        //[FIREBASE] 진료일정 for문, drawable은 수정필요없음
         for(int i=0;i<Person1.appointments.length;i++){
             if(Person1.appointments[i].getDate().equals(selectedDateString)){
                 if(Person1.appointments[i].getSort().equals("검사")){
@@ -237,6 +237,7 @@ public class Fragment_medicalChart extends Fragment {
             MC_LineEditText.setText(temp1);
         }
         //editText가 활성화중일 때
+        //[FIREBASE] 메모내용 갱신|저장
         else if(MC_LineEditText.getVisibility()==View.VISIBLE){
             MC_LineEditText.setVisibility(View.INVISIBLE);
             MC_LineTextView.setVisibility(View.VISIBLE);
@@ -336,6 +337,7 @@ public class Fragment_medicalChart extends Fragment {
             ArrayList<CalendarDay> dates = new ArrayList<>(); //점을 찍을 날짜를 저장,반환
             Calendar calendar = Calendar.getInstance();
             //Data에서 병원예약 날짜가 존재하면 해당 날짜를 위의 arrayList에 저장
+            //[FIREBASE] for문으로 돌려서 예약내용이 있으면 . . .
             for(int i=0;i<Person1.appointments.length;i++){
                 //병원예약날짜 받아오기
                 String dateValue = Person1.appointments[i].getDate();
