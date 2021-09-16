@@ -157,6 +157,7 @@ public class SelectBody_chest extends AppCompatActivity {
                 intent.putExtra("bparts",select_chest);
                 for(int i = 0; i< select_chest.length; i++)
                     Log.e("jj", select_chest[i]);
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }
@@ -168,7 +169,7 @@ public class SelectBody_chest extends AppCompatActivity {
                 Intent intent = new Intent(SelectBody_chest.this, SearchList.class);
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("repeat",repeat);
-
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }

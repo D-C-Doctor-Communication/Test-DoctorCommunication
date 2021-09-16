@@ -132,6 +132,7 @@ public class SearchList extends AppCompatActivity {
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
                     intent.putExtra("repeat",repeat);
+                    intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     break;
                 }
@@ -141,6 +142,7 @@ public class SearchList extends AppCompatActivity {
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
                     intent.putExtra("repeat",repeat);
+                    intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     break;
                 }
@@ -150,6 +152,7 @@ public class SearchList extends AppCompatActivity {
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
                     intent.putExtra("repeat",repeat);
+                    intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     break;
                 }
@@ -159,7 +162,7 @@ public class SearchList extends AppCompatActivity {
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
                     intent.putExtra("repeat",repeat);
-
+                    intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     break;
                 }
@@ -169,6 +172,7 @@ public class SearchList extends AppCompatActivity {
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
                     intent.putExtra("repeat",repeat);
+                    intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     break;
                 }
@@ -178,7 +182,7 @@ public class SearchList extends AppCompatActivity {
                     intent.putExtra("symptom", symptom_Nm[position]);
                     intent.putExtra("part", part_num[position]);
                     intent.putExtra("repeat",repeat);
-
+                    intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     break;
                 }
@@ -188,6 +192,7 @@ public class SearchList extends AppCompatActivity {
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
                     intent.putExtra("repeat",repeat);
+                    intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     break;
                 }
@@ -197,6 +202,7 @@ public class SearchList extends AppCompatActivity {
                     intent.putExtra("symptom", symptom_Nm[position]);
                     intent.putExtra("part", part_num[position]);
                     intent.putExtra("repeat",repeat);
+                    intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     break;
                 }
@@ -206,6 +212,7 @@ public class SearchList extends AppCompatActivity {
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
                     intent.putExtra("repeat",repeat);
+                    intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     break;
                 }
@@ -215,6 +222,7 @@ public class SearchList extends AppCompatActivity {
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part",part_num[position]);
                     intent.putExtra("repeat",repeat);
+                    intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     break;
                 }
@@ -224,6 +232,7 @@ public class SearchList extends AppCompatActivity {
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
                     intent.putExtra("repeat",repeat);
+                    intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     break;
                 }
@@ -233,6 +242,7 @@ public class SearchList extends AppCompatActivity {
                     intent.putExtra("symptom", symptom_Nm[position]); //선택한 증상
                     intent.putExtra("part", part_num[position]);
                     intent.putExtra("repeat",repeat);
+                    intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     break;
                 }

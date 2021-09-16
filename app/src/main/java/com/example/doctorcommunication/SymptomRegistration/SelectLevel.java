@@ -75,7 +75,7 @@ public class SelectLevel extends AppCompatActivity {
                 intent.putExtra("bparts",selected_body);
                 intent.putExtra("levelNm",num);
                 intent.putExtra("repeat",repeat);
-
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }
@@ -95,7 +95,7 @@ public class SelectLevel extends AppCompatActivity {
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
                         intent.putExtra("repeat",repeat);
-
+                        intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
                         break;
                     }
@@ -105,7 +105,7 @@ public class SelectLevel extends AppCompatActivity {
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
                         intent.putExtra("repeat",repeat);
-
+                        intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
                         break;
                     }
@@ -115,7 +115,7 @@ public class SelectLevel extends AppCompatActivity {
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
                         intent.putExtra("repeat",repeat);
-
+                        intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
                         break;
                     }
@@ -125,7 +125,7 @@ public class SelectLevel extends AppCompatActivity {
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
                         intent.putExtra("repeat",repeat);
-
+                        intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
                         break;
                     }
@@ -135,7 +135,7 @@ public class SelectLevel extends AppCompatActivity {
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
                         intent.putExtra("repeat",repeat);
-
+                        intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
                         break;
                     }
@@ -145,7 +145,7 @@ public class SelectLevel extends AppCompatActivity {
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
                         intent.putExtra("repeat",repeat);
-
+                        intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
                         break;
                     }
@@ -155,7 +155,7 @@ public class SelectLevel extends AppCompatActivity {
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
                         intent.putExtra("repeat",repeat);
-
+                        intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
                         break;
                     }
@@ -165,7 +165,7 @@ public class SelectLevel extends AppCompatActivity {
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
                         intent.putExtra("repeat",repeat);
-
+                        intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
                         break;
                     }
@@ -175,7 +175,7 @@ public class SelectLevel extends AppCompatActivity {
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
                         intent.putExtra("repeat",repeat);
-
+                        intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
                         break;
                     }
@@ -185,6 +185,7 @@ public class SelectLevel extends AppCompatActivity {
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
                         intent.putExtra("repeat",repeat);
+                        intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
                         break;
                     }
@@ -194,7 +195,7 @@ public class SelectLevel extends AppCompatActivity {
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
                         intent.putExtra("repeat",repeat);
-
+                        intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
                         break;
                     }
@@ -204,7 +205,7 @@ public class SelectLevel extends AppCompatActivity {
                         intent.putExtra("symptom", symptom);
                         intent.putExtra("part", part);
                         intent.putExtra("repeat",repeat);
-
+                        intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(intent);
                         break;
                     }

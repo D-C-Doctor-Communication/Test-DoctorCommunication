@@ -241,6 +241,7 @@ public class SelectBody_arm extends AppCompatActivity {
                 intent.putExtra("bparts",select_arm);
                 for(int i = 0; i< select_arm.length; i++)
                     Log.e("jj", select_arm[i]);
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }
@@ -252,7 +253,7 @@ public class SelectBody_arm extends AppCompatActivity {
                 Intent intent = new Intent(SelectBody_arm.this, SearchList.class);
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("repeat",repeat);
-
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }

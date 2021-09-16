@@ -204,6 +204,7 @@ public class SelectBody_leg extends AppCompatActivity {
                 intent.putExtra("bparts",select_leg);
                 for(int i = 0; i< select_leg.length; i++)
                     Log.e("jj", select_leg[i]);
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }
@@ -215,7 +216,7 @@ public class SelectBody_leg extends AppCompatActivity {
                 Intent intent = new Intent(SelectBody_leg.this, SearchList.class);
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("repeat",repeat);
-
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }

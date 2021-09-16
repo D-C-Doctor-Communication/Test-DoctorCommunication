@@ -153,6 +153,7 @@ public class SelectBody_waist extends AppCompatActivity {
                 intent.putExtra("bparts",select_waist);
                 for(int i = 0; i< select_waist.length; i++)
                     Log.e("jj", select_waist[i]);
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }
@@ -165,7 +166,7 @@ public class SelectBody_waist extends AppCompatActivity {
                 Intent intent = new Intent(SelectBody_waist.this,SearchList.class);
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("repeat",repeat);
-
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }

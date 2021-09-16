@@ -173,6 +173,7 @@ public class SelectBody_face extends AppCompatActivity {
                 intent.putExtra("bparts", select_face);
                 for(int i = 0; i< select_face.length; i++)
                     Log.e("jj", select_face[i]);
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }
@@ -184,7 +185,7 @@ public class SelectBody_face extends AppCompatActivity {
                 Intent intent = new Intent(SelectBody_face.this, SearchList.class);
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("repeat",repeat);
-
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }

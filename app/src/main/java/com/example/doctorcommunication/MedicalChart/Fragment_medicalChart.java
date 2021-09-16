@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -54,7 +55,7 @@ public class Fragment_medicalChart extends Fragment {
     //진료 일정 추가하기
     TextView btn_addAppointDoctor;
     //진료 일정이 없습니다 텍스트
-    TextView noneDataText;
+    ImageView noneData;
     //진료 후기 작성하기
     TextView btn_writeReview;
     //진료 후기 수정 버튼
@@ -92,7 +93,7 @@ public class Fragment_medicalChart extends Fragment {
         //병원 일정 추가하기 버튼
         btn_addAppointDoctor = view.findViewById(R.id.btn_addAppointDoctor);
         //진료 일정이 없습니다 TextView
-        noneDataText = view.findViewById(R.id.noneDataText);
+        noneData = view.findViewById(R.id.noneData);
         //기록 데이터 확인 버튼
         show_data = view.findViewById(R.id.show_data);
 
@@ -102,7 +103,6 @@ public class Fragment_medicalChart extends Fragment {
         setListViewHeight(listView);
         //진료 후기 작성할때 키보드가 UI 가리는것 방지
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
 
         //기본 표시 날짜(오늘)
         CalendarDay date = CalendarDay.today();
@@ -189,13 +189,13 @@ public class Fragment_medicalChart extends Fragment {
                     if(Person1.appointments[i].getSort().equals("검사")){
                         listViewAdapter.addItem(R.drawable.clinic_checkup,Person1.appointments[i].getName(),Person1.appointments[i].getLocation(),Person1.appointments[i].getTime());
                         listView.setVisibility(View.VISIBLE);
-                        noneDataText.setVisibility(View.INVISIBLE);
+                        noneData.setVisibility(View.INVISIBLE);
                         btn_addAppointDoctor.setBackgroundColor(Color.parseColor("#0f000000"));
                     }
                     else if(Person1.appointments[i].getSort().equals("진료")){
                         listViewAdapter.addItem(R.drawable.clinic_clinic,Person1.appointments[i].getName(),Person1.appointments[i].getLocation(),Person1.appointments[i].getTime());
                         listView.setVisibility(View.VISIBLE);
-                        noneDataText.setVisibility(View.INVISIBLE);
+                        noneData.setVisibility(View.INVISIBLE);
                         btn_addAppointDoctor.setBackgroundColor(Color.parseColor("#0f000000"));
                     }
                 }
@@ -250,7 +250,7 @@ public class Fragment_medicalChart extends Fragment {
             if (requestCode == REQ_ADD_CONTACT) {
                 if (resultCode == RESULT_OK) {
                     //일정이 존재하면 listView visible로 바꿈
-                    noneDataText.setVisibility(View.INVISIBLE);
+                    noneData.setVisibility(View.INVISIBLE);
                     listView.setVisibility(View.VISIBLE);
                     //일정 이름을 MC_PopupActivity로부터 받아옴
                     String scheduleName = intent.getStringExtra("schedule_name");
