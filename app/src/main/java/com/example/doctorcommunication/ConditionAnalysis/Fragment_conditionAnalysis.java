@@ -334,14 +334,18 @@ public class Fragment_conditionAnalysis extends Fragment {
         for(int i = 1; i <= 30; i++){
             fire_date = String.valueOf(i);
             if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
+            Log.d("myapp","1111111111111");
             fire_date = "202109" +  fire_date;
+            Log.d("myapp","2222222222222");
             for(int j=0; j<5; j++){
+                Log.d("myapp","3333333333333");
                 String finalStringDateValue = fire_date;
                 myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Log.d("myapp","444444444444");
                         String get_symptom = snapshot.child("symptom").getValue(String.class);
-                        Log.d("get_fire symptom", get_symptom);
+                        Log.d("onDataChange","finalStringDateValue : "+finalStringDateValue+"  , get_symptom : "+get_symptom);
                         if(!get_symptom.equals("e"))
                             data.put(get_symptom,0);
                     }
@@ -384,8 +388,8 @@ public class Fragment_conditionAnalysis extends Fragment {
             }
         });
 
-        if(list_entries.get(0).getValue()!=0) one.setText(list_entries.get(0).getKey());
-        else one.setText("해당없음");
+//        if(list_entries.get(0).getValue()!=0) one.setText(list_entries.get(0).getKey());
+//        else one.setText("해당없음");
         //if(list_entries.get(1).getValue()!=0) two.setText(list_entries.get(1).getKey());
         //else two.setText("해당없음");
         //if(list_entries.get(2).getValue()!=0) three.setText(list_entries.get(2).getKey());
