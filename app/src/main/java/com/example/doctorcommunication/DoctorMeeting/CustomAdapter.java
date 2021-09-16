@@ -20,7 +20,7 @@ public class CustomAdapter extends BaseExpandableListAdapter {
     Context context;
 
     public CustomAdapter(Context context, ArrayList<ParentData> parentDatas,ArrayList<ArrayList<ContentData>> childDatas){
-        Log.d("myapp","어댑터 생성됨");
+        Log.d("myapp","CustomAdapter 어댑터 생성됨");
         this.groupDatas = parentDatas;
         this.childDatas = childDatas;
         this.context = context;
@@ -65,6 +65,7 @@ public class CustomAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         //부모 포함되는 내용 : 날짜,파트,통증정도
+        Log.d("myapp","getGroupView 들어옴");
         if(convertView==null){
             convertView = inflater.inflate(R.layout.dc_list_group, parent, false);
         }
@@ -79,7 +80,7 @@ public class CustomAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-
+        Log.d("myapp","getChildView 들어옴");
         if(convertView == null){
             convertView = inflater.inflate(R.layout.dc_list_item,parent, false);
         }

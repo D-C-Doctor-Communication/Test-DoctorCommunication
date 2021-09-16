@@ -1,6 +1,8 @@
 package com.example.doctorcommunication.DoctorMeeting;
 
 
+import android.util.Log;
+
 public class ParentData {
     //parent - 날짜,증상명,통증정도()
     //child - 부위,통증정도,통증양상,악화상황,동반증상,추가사항
@@ -9,6 +11,7 @@ public class ParentData {
     private String pain_level;
 
     public ParentData(String date,String part,String pain_level){
+        Log.d("myapp","Parent 들어감");
         this.date = date;
         this.part = part;
         this.pain_level = pain_level;

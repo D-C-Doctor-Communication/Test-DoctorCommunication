@@ -25,9 +25,11 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.doctorcommunication.DataManagement.Person1;
 import com.example.doctorcommunication.ConditionAnalysis.Fragment_conditionAnalysis;
+import com.example.doctorcommunication.DataManagement.Symptom2;
 import com.example.doctorcommunication.MainActivity;
 import com.example.doctorcommunication.R;
 import com.example.doctorcommunication.Recording.Recording;
@@ -198,11 +200,9 @@ public class MeetingDoc extends AppCompatActivity {
         return true;
     }
 
-    //db연동필요 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     //리스트 데이터 설정
     private void setData(int valudIdx){
-        Log.d("myapp","넘어옴");
+        Log.d("myapp","setData 넘어옴");
         //부모,자식 데이터 arraylist
         groupListDatas = new ArrayList<ParentData>();
         childListDatas = new ArrayList<ArrayList<ContentData>>();
@@ -216,72 +216,66 @@ public class MeetingDoc extends AppCompatActivity {
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String uid = user.getUid();
+
+        String stringDateValue;
         //선택된 증상 데이터 선별
-
-
         for(int i=1; i<=30; i++){
             fire_date = String.valueOf(i);
             if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
             fire_date = "202109" +  fire_date;
-
             if(checkIsBetween(fire_date)){
-                Log.d("fire_Date", fire_date);
                 for(int j=0; j<5; j++){
-                    myRef.child(uid).child("date").child(fire_date).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
+                    String finalStringDateValue = fire_date;
+                    myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            String get_symptom = snapshot.child("symptom").getValue(String.class);
-                            String get_part = snapshot.child("part").getValue(String.class);
-                            String get_painLevel = snapshot.child("painLevel").getValue(String.class);
-                            String get_characteristics = snapshot.child("pain_characteristics").getValue(String.class);
-                            String get_situation = snapshot.child("pain_situation").getValue(String.class);
-                            String get_accompany_pain = snapshot.child("accompany_pain").getValue(String.class);
-                            String get_additional = snapshot.child("additional").getValue(String.class);
+                            Symptom2 symptom = snapshot.getValue(Symptom2.class);
 
-                            Log.d("get_fire", get_symptom+","+get_part+","+get_painLevel+","+get_characteristics+","+get_situation+","+get_accompany_pain+","+get_additional);
-
-                            if((!get_symptom.equals("e")) && get_symptom.equals(selectedSymptom)) {
-                                Log.d("fire_Date 통과", get_symptom+selectedSymptom);
+                            if((!symptom.getSymptom().equals("e")) && symptom.getSymptom().equals(selectedSymptom)) {
+                                Log.d("get_fire2", symptom.getSymptom()+","+symptom.getPart()+","+symptom.getPainLevel()+","+symptom.getPain_characteristics()+","+symptom.getPain_situation()+","+symptom.getAccompany_pain()+","+symptom.getAdditional());
+                                Log.d("fire_Date 통과", symptom.getSymptom()+selectedSymptom);
+                                Log.d("finalStringDateValue", finalStringDateValue);
                                 Calendar calendar = Calendar.getInstance();
                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
-                                Log.d("datestr", fire_date);
-                                String dateStr = fire_date.substring(0,4)+"."+fire_date.substring(4,6)+"."+fire_date.substring(6);
-                                Log.d("datestr", dateStr);
-                                String yoil = "";
+
+                                /*String dateStr = "";
+                                dateStr = finalStringDateValue.substring(0,4)+"."+finalStringDateValue.substring(4,6)+"."+finalStringDateValue.substring(6,8);
+                                Log.d("datestr", dateStr);*/
+
+                                String yoil = " ";
                                 try {
-                                    Date date = sdf.parse(fire_date);
+                                    Date date = sdf.parse(finalStringDateValue);
                                     calendar.setTime(date);
                                     yoil = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.KOREAN);
                                 } catch (ParseException e) {
                                     Log.d("myapp","예외발생");
                                     e.printStackTrace();
                                 }
-                                Log.d("parent", dateStr+","+yoil+get_part+","+get_painLevel);
+                                Log.d("parent", yoil+symptom.getPart()+","+symptom.getPainLevel());
+
                                 groupListDatas.add(new ParentData(
-                                        dateStr + " ("+yoil+")",
-                                        "get_part",
-                                        "get_painLevel")
+                                        finalStringDateValue + " ("+yoil+")",
+                                        symptom.getPart(),
+                                        symptom.getPainLevel())
                                 );
+
                                 childListDatas.add(new ArrayList<ContentData>());
-                                Log.d("get_fire2", get_symptom+","+get_part+","+get_painLevel+","+get_characteristics+","+get_situation+","+get_accompany_pain+","+get_additional);
+
                                 childListDatas.get(sizeList).add(new ContentData(
-                                        "get_part" ,
-                                        get_painLevel,
-                                        "get_characteristics" ,
-                                        "get_situation" ,
-                                        "get_accompany_pain",
-                                        "get_additional")
+                                        symptom.getPart() ,
+                                        symptom.getPainLevel(),
+                                        symptom.getPain_characteristics() ,
+                                        symptom.getPain_situation(),
+                                        symptom.getAccompany_pain(),
+                                        symptom.getAdditional())
                                 );
-                                Log.d("sizelist",sizeList+"");
-                                childListDatas.get(sizeList).add(new ContentData(
-                                        "get_part" ,
-                                        get_painLevel,
-                                        "get_characteristics" ,
-                                        "get_situation" ,
-                                        "get_accompany_pain",
-                                        "get_additional")
-                                );
+                                //Log.d("list", childListDatas.get(0).get(0).getPart());
+                                adapter = new CustomAdapter(MeetingDoc.this,groupListDatas,childListDatas);
+                                //리스트 생성
+                                expandableListView.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
                                 sizeList++;
+                                Log.d("myapp","sizeList : "+sizeList+"");
                             }
                         }
                         @Override
@@ -304,13 +298,8 @@ public class MeetingDoc extends AppCompatActivity {
                 //텍스트 지정
                 symptom_title.setText(buttonValue[i]);
                 //선택한 증상에 맞는 데이터 처리 (리스트 데이터 준비)
-
                 setData(i);
-                //Log.d("list", childListDatas.get(0).get(0).getPart());
-                adapter = new CustomAdapter(this,groupListDatas,childListDatas);
-                //리스트 생성
-                expandableListView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+                Log.d("myapp","어댑터 변경사항 적용됨");
                 btnClicked = i;
             }
         }

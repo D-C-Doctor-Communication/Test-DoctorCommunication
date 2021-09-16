@@ -12,7 +12,7 @@
         android:overScrollMode="never">
 
         <LinearLayout
-            android:id="@+id/addLayout"
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" />
