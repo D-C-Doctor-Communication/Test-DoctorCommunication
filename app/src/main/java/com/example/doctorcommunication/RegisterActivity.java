@@ -110,8 +110,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 hashMap.put("time","e");
                                 hashMap.put("scheduleName","e");
                                 hashMap.put("place","e");
-                                hashMap.put("clinic_checkup", "e");
-                                hashMap.put("clinic_clinic", "e");
+                                hashMap.put("clinic_type", "e");
+                                hashMap.put("memo", "e");
 
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                                 DatabaseReference myRef = database.getReference().child("users");
