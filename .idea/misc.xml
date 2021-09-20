@@ -9,7 +9,8 @@
         <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/drawable-v24/mc_button_clicked.xml" value="0.1864864864864865" />
         <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/drawable-v24/mc_button_nonclicked.xml" value="0.1864864864864865" />
         <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/drawable-v24/stomach_clicked08.xml" value="0.13918918918918918" />
-        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/fragment_home.xml" value="0.1662162162162162" />
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/activity_setting.xml" value="0.16261261261261262" />
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/fragment_medical_chart.xml" value="0.33" />
         <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/home_listview_item.xml" value="0.1662162162162162" />
         <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/mc_info_popup.xml" value="0.26756756756756755" />

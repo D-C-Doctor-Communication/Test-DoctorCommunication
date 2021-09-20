@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.doctorcommunication.DataManagement.Person1;
+import com.example.doctorcommunication.DataManagement.Symptom2;
 import com.example.doctorcommunication.R;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
@@ -336,13 +337,15 @@ public class Fragment_conditionAnalysis extends Fragment {
             if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
             fire_date = "202109" +  fire_date;
             for(int j=0; j<5; j++){
-                myRef.child(uid).child("date").child(fire_date).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
+                Log.d("myapp","3333333333333");
+                String finalStringDateValue = fire_date;
+                myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String get_symptom = snapshot.child("symptom").getValue(String.class);
-                        Log.d("get_fire symptom", get_symptom);
-                        if(!get_symptom.equals("e"))
-                            data.put(get_symptom,0);
+                        Symptom2 dataput = snapshot.getValue(Symptom2.class);
+                        Log.d("onDataChange","finalStringDateValue : "+finalStringDateValue+"  , get_symptom : "+dataput.getSymptom());
+                        if(!(dataput.getSymptom().equals("e")))
+                            data.put(dataput.getSymptom(),0);
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) { }
@@ -354,15 +357,17 @@ public class Fragment_conditionAnalysis extends Fragment {
             if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
             fire_date = "202109" +  fire_date;
             for(int j=0; j<5; j++){
-                myRef.child(uid).child("date").child(fire_date).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
+                String finalStringDateValue = fire_date;
+                myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String get_symptom = snapshot.child("symptom").getValue(String.class);
-                        Log.d("get_fire symptom", get_symptom);
-                        if(!get_symptom.equals("e") && isInSameMonth(fire_date ,strDate)) {
-                            data.put(get_symptom, (data.get(get_symptom) + 1));
+                        Symptom2 dataput = snapshot.getValue(Symptom2.class);
+                        Log.d("get_fire symptom", dataput.getSymptom());
+                        // && isInSameMonth(finalStringDateValue ,strDate)
+                        if(!(dataput.getSymptom().equals("e"))) {
+                            data.put(dataput.getSymptom(), (data.get(dataput.getSymptom()) + 1));
                         }
-                        //value 개수를 기준으로 내림차순 정렬 (정렬결과에 따라 순위 지정)
+//value 개수를 기준으로 내림차순 정렬 (정렬결과에 따라 순위 지정)
                         // Map.Entry 리스트 작성
                         List<Map.Entry<String, Integer>> list_entries = new ArrayList<>(data.entrySet());
                         // 비교함수 Comparator를 사용하여 내림 차순으로 정렬
@@ -386,6 +391,7 @@ public class Fragment_conditionAnalysis extends Fragment {
                 });
             }
         }
+
     }
 
 
@@ -398,28 +404,28 @@ public class Fragment_conditionAnalysis extends Fragment {
             if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
             fire_date = "202109" +  fire_date;
             for(int j=0; j<5; j++){
-                myRef.child(uid).child("date").child(fire_date).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
+                String finalStringDateValue = fire_date;
+                myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String get_symptom = snapshot.child("symptom").getValue(String.class);
-                        String get_Level = snapshot.child("painLevel").getValue(String.class);
-                        Log.d("get_fire symptom", get_symptom+get_Level);
-                        if(get_symptom.equals(symptom)) {
-                            switch (isInSameWeek(fire_date,strDate)){ //사용자가 선택한 날짜인지 확인 (1주차면 1,2주차면 2..반환)
+                        Symptom2 dataput = snapshot.getValue(Symptom2.class);
+                        Log.d("get_fire symptom", dataput.getSymptom()+dataput.getPainLevel());
+                        if(dataput.getSymptom().equals(symptom)) {
+                            switch (isInSameWeek(finalStringDateValue,strDate)){ //사용자가 선택한 날짜인지 확인 (1주차면 1,2주차면 2..반환)
                                 case 1 : //1주차
-                                    firstWeek += Integer.parseInt(get_Level);
+                                    firstWeek += Integer.parseInt(dataput.getPainLevel());
                                     fNum++;
                                     break;
                                 case 2 : //2주차
-                                    secondWeek += Integer.parseInt(get_Level);
+                                    secondWeek += Integer.parseInt(dataput.getPainLevel());
                                     sNum++;
                                     break;
                                 case 3 : //3주차
-                                    thirdWeek += Integer.parseInt(get_Level);
+                                    thirdWeek += Integer.parseInt(dataput.getPainLevel());
                                     tNum++;
                                     break;
                                 case 4 : //4주차
-                                    fourthWeek += Integer.parseInt(get_Level);
+                                    fourthWeek += Integer.parseInt(dataput.getPainLevel());
                                     foNum++;
                                     break;
                             }
@@ -477,14 +483,15 @@ public class Fragment_conditionAnalysis extends Fragment {
                 if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
                 fire_date = "202109" +  fire_date;
                 for(int j=0; j<5; j++){
-                    myRef.child(uid).child("date").child(fire_date).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
+                    String finalStringDateValue = fire_date;
+                    myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            String get_symptom = snapshot.child("symptom").getValue(String.class);
-                            Log.d("get_fire symptom", get_symptom);
+                            Symptom2 dataput = snapshot.getValue(Symptom2.class);
+                            Log.d("get_fire symptom", dataput.getSymptom());
                             //데이터가 기록된 날짜가 선택된 달과 일치할경우 1씩 증가
-                            Log.d("fiiir", fire_date+isInSameMonth(fire_date,strDate));
-                            if((!get_symptom.equals("e")) && isInSameMonth(fire_date,strDate)) numberOfData++;
+                            Log.d("fiiir", finalStringDateValue+isInSameMonth(finalStringDateValue,strDate));
+                            if((!(dataput.getSymptom().equals("e"))) && isInSameMonth(finalStringDateValue,strDate)) numberOfData++;
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) { }
@@ -502,15 +509,16 @@ public class Fragment_conditionAnalysis extends Fragment {
                 if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
                 fire_date = "202109" +  fire_date;
                 for(int j=0; j<5; j++){
-                    myRef.child(uid).child("date").child(fire_date).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
+                    String finalStringDateValue = fire_date;
+                    myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            String get_Level = snapshot.child("painLevel").getValue(String.class);
-                            Log.d("get_fire_Level", get_Level);
+                            Symptom2 dataput = snapshot.getValue(Symptom2.class);
+                            Log.d("get_fire_Level", dataput.getPainLevel());
 
                             //데이터가 기록된 날짜가 선택된 달과 일치할경우 1씩 증가
-                            if((!get_Level.equals("e")) && isInSameMonth(fire_date,strDate)) {
-                                if(Integer.parseInt(get_Level)>=5) numberOfData++;
+                            if((!(dataput.getPainLevel().equals("e"))) && isInSameMonth(finalStringDateValue,strDate)) {
+                                if(Integer.parseInt(dataput.getPainLevel())>=5) numberOfData++;
                             }
                         }
                         @Override
@@ -529,14 +537,15 @@ public class Fragment_conditionAnalysis extends Fragment {
                 if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
                 fire_date = "202109" +  fire_date;
                 for(int j=0; j<5; j++){
-                    myRef.child(uid).child("date").child(fire_date).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
+                    String finalStringDateValue = fire_date;
+                    myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            String get_scheduleName = snapshot.child("scheduleName").getValue(String.class);
-                            Log.d("fire_get_scheduleName", get_scheduleName);
+                            Symptom2 dataput = snapshot.getValue(Symptom2.class);
+                            Log.d("fire_get_scheduleName", dataput.getScheduleName());
 
                             //데이터가 기록된 날짜가 선택된 달과 일치할경우 1씩 증가
-                            if((!get_scheduleName.equals("e")) && isInSameMonth(fire_date,strDate)) {
+                            if((!(dataput.getScheduleName().equals("e"))) && isInSameMonth(finalStringDateValue,strDate)) {
                                numberOfData++;
                             }
                         }

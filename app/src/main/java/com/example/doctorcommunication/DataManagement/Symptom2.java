@@ -28,10 +28,10 @@ public class Symptom2 implements Serializable {
     private String place; //장소
     @PropertyName("time")
     private String time; // 시간
-    @PropertyName("clinic_clinic")
-    private String clinic_clinic; //진료
-    @PropertyName("clinic_checkup")
-    private String clinic_checkup; //검사
+    @PropertyName("clinic_type")
+    private String clinic_type; // 진료/검사 종류
+    @PropertyName("memo")
+    private String memo; // 진료/검사 종류
 
     public Symptom2(){
 
@@ -39,7 +39,7 @@ public class Symptom2 implements Serializable {
 
     //추가사항 없는 값 생성자
     public Symptom2(String symptom, String part, String painLevel, String pain_characteristics
-            , String pain_situation, String accompany_pain, String scheduleName, String place, String time, String clinic_clinic, String clinic_checkup){
+            , String pain_situation, String accompany_pain, String scheduleName, String place, String time, String clinic_type, String memo){
         this.symptom = symptom;
         this.part = part;
         this.painLevel = painLevel;
@@ -50,12 +50,13 @@ public class Symptom2 implements Serializable {
         this.scheduleName = scheduleName;
         this.place = place;
         this.time = time;
-        this.clinic_clinic = clinic_clinic;
-        this.clinic_checkup = clinic_checkup;
+        this.clinic_type = clinic_type;
+
+        this.memo = memo;
     }
     //추가사항 있는 값 생성자
     public Symptom2(String symptom, String part, String painLevel, String pain_characteristics
-            , String pain_situation, String accompany_pain, String additional, String scheduleName, String place, String time, String clinic_clinic, String clinic_checkup){
+            , String pain_situation, String accompany_pain, String additional, String scheduleName, String place, String time, String clinic_type, String memo){
         this.symptom = symptom;
         this.part = part;
         this.painLevel = painLevel;
@@ -67,8 +68,9 @@ public class Symptom2 implements Serializable {
         this.scheduleName = scheduleName;
         this.place = place;
         this.time = time;
-        this.clinic_clinic = clinic_clinic;
-        this.clinic_checkup = clinic_checkup;
+        this.clinic_type = clinic_type;
+
+        this.memo = memo;
     }
 
     public String getPart(){ return part; }
@@ -80,6 +82,14 @@ public class Symptom2 implements Serializable {
     public String getAdditional(){
         if(additional!=null) return additional;
         return "해당없음";
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+
+    public String getMemo() {
+        return memo;
     }
 
     public String getScheduleName() {
@@ -94,11 +104,7 @@ public class Symptom2 implements Serializable {
         return time;
     }
 
-    public String getClinic_clinic() {
-        return clinic_clinic;
-    }
-
-    public String getClinic_checkup() {
-        return clinic_checkup;
+    public String getClinic_type() {
+        return clinic_type;
     }
 }

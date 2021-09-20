@@ -16,6 +16,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import org.threeten.bp.DayOfWeek;
@@ -23,7 +24,15 @@ import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.TextStyle;
 
 import com.example.doctorcommunication.DataManagement.Person1;
+import com.example.doctorcommunication.DataManagement.Symptom2;
 import com.example.doctorcommunication.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -56,12 +65,19 @@ public class Fragment_medicalChart extends Fragment {
     TextView MC_LineTextView;
     //(팝업창 이동) activity 실행 요청 확인을 위한 요청코드
     static final int REQ_ADD_CONTACT = 1;
+    static String fire_date="";
     //리스트
     ListView listView;
     //각 날짜를 클릭했을 때 사용할 어댑터
     MCListViewAdapter adapter = new MCListViewAdapter();
     //기록 데이터 확인 버튼
     Button show_data;
+    static int listDataCount = 0;
+    static FirebaseAuth firebaseAuth =  FirebaseAuth.getInstance();
+    static FirebaseDatabase database = FirebaseDatabase.getInstance();
+    static DatabaseReference myRef = database.getReference().child("users");
+    static FirebaseUser user = firebaseAuth.getCurrentUser();
+    static String uid = user.getUid();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -158,7 +174,6 @@ public class Fragment_medicalChart extends Fragment {
             //진료 후기 작성
             String memotext1 = monthCalendar.getSameDateMomo(selectedDateString);
             MC_LineTextView.setText(memotext1);
-            MC_LineEditText.setText(memotext1);
             //수정버튼을 눌렀을때 텍스트뷰,에디트뷰 상태에 따라 수정기능 on off
             MC_editBtn.setOnClickListener(v -> {
                 changeTextEdit(selectedDateString);
@@ -192,8 +207,53 @@ public class Fragment_medicalChart extends Fragment {
         //listview 참조 및 adapter 연결
         MCListViewAdapter listViewAdapter = new MCListViewAdapter();
 
-        int listDataCount = 0;
-        for(int i=0;i<Person1.appointments.length;i++){
+        for(int i = 1; i <= 30; i++){
+            fire_date = String.valueOf(i);
+            if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
+            fire_date = "202109" +  fire_date;
+            for(int j=0; j<5; j++){
+                String finalStringDateValue = fire_date;
+                if (finalStringDateValue.equals(selectedDateString)) {
+                    myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Symptom2 appointments = snapshot.getValue(Symptom2.class);
+                            if(appointments.getClinic_type().equals("검사")){
+                                listViewAdapter.addItem(R.drawable.clinic_checkup,appointments.getScheduleName(),appointments.getPlace(),appointments.getTime());
+                                listView.setVisibility(View.VISIBLE);
+                                noneData.setVisibility(View.INVISIBLE);
+                                btn_addAppointDoctor.setBackgroundResource(R.drawable.mc_button_nonclicked);
+                                btn_addAppointDoctor.setTextColor(Color.BLACK);
+                            }
+                            else if(appointments.getClinic_type().equals("진료")){
+                                listViewAdapter.addItem(R.drawable.clinic_clinic,appointments.getScheduleName(),appointments.getPlace(),appointments.getTime());
+                                listView.setVisibility(View.VISIBLE);
+                                noneData.setVisibility(View.INVISIBLE);
+                                btn_addAppointDoctor.setBackgroundResource(R.drawable.mc_button_nonclicked);
+                                btn_addAppointDoctor.setTextColor(Color.BLACK);
+                            }
+                            Log.d("myapp","checkAppointment 데이터 추가됨");
+                            listDataCount++;
+                            listView.setAdapter(listViewAdapter);
+                            setListViewHeightBasedOnChildren(listView);
+                            listViewAdapter.notifyDataSetChanged();
+
+                            if (listDataCount ==0){
+                                noneData.setVisibility(View.VISIBLE);
+                                btn_addAppointDoctor.setBackgroundResource(R.drawable.mc_button_clicked);
+                                btn_addAppointDoctor.setTextColor(Color.WHITE);
+                            }
+                            Log.d("myapp","Adapter added, count : "+ listDataCount);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) { }
+                    });
+
+                }
+
+            }
+        }
+        /*for(int i=0;i<Person1.appointments.length;i++){
             if(Person1.appointments[i].getDate().equals(selectedDateString)){
                 if(Person1.appointments[i].getSort().equals("검사")){
                     listViewAdapter.addItem(R.drawable.clinic_checkup,Person1.appointments[i].getName(),Person1.appointments[i].getLocation(),Person1.appointments[i].getTime());
@@ -212,19 +272,17 @@ public class Fragment_medicalChart extends Fragment {
                 Log.d("myapp","checkAppointment 데이터 추가됨");
                 listDataCount++;
             }
-        }
-
-
+        }*/
         listView.setAdapter(listViewAdapter);
         setListViewHeightBasedOnChildren(listView);
         listViewAdapter.notifyDataSetChanged();
 
-        if (listDataCount==0){
+        if (listDataCount ==0){
             noneData.setVisibility(View.VISIBLE);
             btn_addAppointDoctor.setBackgroundResource(R.drawable.mc_button_clicked);
             btn_addAppointDoctor.setTextColor(Color.WHITE);
         }
-        Log.d("myapp","Adapter added, count : "+listDataCount);
+        Log.d("myapp","Adapter added, count : "+ listDataCount);
     }
 
     //진료 후기 작성
@@ -237,6 +295,7 @@ public class Fragment_medicalChart extends Fragment {
             MC_LineEditText.setText(temp1);
         }
         //editText가 활성화중일 때
+        //[FIREBASE] 메모내용 갱신|저장
         else if(MC_LineEditText.getVisibility()==View.VISIBLE){
             MC_LineEditText.setVisibility(View.INVISIBLE);
             MC_LineTextView.setVisibility(View.VISIBLE);
@@ -300,6 +359,30 @@ public class Fragment_medicalChart extends Fragment {
                 btn_addAppointDoctor.setTextColor(Color.BLACK);
 
                 //파이어베이스에 등록정보 저장
+                final int[] j = {0};
+                for(j[0] =0; j[0] <5; j[0]++){
+                    //String finalStringDateValue = fire_date;
+                    final String[] ok = {""};
+                    int finalJ = j[0];
+                    Log.d("okj1", j[0] +"");
+                    myRef.child(uid).child("date").child(selectedDateString).child(String.valueOf(j[0])).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Symptom2 appointments = snapshot.getValue(Symptom2.class);
+                            if(appointments.getScheduleName().equals("e")){
+                                myRef.child(uid).child("date").child(selectedDateString).child(String.valueOf(finalJ)).child("scheduleName").setValue(scheduleName);
+                                myRef.child(uid).child("date").child(selectedDateString).child(String.valueOf(finalJ)).child("place").setValue(location);
+                                myRef.child(uid).child("date").child(selectedDateString).child(String.valueOf(finalJ)).child("time").setValue(selectedTime);
+                                myRef.child(uid).child("date").child(selectedDateString).child(String.valueOf(finalJ)).child("clinic_type").setValue(typeOfSchedule);
+                                if(appointments.getScheduleName().equals("e")) j[0] +=5;
+                                Log.d("okj", j[0] +"");
+                            }
+
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) { }
+                    });
+                }
                 Log.d("myapp","일정 생성 완료 => 날짜 : "+selectedDateString+" 일정이름 : "+scheduleName+" 장소 : "+location+" 시간 : "+selectedTime+" 종류 : "+typeOfSchedule);
 
             }
@@ -310,24 +393,65 @@ public class Fragment_medicalChart extends Fragment {
     static class monthCalendar{
         //선택한 날짜에 저장된 메모를 찾아 반환함
         static public String getSameDateMomo(String memo_selecteddate){
-            String memoContent = "";
-            for(int i = 0; i< Person1.memos.length; i++){
+            final String[] memoContent = {""};
+            /*for(int i = 0; i< Person1.memos.length; i++){
                 if(Person1.memos[i].getDate().equals(memo_selecteddate)){
-                    memoContent = Person1.memos[i].getMemo();
+                    memoContent[0] = Person1.memos[i].getMemo();
                     Log.d("myapp","메모기록이 존재함!");
                     break;
                 }
+            }*/
+            for(int i = 1; i <= 30; i++){
+                fire_date = String.valueOf(i);
+                if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
+                fire_date = "202109" +  fire_date;
+                for(int j=0; j<5; j++){
+                    String finalStringDateValue = fire_date;
+                    myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Symptom2 appointments = snapshot.getValue(Symptom2.class);
+                            Log.d("get_fire", appointments.getMemo());
+                            if(appointments.getMemo().equals(memo_selecteddate)){
+                                memoContent[0] = appointments.getMemo();
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) { }
+                    });
+                }
             }
-            if(memoContent.equals("")) memoContent="진료 후기를 작성해주세요.";
-            return memoContent;
+            if(memoContent[0].equals("")) memoContent[0] ="진료 후기를 작성해주세요.";
+            return memoContent[0];
         }
         //선택한 날짜에 저장된 메모를 찾아 메모 수정함
         public static void changeMemo(String memo_selecteddate, String memo) {
-            for(int i=0;i<Person1.memos.length;i++){
+            /*for(int i=0;i<Person1.memos.length;i++){
                 if(Person1.memos[i].getDate().equals(memo_selecteddate)){
                     Person1.memos[i].setMemo(memo);
                     Log.d("myapp","메모기록이 수정됨!");
                     break;
+                }
+            }*/
+            for(int i = 1; i <= 30; i++){
+                fire_date = String.valueOf(i);
+                if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
+                fire_date = "202109" +  fire_date;
+                for(int j=0; j<5; j++){
+                    String finalStringDateValue = fire_date;
+                    myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Symptom2 appointments = snapshot.getValue(Symptom2.class);
+                            Log.d("get_fire", appointments.getMemo());
+                            if(appointments.getMemo().equals(memo_selecteddate)){
+                                appointments.setMemo(memo);
+                                Log.d("myapp","메모기록이 수정됨!");
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) { }
+                    });
                 }
             }
         }
@@ -336,7 +460,8 @@ public class Fragment_medicalChart extends Fragment {
             ArrayList<CalendarDay> dates = new ArrayList<>(); //점을 찍을 날짜를 저장,반환
             Calendar calendar = Calendar.getInstance();
             //Data에서 병원예약 날짜가 존재하면 해당 날짜를 위의 arrayList에 저장
-            for(int i=0;i<Person1.appointments.length;i++){
+            //[FIREBASE] for문으로 돌려서 예약내용이 있으면 . . .
+            /*for(int i=0;i<Person1.appointments.length;i++){
                 //병원예약날짜 받아오기
                 String dateValue = Person1.appointments[i].getDate();
                 int year = Integer.parseInt(dateValue.substring(0,4));
@@ -346,6 +471,33 @@ public class Fragment_medicalChart extends Fragment {
                 calendar.set(year,month-1,dayy);
                 CalendarDay day = CalendarDay.from(calendar);
                 dates.add(day);
+            }*/
+            for(int i = 1; i <= 30; i++){
+                fire_date = String.valueOf(i);
+                if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
+                fire_date = "202109" +  fire_date;
+                for(int j=0; j<5; j++){
+                    String finalStringDateValue = fire_date;
+                    myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Symptom2 appointments = snapshot.getValue(Symptom2.class);
+                            Log.d("get_fire", appointments.getMemo());
+                            if(!(appointments.getMemo().equals("e"))){
+                                String dateValue = finalStringDateValue;
+                                int year = Integer.parseInt(dateValue.substring(0,4));
+                                int month = Integer.parseInt(dateValue.substring(4,6));
+                                int dayy = Integer.parseInt(dateValue.substring(6));
+
+                                calendar.set(year,month-1,dayy);
+                                CalendarDay day = CalendarDay.from(calendar);
+                                dates.add(day);
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) { }
+                    });
+                }
             }
             return dates;
         }
