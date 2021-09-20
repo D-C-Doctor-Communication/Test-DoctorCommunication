@@ -9,8 +9,7 @@
         <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/drawable-v24/mc_button_clicked.xml" value="0.1864864864864865" />
         <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/drawable-v24/mc_button_nonclicked.xml" value="0.1864864864864865" />
         <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/drawable-v24/stomach_clicked08.xml" value="0.13918918918918918" />
-        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/activity_setting.xml" value="0.16261261261261262" />
-        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/fragment_home.xml" value="0.33" />
+        <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/fragment_home.xml" value="0.1662162162162162" />
         <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/fragment_medical_chart.xml" value="0.33" />
         <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/home_listview_item.xml" value="0.1662162162162162" />
         <entry key="..\:/AndroidProject/DoctorCommunication/app/src/main/res/layout/mc_info_popup.xml" value="0.26756756756756755" />
@@ -65,6 +64,10 @@
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/mc_popup_left_btn.xml" value="0.19305555555555556" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/mc_popup_right_btn.xml" value="0.19305555555555556" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/mc_popup_save_btn.xml" value="0.22864583333333333" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/seekbar.xml" value="0.21441441441441442" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/seekbar_bg.xml" value="0.21441441441441442" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/seekbar_pg.xml" value="0.21441441441441442" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/seekbar_thumb.xml" value="0.21441441441441442" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/serach_edge.xml" value="0.1594017094017094" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/stomach_clicked04.xml" value="0.1453125" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/drawable-v24/stomach_clicked05.xml" value="0.1453125" />
@@ -126,7 +129,7 @@
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_body_stomach.xml" value="0.136" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_body_waist.xml" value="0.264" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_item.xml" value="0.5" />
-        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_level.xml" value="0.15" />
+        <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_level.xml" value="0.33" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_pattern.xml" value="0.25" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/select_worse.xml" value="0.25" />
         <entry key="..\:/Summer_Android/DoctorCommunication/app/src/main/res/layout/setting_activity.xml" value="0.15888157894736843" />
