@@ -45,6 +45,8 @@
         android:layout_height="0dp"
         android:max="10"
         android:rotation="270"
+        android:background="@null"
+        android:splitTrack="false"
         android:progressDrawable="@drawable/seekbar"
         android:thumb="@drawable/seekbar_thumb"
         app:layout_constraintBottom_toTopOf="@+id/nextpage"
