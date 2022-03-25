@@ -3,6 +3,7 @@ package com.example.doctorcommunication.MedicalChart;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,12 +41,15 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 
 
 public class Fragment_medicalChart extends Fragment {
+
+    public static String format_Month = "MM";
 
     //캘린더
     MaterialCalendarView materialCalendarView;
@@ -204,13 +208,24 @@ public class Fragment_medicalChart extends Fragment {
     //데이터 관련 메소드
     //진료 일정 조회 + 리스트 생성
     public void checkAppointment(){
+        Calendar cal = Calendar.getInstance();
+
+        long now = System.currentTimeMillis();
+        Date mDate = new Date(now);
+
+        SimpleDateFormat simpleDate = new SimpleDateFormat("MM");
+
         //listview 참조 및 adapter 연결
         MCListViewAdapter listViewAdapter = new MCListViewAdapter();
 
-        for(int i = 1; i <= 30; i++){
+
+        String month = simpleDate.format(mDate);
+        Log.d("D-Month", "D - " + month);
+
+        for(int i = 1; i <= cal.getMaximum(Calendar.DAY_OF_MONTH); i++){
             fire_date = String.valueOf(i);
             if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
-            fire_date = "202109" +  fire_date;
+            fire_date = "2022"+ month + fire_date;
             for(int j=0; j<5; j++){
                 String finalStringDateValue = fire_date;
                 if (finalStringDateValue.equals(selectedDateString)) {
@@ -238,7 +253,7 @@ public class Fragment_medicalChart extends Fragment {
                             setListViewHeightBasedOnChildren(listView);
                             listViewAdapter.notifyDataSetChanged();
 
-                            if (listDataCount ==0){
+                            if (listDataCount == 0){
                                 noneData.setVisibility(View.VISIBLE);
                                 btn_addAppointDoctor.setBackgroundResource(R.drawable.mc_button_clicked);
                                 btn_addAppointDoctor.setTextColor(Color.WHITE);
@@ -401,10 +416,17 @@ public class Fragment_medicalChart extends Fragment {
                     break;
                 }
             }*/
-            for(int i = 1; i <= 30; i++){
+            Calendar cal = Calendar.getInstance();
+            long now = System.currentTimeMillis();
+            Date mDate = new Date(now);
+            SimpleDateFormat simpleDate = new SimpleDateFormat("MM");
+            String month = simpleDate.format(mDate);
+
+            for(int i = 1; i <= cal.getMaximum(Calendar.DAY_OF_MONTH); i++){
                 fire_date = String.valueOf(i);
                 if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
-                fire_date = "202109" +  fire_date;
+                fire_date = "2022" + month + fire_date;
+
                 for(int j=0; j<5; j++){
                     String finalStringDateValue = fire_date;
                     myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -433,10 +455,16 @@ public class Fragment_medicalChart extends Fragment {
                     break;
                 }
             }*/
-            for(int i = 1; i <= 30; i++){
+            Calendar cal = Calendar.getInstance();
+            long now = System.currentTimeMillis();
+            Date mDate = new Date(now);
+            SimpleDateFormat simpleDate = new SimpleDateFormat("MM");
+            String month = simpleDate.format(mDate);
+
+            for(int i = 1; i <= cal.getMaximum(Calendar.DAY_OF_MONTH); i++){
                 fire_date = String.valueOf(i);
                 if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
-                fire_date = "202109" +  fire_date;
+                fire_date = "2022" + month + fire_date;
                 for(int j=0; j<5; j++){
                     String finalStringDateValue = fire_date;
                     myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -472,10 +500,15 @@ public class Fragment_medicalChart extends Fragment {
                 CalendarDay day = CalendarDay.from(calendar);
                 dates.add(day);
             }*/
-            for(int i = 1; i <= 30; i++){
+            long now = System.currentTimeMillis();
+            Date mDate = new Date(now);
+            SimpleDateFormat simpleDate = new SimpleDateFormat("MM");
+            String month = simpleDate.format(mDate);
+
+            for(int i = 1; i <= calendar.getMaximum(Calendar.DAY_OF_MONTH); i++){
                 fire_date = String.valueOf(i);
                 if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
-                fire_date = "202109" +  fire_date;
+                fire_date = "2022" + month +  fire_date;
                 for(int j=0; j<5; j++){
                     String finalStringDateValue = fire_date;
                     myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {

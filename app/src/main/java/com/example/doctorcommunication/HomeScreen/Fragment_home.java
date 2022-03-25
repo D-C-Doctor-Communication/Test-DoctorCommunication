@@ -310,6 +310,11 @@ public class Fragment_home extends Fragment {
             Calendar cal = Calendar.getInstance();
             cal.setFirstDayOfWeek(Calendar.SUNDAY);
 
+            long now = System.currentTimeMillis();
+            Date mDate = new Date(now);
+            SimpleDateFormat simpleDate = new SimpleDateFormat("MM");
+            String month = simpleDate.format(mDate);
+
             int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
             cal.add(Calendar.DAY_OF_MONTH, (-(dayOfWeek - 1)));
 
@@ -335,10 +340,10 @@ public class Fragment_home extends Fragment {
             for(int i=0;i<=6;i++){
                 isDataExist = false;
                 String checkDate = todaySdf.format(cal.getTime()).substring(0,4)+""+todaySdf.format(cal.getTime()).substring(5,7)+""+wDate[i].getText();
-                for(int j = 1; j <= 30; j++){
+                for(int j = 1; j <= cal.getMaximum(Calendar.DAY_OF_MONTH); j++){
                     fire_date = String.valueOf(j);
                     if((int)(Math.log10(j)+1) == 1) fire_date = "0"+fire_date;
-                    fire_date = "202109" +  fire_date;
+                    fire_date = "2022" + month +  fire_date;
                     Log.d("myapp","fire_date : "+fire_date);
                     for(int k=0; k<5; k++){
                         myRef.child(uid).child("date").child(fire_date).child(String.valueOf(k)).addValueEventListener(new ValueEventListener() {

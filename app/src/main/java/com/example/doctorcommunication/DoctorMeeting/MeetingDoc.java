@@ -226,11 +226,17 @@ public class MeetingDoc extends AppCompatActivity {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String uid = user.getUid();
 
+        Calendar cal = Calendar.getInstance();
+        long now = System.currentTimeMillis();
+        Date mDate = new Date(now);
+        SimpleDateFormat simpleDate = new SimpleDateFormat("MM");
+        String month = simpleDate.format(mDate);
+
         //선택된 증상 데이터 선별
-        for(int i=1; i<=30; i++){
+        for(int i=1; i<=cal.getMaximum(Calendar.DAY_OF_MONTH); i++){
             fire_date = String.valueOf(i);
             if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
-            fire_date = "202109" +  fire_date;
+            fire_date = "2022" + month + fire_date;
             if(checkIsBetween(fire_date)){
                 for(int j=0; j<5; j++){
                     String finalStringDateValue = fire_date;

@@ -124,9 +124,45 @@ public class RegisterActivity extends AppCompatActivity {
                                 for(int i=1; i<=30; i++) {
                                     int length = (int) (Math.log10(i) + 1);
                                     if (length == 1) {
-                                        date = "2021090" + i;
+                                        date = "2022040" + i;
                                     } else {
-                                        date = "202109" + i;
+                                        date = "202204" + i;
+                                    }
+                                    for(int j=0;j<5;j++){
+                                        String jj = j+"";
+                                        myRef.child(uid).child("date").child(date).child(jj).setValue(hashMap);
+                                    }
+                                }
+                                for(int i=1; i<=31; i++) {
+                                    int length = (int) (Math.log10(i) + 1);
+                                    if (length == 1) {
+                                        date = "2022050" + i;
+                                    } else {
+                                        date = "202205" + i;
+                                    }
+                                    for(int j=0;j<5;j++){
+                                        String jj = j+"";
+                                        myRef.child(uid).child("date").child(date).child(jj).setValue(hashMap);
+                                    }
+                                }
+                                for(int i=1; i<=30; i++) {
+                                    int length = (int) (Math.log10(i) + 1);
+                                    if (length == 1) {
+                                        date = "2022060" + i;
+                                    } else {
+                                        date = "202206" + i;
+                                    }
+                                    for(int j=0;j<5;j++){
+                                        String jj = j+"";
+                                        myRef.child(uid).child("date").child(date).child(jj).setValue(hashMap);
+                                    }
+                                }
+                                for(int i=1; i<=31; i++) {
+                                    int length = (int) (Math.log10(i) + 1);
+                                    if (length == 1) {
+                                        date = "2022070" + i;
+                                    } else {
+                                        date = "202207" + i;
                                     }
                                     for(int j=0;j<5;j++){
                                         String jj = j+"";

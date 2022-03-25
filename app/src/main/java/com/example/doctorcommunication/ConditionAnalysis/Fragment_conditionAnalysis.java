@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -331,11 +332,16 @@ public class Fragment_conditionAnalysis extends Fragment {
     static void setRanking(String strDate,TextView one,TextView two,TextView three){
         HashMap<String,Integer> data = new HashMap<>();//new에서 타입 파라미터 생략가능
         //각 증상을 key값으로, 증상의 개수를 value값으로 가지는 Map 생성
+        Calendar cal = Calendar.getInstance();
+        long now = System.currentTimeMillis();
+        Date mDate = new Date(now);
+        SimpleDateFormat simpleDate = new SimpleDateFormat("MM");
+        String month = simpleDate.format(mDate);
 
-        for(int i = 1; i <= 30; i++){
+        for(int i = 1; i <= cal.getMaximum(Calendar.DAY_OF_MONTH); i++){
             fire_date = String.valueOf(i);
             if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
-            fire_date = "202109" +  fire_date;
+            fire_date = "2022" + month +  fire_date;
             for(int j=0; j<5; j++){
                 Log.d("myapp","3333333333333");
                 String finalStringDateValue = fire_date;
@@ -352,10 +358,10 @@ public class Fragment_conditionAnalysis extends Fragment {
                 });
             }
         }
-        for(int i = 1; i <= 30; i++){
+        for(int i = 1; i <= cal.getMaximum(Calendar.DAY_OF_MONTH); i++){
             fire_date = String.valueOf(i);
             if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
-            fire_date = "202109" +  fire_date;
+            fire_date = "2022" + month +  fire_date;
             for(int j=0; j<5; j++){
                 String finalStringDateValue = fire_date;
                 myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -398,11 +404,16 @@ public class Fragment_conditionAnalysis extends Fragment {
     //그래프의 x값(각 주별 심각도 평균) - 날짜와 증상이 사용자가 선택한 것과 일치하는지 확인
     static int[] getAverageOfWeek(String strDate,String symptom){ //상단바에서 선택한 날짜, 증상
         int[] graphData = new int[4];   //그래프의 x좌표 -> 1,2,3,4주차
+        Calendar cal = Calendar.getInstance();
+        long now = System.currentTimeMillis();
+        Date mDate = new Date(now);
+        SimpleDateFormat simpleDate = new SimpleDateFormat("MM");
+        String month = simpleDate.format(mDate);
 
-        for(int i = 1; i <= 30; i++){
+        for(int i = 1; i <= cal.getMaximum(Calendar.DAY_OF_MONTH); i++){
             fire_date = String.valueOf(i);
             if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
-            fire_date = "202109" +  fire_date;
+            fire_date = "2022" + month + fire_date;
             for(int j=0; j<5; j++){
                 String finalStringDateValue = fire_date;
                 myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -478,10 +489,17 @@ public class Fragment_conditionAnalysis extends Fragment {
         //총 기록된 통증 수
         public static int accruedData(String strDate){
             numberOfData = 0;
-            for(int i = 1; i <= 30; i++){
+
+            Calendar cal = Calendar.getInstance();
+            long now = System.currentTimeMillis();
+            Date mDate = new Date(now);
+            SimpleDateFormat simpleDate = new SimpleDateFormat("MM");
+            String month = simpleDate.format(mDate);
+
+            for(int i = 1; i <= cal.getMaximum(Calendar.DAY_OF_MONTH); i++){
                 fire_date = String.valueOf(i);
                 if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
-                fire_date = "202109" +  fire_date;
+                fire_date = "2022" + month + fire_date;
                 for(int j=0; j<5; j++){
                     String finalStringDateValue = fire_date;
                     myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -504,10 +522,17 @@ public class Fragment_conditionAnalysis extends Fragment {
         //심각도 5 이상
         public static int moreThanFive(String strDate){
             numberOfData = 0;
-            for(int i = 1; i <= 30; i++){
+
+            Calendar cal = Calendar.getInstance();
+            long now = System.currentTimeMillis();
+            Date mDate = new Date(now);
+            SimpleDateFormat simpleDate = new SimpleDateFormat("MM");
+            String month = simpleDate.format(mDate);
+
+            for(int i = 1; i <= cal.getMaximum(Calendar.DAY_OF_MONTH); i++){
                 fire_date = String.valueOf(i);
                 if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
-                fire_date = "202109" +  fire_date;
+                fire_date = "2022" + month + fire_date;
                 for(int j=0; j<5; j++){
                     String finalStringDateValue = fire_date;
                     myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -532,10 +557,16 @@ public class Fragment_conditionAnalysis extends Fragment {
         //병원 예약 횟수
         public static int appointmentDC(String strDate){
             numberOfData = 0;
-            for(int i = 1; i <= 30; i++){
+            Calendar cal = Calendar.getInstance();
+            long now = System.currentTimeMillis();
+            Date mDate = new Date(now);
+            SimpleDateFormat simpleDate = new SimpleDateFormat("MM");
+            String month = simpleDate.format(mDate);
+
+            for(int i = 1; i <= cal.getMaximum(Calendar.DAY_OF_MONTH); i++){
                 fire_date = String.valueOf(i);
                 if((int)(Math.log10(i)+1) == 1) fire_date = "0"+fire_date;
-                fire_date = "202109" +  fire_date;
+                fire_date = "2022" + month + fire_date;
                 for(int j=0; j<5; j++){
                     String finalStringDateValue = fire_date;
                     myRef.child(uid).child("date").child(finalStringDateValue).child(String.valueOf(j)).addListenerForSingleValueEvent(new ValueEventListener() {
